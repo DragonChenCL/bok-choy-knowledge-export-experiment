@@ -1,5 +1,6 @@
 name: Generate Bao Rescue PDFs
 
+# Reproducible binary deliverables for EXP-003.
 on:
   workflow_dispatch:
   push:
