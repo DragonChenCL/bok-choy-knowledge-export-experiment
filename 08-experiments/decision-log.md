@@ -41,3 +41,27 @@
 **Decision:** initial content emphasizes diagnosis, inspection, cultural/physical/IPM-oriented steps, prevention, and escalation to current local Extension/product-label guidance.
 
 **Why:** improves reliability and avoids unsafe overgeneralization.
+
+---
+
+## 2026-09-07 — D005: Stop Bok Choy before build; preserve it as a validation example
+
+**Evidence:** the problem is real, but current evidence does not yet show that a Bok-Choy-only paid knowledge product has a sufficiently large market. Reddit frequency raised a market-size concern; Google/SERP review confirmed long-tail demand but did not provide enough volume evidence to justify committing production resources.
+
+**Decision:** stop EXP-001 before PDF/site production. Keep all research as a retrospective example for the reusable SOP.
+
+**Why:** the experiment's primary goal is to validate the process, not defend the first idea.
+
+**Lesson:** early rejection is a successful outcome when evidence is weaker than the next available candidate.
+
+---
+
+## 2026-09-07 — D006: Select Sourdough Starter Rescue as the leading EXP-002 validation candidate
+
+**Evidence:** fresh 2026 Reddit troubleshooting activity; Etsy currently shows a substantial sourdough troubleshooting market with paid digital products and adjacent products with hundreds to 1,000+ reviews; newer decision-tree/troubleshooter products continue to launch and receive purchases/reviews; Google SERPs contain active 2025–2026 troubleshooting content.
+
+**Decision:** run the full topic-validation SOP on **Sourdough Starter Rescue / Troubleshooting** before any build decision.
+
+**Why:** compared with the initial brainstorm candidates, it currently has the strongest combination of fresh pain, explicit payment evidence, low production cost, broad content surface, and natural decision-tree packaging.
+
+**Important:** this is a decision to validate, not a decision to create or sell the product.
