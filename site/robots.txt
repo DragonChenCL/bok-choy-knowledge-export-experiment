@@ -1,4 +1,4 @@
 User-agent: *
-Allow: /
+Disallow:
 
-Sitemap: https://REPLACE_WITH_DOMAIN/sitemap.xml
+Sitemap: REPLACE_WITH_DOMAIN/sitemap.xml
