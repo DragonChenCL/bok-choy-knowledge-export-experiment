@@ -79,23 +79,63 @@ HD sprite install commit:
 - `d59d7fe90c52d6c627ad14376e577fc37ee47f32`
 - message: `p0: install reviewed HD Bao Rescue sprite`
 
-After that commit, GitHub main reports `06-assets/bao-rescue/v4/bao-sprite.webp` as exactly `108598` bytes with blob SHA `81fb1a2754b493d61c5b58d132947d65a539ec07`, matching the reviewed local candidate byte-for-byte.
+After that commit, GitHub main reported `06-assets/bao-rescue/v4/bao-sprite.webp` as exactly `108598` bytes with blob SHA `81fb1a2754b493d61c5b58d132947d65a539ec07`, matching the reviewed local candidate byte-for-byte.
 
-## P0 manual/code-level interaction review
-Reviewed `site/diagnose/index.html`, `data.js`, `app.js`, and `styles.css` against the frozen MVP scope.
+## P0 interaction review
+Reviewed `site/diagnose/index.html`, `data.js`, `app.js`, and `styles.css`, then executed the deployed Pages artifact in headless Chromium with the real CSS, JavaScript, data model and reviewed WebP inlined.
 
+Code-level checks:
 - Back: question flow decrements the question index and removes the latest answer; first-question Back resets safely.
 - Restart / Start over: resets selected symptom, answers, question index, visual selected state, progress, and disables Next again.
 - Step bar: starts at step 1; question flow activates steps 2/3; result activates step 4.
 - Next disabled/enabled: initially disabled, enabled only after selecting a symptom/special case, reset to disabled on restart.
 - Result content: preserves evidence-aware statuses (`CORE LOGIC`, `CONFLICTED EVIDENCE`, `NEEDS MORE INFO`, `BETA`, `OUT OF SCOPE`, `STYLE GATE`) and always provides a next-batch test rather than a generic cause list.
-- Image mapping: CSS maps the 2x5 sprite exactly as `normal / underproof`, `overproof / collapsed`, `wrinkled / wet`, `fluffyCrumb / denseCrumb`, `gummyCrumb / cracked`.
-- Mobile layout: responsive breakpoints at 920px, 740px and 520px collapse the main layout, answer grids, symptom grids and Next button appropriately.
 - Special Case remains limited to `Cracked / opened`, `Frozen / reheated`, `Other`; no High Altitude / Dry Dough expansion was introduced.
 
-## Final deployment closure
-The one-shot reconstruction workflow is temporary and is removed before final deployment. The normal Pages workflow remains the deployment source of truth and continues to publish `06-assets/bao-rescue/v4/bao-sprite.webp` directly with the >100000-byte guard.
+Chromium interaction checks:
+- initial Next disabled: PASS
+- initial progress step = 1: PASS
+- choose `Didn't rise / stayed small`: PASS; Next becomes enabled and selected visual state is applied
+- `under -> cool -> none` path: PASS
+- result title `Test the proofing endpoint first`: PASS
+- result contains one `Next-batch test`: PASS
+- result retains all 3 observed facts: PASS
+- Back from result returns to the previous question: PASS
+- Restart returns to chooser, clears selection, disables Next, resets progress to step 1: PASS
+- Special Case shows exactly `Cracked / opened bun`, `Frozen / reheated`, `Other / not listed`: PASS
+- Special Case Back resets safely: PASS
+- all 10 sprite cells resolve to the intended 2x5 background positions: PASS 10/10
+- Chromium canonicalizes CSS zero positions as `0px` rather than `0%`; after equivalent-zero normalization there are no mapping mismatches
+- 390x844 mobile emulation: symptom grid becomes one column, Next fills chooser width, desktop motto hides: PASS
+- runtime background uses the reviewed WebP asset: PASS
 
-Because the Pages workflow is path-filtered, the final closure commit intentionally touches only a non-functional comment in `.github/workflows/deploy-site-pages.yml` to trigger the normal deployment after this log is recorded. The exact final deployed commit is verified from the generated online `build.json`; `build.json` must equal GitHub main before P0 is declared complete.
+## Final Pages deployment verification
+Normal Pages workflow run:
+- run: `34245366539`
+- workflow run number: `10`
+- trigger commit: `f3dbea512037a8e65150e6fe94ce8e81f7ad4204`
+- build job: PASS
+- `Run P0 decision-path QA`: PASS
+- `Stage latest site`: PASS
+- `Verify staged MVP`: PASS
+- Pages artifact upload: PASS
+- deploy job / `Deploy to GitHub Pages`: PASS
+- overall conclusion: SUCCESS
 
-No v4.6/v4.7 work or feature expansion was started.
+Deployed Pages artifact:
+- artifact id: `10063738341`
+- artifact SHA256 digest: `7f3edf4d499dfdc12b0fed82c6dbdad57dfb16739ddd21ef8ad029033e1432fc`
+- `build.json.commit`: `f3dbea512037a8e65150e6fe94ce8e81f7ad4204`
+- `build.json.run_id`: `34245366539`
+- `build.json.product_stage`: `MVP_FREEZE_P0`
+- deployed `diagnose/index.html` marker: `deployed-commit:f3dbea512037a8e65150e6fe94ce8e81f7ad4204`
+- root `index.html` contains meta refresh, JavaScript replace and fallback link to `./diagnose/`
+- deployed sprite: 108598 bytes, 2400x4500 WebP, SHA256 `fac8b73eee3440a03cbfbd521024527b9b7e000f64018a25d4d5b7f1ef084448`, Git blob SHA `81fb1a2754b493d61c5b58d132947d65a539ec07`
+
+## Final repository/deployment alignment
+The temporary reconstruction workflow and temporary HD upload chunks were removed. The standard Pages workflow remains the only deployment mechanism and still publishes the reviewed `bao-sprite.webp` directly with the >100000-byte regression guard.
+
+This log update is followed only by a no-functional-change Pages workflow comment update so that the log itself is included in final main while the final deployed `build.json` is regenerated from that final main commit. The final exact alignment SHA is therefore taken from the final `build.json` / GitHub main verification rather than self-embedding a commit SHA inside the commit that defines that SHA.
+
+## Freeze decision
+P0 functional, visual-resource, QA, interaction and Pages-deployment gates are satisfied. No v4.6/v4.7 work or feature expansion was started. After the final main/build.json equality check, development stops at v4.5 MVP Freeze.
