@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'site/**'
-      - '06-assets/bao-rescue/v4/sprite-q20.b64.part-*'
+      - '06-assets/bao-rescue/v4/bao-sprite.webp'
       - '.github/workflows/deploy-site-pages.yml'
   workflow_dispatch:
 
@@ -39,13 +39,12 @@ jobs:
           # The repository site directory is the single deploy source.
           cp -R site/. _site/
 
-          # Rebuild the diagnostic photo sprite from committed text parts.
-          # This replaces the old 4 KB v3 thumbnails that caused blurry images.
+          # Publish the reviewed P0 sprite directly. Do not reconstruct old q20 parts.
           mkdir -p _site/assets/bao-rescue
-          PARTS=(06-assets/bao-rescue/v4/sprite-q20.b64.part-*)
-          test "${#PARTS[@]}" -eq 10
-          cat "${PARTS[@]}" | tr -d '\r\n' | base64 -d > _site/assets/bao-rescue/bao-sprite.webp
+          cp 06-assets/bao-rescue/v4/bao-sprite.webp _site/assets/bao-rescue/bao-sprite.webp
           test -s _site/assets/bao-rescue/bao-sprite.webp
+          test "$(stat -c%s _site/assets/bao-rescue/bao-sprite.webp)" -gt 100000
+          file _site/assets/bao-rescue/bao-sprite.webp | grep -qi 'Web/P'
 
           # Trace the exact deployed commit.
           BUILD_TIME="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
@@ -55,7 +54,7 @@ jobs:
             "run_id": "${GITHUB_RUN_ID}",
             "run_number": "${GITHUB_RUN_NUMBER}",
             "built_at": "${BUILD_TIME}",
-            "product_stage": "MVP_FREEZE"
+            "product_stage": "MVP_FREEZE_P0"
           }
           EOF
 
@@ -91,10 +90,11 @@ jobs:
           grep -q 'bao-sprite.webp' _site/diagnose/styles.css
           grep -q 'deployed-commit:${{ github.sha }}' _site/diagnose/index.html
           grep -q '${{ github.sha }}' _site/build.json
+          grep -q 'Cracked/opened, frozen/reheated, or another unlisted case.' _site/diagnose/index.html
 
-          # Prevent regression to the old thumbnail deployment path.
-          if grep -R 'v3/source' _site/diagnose _site/index.html; then
-            echo 'Old v3 thumbnail dependency detected'
+          # Prevent regression to the old thumbnail / q20 reconstruction path.
+          if grep -R 'v3/source\|sprite-q20' _site/diagnose _site/index.html; then
+            echo 'Old thumbnail dependency detected'
             exit 1
           fi
 
