@@ -1,0 +1,381 @@
+{
+  "version": "0.1",
+  "status": "logic-prototype-not-for-sale",
+  "product": "Bao Rescue Visual Diagnosis System",
+  "scope": {
+    "included": [
+      "wheat-flour steamed buns",
+      "yeast-leavened mantou",
+      "yeast-leavened filled baozi",
+      "folded gua bao where dough symptom applies"
+    ],
+    "excluded": [
+      "sourdough-only bao",
+      "gluten-free bao",
+      "no-yeast-only bao",
+      "pan-fried sheng jian bao",
+      "food-safety diagnosis for raw filling"
+    ]
+  },
+  "confidence_model": {
+    "evidence_strength": ["A", "B", "C", "UNKNOWN"],
+    "case_confidence": ["HIGH", "MEDIUM", "LOW"]
+  },
+  "start_node": "scope_style",
+  "nodes": {
+    "scope_style": {
+      "type": "question",
+      "prompt": "What kind of steamed bun are you trying to make?",
+      "options": {
+        "mantou": "scope_leavening",
+        "filled_baozi": "scope_leavening",
+        "folded_gua_bao": "scope_leavening",
+        "cantonese_cracking_char_siu_bao": "scope_leavening",
+        "other_or_unsure": "scope_leavening"
+      }
+    },
+    "scope_leavening": {
+      "type": "question",
+      "prompt": "What is the main leavening method?",
+      "options": {
+        "yeast_only": "scope_steamer",
+        "yeast_plus_baking_powder": "scope_steamer",
+        "unknown": "scope_steamer",
+        "no_yeast": "out_of_scope",
+        "sourdough_only": "out_of_scope"
+      }
+    },
+    "scope_steamer": {
+      "type": "question",
+      "prompt": "What steamer did you use?",
+      "options": {
+        "bamboo": "scope_substitution",
+        "metal": "scope_substitution",
+        "electric_or_pressure": "scope_substitution",
+        "other": "scope_substitution"
+      }
+    },
+    "scope_substitution": {
+      "type": "question",
+      "prompt": "Did you substantially change the source recipe?",
+      "options": {
+        "flour": "primary_symptom",
+        "liquid": "primary_symptom",
+        "yeast": "primary_symptom",
+        "sugar": "primary_symptom",
+        "filling": "primary_symptom",
+        "no_major_change": "primary_symptom"
+      }
+    },
+    "primary_symptom": {
+      "type": "question",
+      "prompt": "Which observable result is closest to your batch?",
+      "options": {
+        "barely_rose_before_steaming": "a_proof_state",
+        "dense_tough_not_fluffy": "b_presteam_rise",
+        "collapsed_lost_volume": "c_timing",
+        "wrinkled_elephant_skin": "d_lost_volume",
+        "wet_pitted_translucent": "e_condensation_clues",
+        "cracked_split_opened": "f_style_gate",
+        "appearance_only": "g_appearance"
+      }
+    },
+    "a_proof_state": {
+      "type": "question",
+      "prompt": "Before steaming, did the shaped buns become plumper/lighter and did a gentle press return slowly?",
+      "options": {
+        "no_still_heavy_fast_rebound": "a_environment",
+        "somewhat": "a_environment",
+        "yes_slow_rebound": "a_yeast_formula"
+      }
+    },
+    "a_environment": {
+      "type": "question",
+      "prompt": "Was the dough/kitchen unusually cool or was the dough recently refrigerated?",
+      "options": {
+        "yes": "result_a_temp_underproof",
+        "no": "a_yeast_formula",
+        "unknown": "a_yeast_formula"
+      }
+    },
+    "a_yeast_formula": {
+      "type": "question",
+      "prompt": "Any reason to suspect yeast activity or a major formula substitution?",
+      "options": {
+        "old_or_expired_yeast": "result_a_yeast",
+        "yeast_type_or_method_changed": "result_a_yeast",
+        "stiff_or_modified_formula": "result_a_formula",
+        "none_known": "result_a_underproof"
+      }
+    },
+    "b_presteam_rise": {
+      "type": "question",
+      "prompt": "Did the shaped buns clearly rise before steaming?",
+      "options": {
+        "no": "a_proof_state",
+        "yes": "b_interior",
+        "unsure": "b_interior"
+      }
+    },
+    "b_interior": {
+      "type": "question",
+      "prompt": "Which interior texture is closest?",
+      "options": {
+        "dry_tight_heavy": "b_substitution",
+        "wet_gummy": "result_beta_gummy",
+        "airy_but_chewy": "b_substitution",
+        "uneven_large_holes": "result_beta_large_holes"
+      }
+    },
+    "b_substitution": {
+      "type": "question",
+      "prompt": "Did you change flour or did the dough feel much stiffer/drier than expected?",
+      "options": {
+        "yes": "result_b_hydration_flour",
+        "no": "b_structure",
+        "unknown": "b_structure"
+      }
+    },
+    "b_structure": {
+      "type": "question",
+      "prompt": "Before shaping, was the dough smooth, elastic and cohesive rather than crumbly/tearing?",
+      "options": {
+        "no": "result_b_structure",
+        "yes": "result_b_mixed",
+        "unsure": "result_b_mixed"
+      }
+    },
+    "c_timing": {
+      "type": "question",
+      "prompt": "When did the volume loss mainly appear?",
+      "options": {
+        "before_steaming_or_waiting": "c_proof_state",
+        "during_steaming": "c_proof_state",
+        "when_heat_stopped": "c_proof_state",
+        "after_lid_opening_or_cooling": "c_proof_state",
+        "unsure": "c_proof_state"
+      }
+    },
+    "c_proof_state": {
+      "type": "question",
+      "prompt": "Before steaming, were the buns very puffy/fragile/spreading or did a finger indent fail to recover?",
+      "options": {
+        "yes": "result_c_overproof",
+        "no": "c_surface_moisture",
+        "unsure": "c_surface_moisture"
+      }
+    },
+    "c_surface_moisture": {
+      "type": "question",
+      "prompt": "Were there obvious wet spots, pits, droplets, or a very wet filling/thin wrapper?",
+      "options": {
+        "wet_or_pitted_surface": "e_condensation_clues",
+        "wet_filling_or_thin_wrapper": "result_c_filling_support",
+        "no": "result_c_transition_conflicted",
+        "unknown": "result_c_transition_conflicted"
+      }
+    },
+    "d_lost_volume": {
+      "type": "question",
+      "prompt": "Did the wrinkled bun also visibly lose volume or flatten?",
+      "options": {
+        "yes": "c_timing",
+        "no": "d_wet_surface",
+        "unsure": "d_wet_surface"
+      }
+    },
+    "d_wet_surface": {
+      "type": "question",
+      "prompt": "Is the surface also wet, pitted or water-marked?",
+      "options": {
+        "yes": "e_condensation_clues",
+        "no": "d_proof_state",
+        "unsure": "d_proof_state"
+      }
+    },
+    "d_proof_state": {
+      "type": "question",
+      "prompt": "Before steaming, did the buns show strong over-proof cues (spreading, very fragile/light, finger indent not recovering)?",
+      "options": {
+        "yes": "result_d_overproof",
+        "no": "result_d_surface_process",
+        "unsure": "result_d_surface_process"
+      }
+    },
+    "e_condensation_clues": {
+      "type": "question",
+      "prompt": "Were lid droplets visible or are you using a metal steamer where condensation could drip onto the buns?",
+      "options": {
+        "yes": "result_e_condensation",
+        "no": "e_filled_location",
+        "unknown": "e_filled_location"
+      }
+    },
+    "e_filled_location": {
+      "type": "question",
+      "prompt": "If filled, are wet/translucent areas concentrated around thin wrapper or filling zones?",
+      "options": {
+        "yes": "result_e_filling_beta",
+        "no": "result_e_unknown",
+        "not_filled": "result_e_unknown"
+      }
+    },
+    "f_style_gate": {
+      "type": "question",
+      "prompt": "Are you intentionally making Cantonese-style cracking-top char siu bao?",
+      "options": {
+        "yes": "result_f_intentional_crack",
+        "no": "result_f_beta",
+        "unsure": "result_f_beta"
+      }
+    },
+    "g_appearance": {
+      "type": "result",
+      "status": "secondary",
+      "message": "Appearance-only concerns are lower priority. Color/smoothness can change with flour type, condensation and process without implying poor eating quality. Diagnose only after clarifying the exact appearance issue."
+    },
+    "out_of_scope": {
+      "type": "result",
+      "status": "out_of_scope",
+      "message": "This v4 logic does not yet generalize safely to this formula/style."
+    },
+    "result_a_temp_underproof": {
+      "type": "result",
+      "hypotheses": [
+        {"cause": "insufficient proofing relative to temperature", "case_confidence": "HIGH", "evidence": "A"},
+        {"cause": "yeast activity issue", "case_confidence": "MEDIUM", "evidence": "A"},
+        {"cause": "stiff/modified formula", "case_confidence": "LOW", "evidence": "A/B"}
+      ],
+      "test": "Keep formula and steaming constant. Extend proof only until observable dough-state cues improve; record room temperature and actual time."
+    },
+    "result_a_yeast": {
+      "type": "result",
+      "hypotheses": [
+        {"cause": "yeast activity / handling issue", "case_confidence": "HIGH", "evidence": "A"},
+        {"cause": "insufficient proofing", "case_confidence": "MEDIUM", "evidence": "A"}
+      ],
+      "test": "Keep formula constant and use confirmed-fresh yeast following the recipe/manufacturer method; compare rise at the same dough temperature."
+    },
+    "result_a_formula": {
+      "type": "result",
+      "hypotheses": [
+        {"cause": "stiff formula / flour-hydration mismatch", "case_confidence": "MEDIUM", "evidence": "A/B"},
+        {"cause": "insufficient proofing", "case_confidence": "MEDIUM", "evidence": "A"}
+      ],
+      "test": "Return to source-recipe flour/liquid ratios before changing multiple fermentation variables."
+    },
+    "result_a_underproof": {
+      "type": "result",
+      "hypotheses": [
+        {"cause": "insufficient proofing", "case_confidence": "MEDIUM", "evidence": "A"},
+        {"cause": "yeast or formula issue", "case_confidence": "LOW", "evidence": "A/B"}
+      ],
+      "test": "Repeat with proof endpoint based on plumpness, lighter feel and slow finger recovery rather than elapsed minutes."
+    },
+    "result_b_hydration_flour": {
+      "type": "result",
+      "hypotheses": [
+        {"cause": "flour/hydration mismatch or excess flour", "case_confidence": "HIGH", "evidence": "A/B"},
+        {"cause": "dough development issue", "case_confidence": "MEDIUM", "evidence": "B"}
+      ],
+      "test": "Keep flour brand and proofing constant; make one measured hydration correction rather than adding flour by feel."
+    },
+    "result_b_structure": {
+      "type": "result",
+      "hypotheses": [
+        {"cause": "insufficient dough/gluten development", "case_confidence": "MEDIUM", "evidence": "B"},
+        {"cause": "flour/hydration mismatch", "case_confidence": "MEDIUM", "evidence": "A/B"}
+      ],
+      "test": "Keep formula constant and change only kneading/development endpoint until dough is smooth and cohesive."
+    },
+    "result_b_mixed": {
+      "type": "result",
+      "hypotheses": [
+        {"cause": "proofing mismatch", "case_confidence": "MEDIUM", "evidence": "A"},
+        {"cause": "flour/hydration/style mismatch", "case_confidence": "MEDIUM", "evidence": "A/B"}
+      ],
+      "test": "Use the historical batch data to select the stronger observation-supported branch; do not change flour and proofing together."
+    },
+    "result_beta_gummy": {
+      "type": "result",
+      "status": "beta-needs-evidence",
+      "message": "Wet/gummy interior is not yet supported strongly enough for commercial ranking. Collect steaming-time, wrapper-thickness and filling-moisture evidence first."
+    },
+    "result_beta_large_holes": {
+      "type": "result",
+      "status": "beta-needs-evidence",
+      "message": "Uneven large-hole diagnosis remains beta. Potential branches include trapped shaping bubbles and fermentation/structure issues."
+    },
+    "result_c_overproof": {
+      "type": "result",
+      "hypotheses": [
+        {"cause": "over-proofing / weakened gas-holding structure", "case_confidence": "HIGH", "evidence": "A"},
+        {"cause": "post-steam transition", "case_confidence": "LOW", "evidence": "C-CONFLICTED"}
+      ],
+      "test": "Keep recipe and steaming unchanged; steam a comparison batch at an earlier final-proof endpoint."
+    },
+    "result_c_transition_conflicted": {
+      "type": "result",
+      "hypotheses": [
+        {"cause": "post-steam thermal transition", "case_confidence": "MEDIUM", "evidence": "C-CONFLICTED"},
+        {"cause": "unobserved proof/structure weakness", "case_confidence": "MEDIUM", "evidence": "A/B"}
+      ],
+      "test": "After proofing is controlled, compare equivalent buns with immediate opening vs ~3-minute covered rest. Keep every other variable unchanged."
+    },
+    "result_c_filling_support": {
+      "type": "result",
+      "hypotheses": [
+        {"cause": "filling moisture / thin wrapper support issue", "case_confidence": "MEDIUM", "evidence": "C"},
+        {"cause": "proofing/structure", "case_confidence": "MEDIUM", "evidence": "A"}
+      ],
+      "test": "Keep dough/proofing constant and reduce only filling moisture/load or increase wrapper center support in a small comparison batch."
+    },
+    "result_d_overproof": {
+      "type": "result",
+      "hypotheses": [
+        {"cause": "over-proofing", "case_confidence": "HIGH", "evidence": "A"},
+        {"cause": "surface/process factors", "case_confidence": "LOW", "evidence": "B/C"}
+      ],
+      "test": "Steam an earlier-proof comparison batch with all other variables unchanged."
+    },
+    "result_d_surface_process": {
+      "type": "result",
+      "hypotheses": [
+        {"cause": "surface drying / shaping bubbles / aggressive steam", "case_confidence": "MEDIUM", "evidence": "B/C"},
+        {"cause": "post-steam transition", "case_confidence": "LOW", "evidence": "C-CONFLICTED"}
+      ],
+      "test": "Choose the strongest observed clue: cover shaped buns if skin dried, or stabilize steam intensity if heat was aggressive. Change one only."
+    },
+    "result_e_condensation": {
+      "type": "result",
+      "hypotheses": [
+        {"cause": "lid condensation / direct water dripping", "case_confidence": "HIGH", "evidence": "A"},
+        {"cause": "filling/wrapper moisture", "case_confidence": "LOW", "evidence": "C"}
+      ],
+      "test": "Keep formula/proofing constant. Change only condensation control using a safe cloth-wrapped metal lid or equivalent bamboo-steamer setup."
+    },
+    "result_e_filling_beta": {
+      "type": "result",
+      "status": "beta-needs-evidence",
+      "hypotheses": [
+        {"cause": "filling moisture / wrapper thickness", "case_confidence": "MEDIUM", "evidence": "C"}
+      ],
+      "test": "Run a small comparison with filling moisture/load as the single changed variable."
+    },
+    "result_e_unknown": {
+      "type": "result",
+      "status": "needs-more-observations",
+      "message": "No high-confidence moisture cause identified. Ask for exact location, timing, steamer type and filling/wrapper details before recommending a fix."
+    },
+    "result_f_intentional_crack": {
+      "type": "result",
+      "status": "not-a-failure",
+      "message": "Cracking can be intentional in Cantonese-style char siu bao. Diagnose only if the crack pattern differs from the intended style."
+    },
+    "result_f_beta": {
+      "type": "result",
+      "status": "beta-needs-evidence",
+      "message": "Smooth/closed bao cracking needs style-specific evidence before commercial ranking. Current candidate branches: proofing, surface drying/tension, wrapper geometry and seal/filling load."
+    }
+  }
+}
