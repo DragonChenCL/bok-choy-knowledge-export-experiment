@@ -7,6 +7,7 @@ on:
     paths:
       - 'site/**'
       - '06-assets/bao-rescue/v4/bao-sprite.webp'
+      - 'scripts/qa-bao-mvp.cjs'
       - '.github/workflows/deploy-site-pages.yml'
   workflow_dispatch:
 
@@ -28,6 +29,9 @@ jobs:
         with:
           ref: ${{ github.sha }}
           fetch-depth: 1
+
+      - name: Run P0 decision-path QA
+        run: node scripts/qa-bao-mvp.cjs
 
       - name: Stage latest site
         shell: bash
