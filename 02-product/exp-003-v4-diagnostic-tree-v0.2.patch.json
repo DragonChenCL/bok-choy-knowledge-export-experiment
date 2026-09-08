@@ -1,0 +1,158 @@
+{
+  "base": "02-product/exp-003-v4-diagnostic-tree.json",
+  "version": "0.2-patch",
+  "status": "logic-prototype-not-for-sale",
+  "changes": {
+    "start_node": "diagnostic_mode",
+    "add_nodes": {
+      "diagnostic_mode": {
+        "type": "question",
+        "prompt": "What are you trying to do right now?",
+        "options": {
+          "diagnose_failed_batch": "scope_freshness",
+          "rescue_batch_in_progress": "rescue_type",
+          "prevent_next_batch_failure": "prevention_type"
+        }
+      },
+      "scope_freshness": {
+        "type": "question",
+        "prompt": "Is this a freshly made batch or a reheated/frozen batch?",
+        "options": {
+          "freshly_made": "scope_style",
+          "reheated_or_frozen": "out_of_scope_reheat"
+        }
+      },
+      "scope_environment": {
+        "type": "question",
+        "prompt": "Any major environment flag?",
+        "options": {
+          "normal_or_unknown": "scope_steamer",
+          "high_altitude": "high_altitude_notice"
+        }
+      },
+      "high_altitude_notice": {
+        "type": "notice",
+        "set_context": {"high_altitude": true},
+        "message": "High altitude can change fermentation/cooking behavior, but v4 does not yet contain altitude-specific bao adjustments. Continue with general diagnosis, but do not present altitude-specific fixes as validated.",
+        "next": "scope_steamer"
+      },
+      "rescue_type": {
+        "type": "question",
+        "prompt": "What is happening before steaming?",
+        "options": {
+          "proofing_too_fast_or_already_fragile": "rescue_fast_proof",
+          "later_batches_waiting_for_steamer": "rescue_batch_wait",
+          "dough_clearly_too_dry_or_stiff": "rescue_dry_dough",
+          "other": "rescue_beta"
+        }
+      },
+      "prevention_type": {
+        "type": "question",
+        "prompt": "What are you trying to prevent?",
+        "options": {
+          "overproofing_while_batches_wait": "rescue_batch_wait",
+          "proofing_timing_mismatch": "rescue_fast_proof",
+          "dry_stiff_dough": "rescue_dry_dough",
+          "other": "rescue_beta"
+        }
+      },
+      "rescue_fast_proof": {
+        "type": "result",
+        "hypotheses": [
+          {"cause": "proofing is progressing faster than the recipe clock because of actual dough/environment conditions", "case_confidence": "HIGH", "evidence": "A"}
+        ],
+        "action": "Stop using the printed time as the target. Judge the buns by plumpness, lighter feel and finger recovery. If they are already at/near ready and must wait, move the waiting batch to a cooler environment/refrigerator to slow further yeast activity rather than continuing warm proofing.",
+        "evidence_refs": ["E01", "E03", "E07"]
+      },
+      "rescue_batch_wait": {
+        "type": "result",
+        "hypotheses": [
+          {"cause": "later batches continue fermenting while steamer capacity is occupied", "case_confidence": "HIGH", "evidence": "A/B"}
+        ],
+        "action": "Cover waiting shaped buns and chill the later batch to slow proofing while earlier buns steam. Bring/hold batches according to dough state rather than adding the same room-temperature wait to every batch.",
+        "evidence_refs": ["E01", "E03"]
+      },
+      "rescue_dry_dough": {
+        "type": "result",
+        "hypotheses": [
+          {"cause": "flour-hydration mismatch / excess flour", "case_confidence": "HIGH", "evidence": "A/B"}
+        ],
+        "action": "Do not compensate by repeatedly dusting in more flour. Compare measured flour/liquid weights to the source formula and make a small measured liquid adjustment if the dough is clearly stiffer/drier than intended. Record the flour brand/type because absorption differs.",
+        "evidence_refs": ["E06"]
+      },
+      "rescue_beta": {
+        "type": "result",
+        "status": "beta-needs-evidence",
+        "message": "This in-progress rescue case is not yet covered by validated v4 logic. Record the exact observable state instead of improvising a fix."
+      },
+      "spread_proof_state": {
+        "type": "question",
+        "prompt": "Before steaming, were the buns unusually puffy/fragile, spreading while they waited, or did a finger indent fail to recover?",
+        "options": {
+          "yes": "result_spread_overproof",
+          "no": "result_spread_ambiguous",
+          "unsure": "result_spread_ambiguous"
+        }
+      },
+      "result_spread_overproof": {
+        "type": "result",
+        "hypotheses": [
+          {"cause": "over-proofing", "case_confidence": "HIGH", "evidence": "A"},
+          {"cause": "very soft/high-hydration or weak-structure dough", "case_confidence": "LOW", "evidence": "A/B"}
+        ],
+        "test": "Keep formula and steaming unchanged; steam an earlier-proof comparison batch."
+      },
+      "result_spread_ambiguous": {
+        "type": "result",
+        "hypotheses": [
+          {"cause": "proofing mismatch", "case_confidence": "MEDIUM", "evidence": "A"},
+          {"cause": "flour/hydration/structure mismatch", "case_confidence": "MEDIUM", "evidence": "A/B"}
+        ],
+        "test": "Collect dough stiffness, flour substitution and proof-state observations before choosing which single variable to test."
+      },
+      "d_shaping_state": {
+        "type": "question",
+        "prompt": "During shaping/pleating, did the dough feel dry/tight or tear instead of stretching smoothly?",
+        "options": {
+          "yes": "result_d_dough_state",
+          "no": "result_d_surface_process",
+          "unsure": "result_d_surface_process"
+        }
+      },
+      "result_d_dough_state": {
+        "type": "result",
+        "hypotheses": [
+          {"cause": "flour/hydration mismatch", "case_confidence": "MEDIUM", "evidence": "A/B"},
+          {"cause": "insufficient dough development", "case_confidence": "MEDIUM", "evidence": "B"},
+          {"cause": "surface/process factor", "case_confidence": "LOW", "evidence": "B/C"}
+        ],
+        "test": "Choose one observed branch: if clearly dry/stiff, test a measured hydration correction; if not smooth/elastic, test dough-development endpoint. Do not alter proofing simultaneously."
+      },
+      "out_of_scope_reheat": {
+        "type": "result",
+        "status": "out_of_scope",
+        "message": "Frozen/reheated bao failures are a different process from first-cook diagnosis and are not included in commercial v4 core yet."
+      }
+    },
+    "modify_nodes": {
+      "scope_leavening": {
+        "replace_routes": {
+          "yeast_only": "scope_environment",
+          "yeast_plus_baking_powder": "scope_environment",
+          "unknown": "scope_environment"
+        }
+      },
+      "primary_symptom": {
+        "add_option": {
+          "spread_wide_flat_but_not_collapsed": "spread_proof_state"
+        }
+      },
+      "d_proof_state": {
+        "replace_route": {
+          "no": "d_shaping_state",
+          "unsure": "d_shaping_state"
+        }
+      }
+    }
+  }
+}
