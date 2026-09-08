@@ -49,13 +49,10 @@ jobs:
           cp 06-assets/bao-rescue/v3/source/condensation.jpg _site/assets/bao-rescue/condensation.jpg
           cp 06-assets/bao-rescue/v3/source/cracked.jpg _site/assets/bao-rescue/cracked.jpg
 
-          # Single source of truth:
-          # site/diagnose/index.html is the latest product UI.
-          # Publish that same code to both / and /diagnose/ so the root can never lag behind.
+          # Single source of truth: the diagnosis UI is the live product.
           cp _site/diagnose/index.html _site/index.html
 
-          # The diagnose source uses ../assets because it normally lives one directory deep.
-          # Adjust only the promoted root copy.
+          # Diagnose lives one directory deep; adjust only the promoted root copy.
           sed -i 's#../assets/bao-rescue/#./assets/bao-rescue/#g' _site/index.html
 
           # Add traceable build metadata for freshness checks.
@@ -91,9 +88,11 @@ jobs:
           test -s _site/index.html
           test -s _site/diagnose/index.html
           test -s _site/build.json
-          grep -q "Bao Rescue v4.3" _site/index.html
-          grep -q "Bao Rescue v4.3" _site/diagnose/index.html
+          grep -q "Why did my bao fail?" _site/index.html
+          grep -q "Why did my bao fail?" _site/diagnose/index.html
           grep -q "${GITHUB_SHA}" _site/build.json
+          grep -q "deployed-commit:${GITHUB_SHA}" _site/index.html
+          grep -q "deployed-commit:${GITHUB_SHA}" _site/diagnose/index.html
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

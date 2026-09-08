@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bao Rescue v4.3 — Live Photo Diagnosis</title>
+<title>Bao Rescue v4.4 — Live Photo Diagnosis</title>
 <meta name="robots" content="noindex,nofollow">
 <style>
 :root{
@@ -87,7 +87,25 @@ h1{font-size:46px;line-height:1.03;letter-spacing:-.04em;margin:14px 0 10px}
 .actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
 .actions button{border:0;border-radius:10px;padding:11px 14px;font-weight:bold;cursor:pointer}
 .btnP{background:var(--olive);color:white} .btnS{background:#ece9e2}
-@media(max-width:920px){.layout{grid-template-columns:1fr} .side{position:relative;top:auto}}
+
+.heroBand{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr);gap:34px;align-items:center;padding:42px 0 34px;border-bottom:1px solid #ddd7cf}
+.heroCopy h1{font-size:clamp(44px,6vw,76px);line-height:.96;letter-spacing:-.055em;margin:10px 0 16px}
+.heroCopy .heroLead{font:18px/1.6 Arial,sans-serif;color:#555751;max-width:720px;margin:0 0 20px}
+.heroCta{display:inline-flex;align-items:center;gap:10px;background:var(--olive);color:white;text-decoration:none;border-radius:999px;padding:14px 20px;font:700 15px Arial,sans-serif}
+.heroCta:hover{filter:brightness(.95)}
+.trustRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.trustPill{border:1px solid var(--line);background:#fff;-border-radius:999px;padding:8px 11px;font:12px Arial,sans-serif;color:#5e605b}
+.heroPhoto{position:relative;border-radius:22px;overflow:hidden;box-shadow:0 16px 34px rgba(54,43,31,.13);min-height:330px;background:#e8e2d9}
+.heroPhoto img{width:100%;height:100%;min-height:330px;object-fit:cover;display:block}
+.heroNote{position:absolute;right:16px;bottom:16px;max-width:240px;background:rgba(255,253,249,.94);backdrop-filter:blur(5px);border-radius:14px;padding:13px 14px;font:13px/1.45 Arial,sans-serif;color:#4f514b;border:1px solid rgba(255,255,255,.65)}
+.howGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+.howItem{background:#fff;border:1px solid var(--line);border-radius:13px;padding:13px 14px}
+.howItem b{display:block;font-size:14px;margin-bottom:4px}.howItem span{font:12px/1.45 Arial,sans-serif;color:#6f706b}
+.signalNote{margin-top:12px;background:#f5f3ee;border:1px solid var(--line);border-radius:10px;padding:11px 12px;font:12.5px/1.5 Arial,sans-serif;color:#62645e}
+.signalNote b{color:#3f4639}
+.evidenceLine{margin-top:12px;font:12px/1.45 Arial,sans-serif;color:#73756f}
+.evidenceLine a{color:var(--olive);font-weight:700;text-decoration:none}
+@media(max-width:920px){.lheroBand{grid-template-columns:1fr}.layout{grid-template-columns:1fr} .side{position:relative;top:auto}}
 @media(max-width:740px){.wrap{padding:18px 14px 40px} .steps{margin:18px 0 28px} .grid{grid-template-columns:1fr 1fr} .answers{grid-template-columns:1fr} h1{font-size:38px}}
 @media(max-width:520px){.grid{grid-template-columns:1fr} .motto{display:none} .step b{font-size:11px}}
 </style>
@@ -96,13 +114,37 @@ h1{font-size:46px;line-height:1.03;letter-spacing:-.04em;margin:14px 0 10px}
 <div class="wrap">
 <header>
   <div class="logo">
-    <div class="logo-mark">🥟</div>
+    <div class="logo-mark">🥻</div>
     <div><strong>Bao Rescue</strong><span>Fix Your Steamed Buns — Step by Step</span></div>
   </div>
   <div class="motto">Real Problems. Real Solutions. Better Buns.</div>
 </header>
 
-<div class="steps">
+<section class="heroBand">
+  <div class="heroCopy">
+    <div class="kicker">Photo-guided troubleshooting</div>
+    <h1>Why did my bao fail?</h1>
+    <p class="heroLead">Answer a few observable questions. Bao Rescue narrows the cause family, shows how confident that ranking is, and gives you one next-batch test instead of ten generic guesses.</p>
+    <a class="heroCta" href="#diagnoseStart">Start free diagnosis <span>→</span></a>
+    <div class="trustRow">
+      <span class="trustPill">Photo first</span>
+      <span class="trustPill">Cause ranking</span>
+      <span class="trustPill">One-variable test</span>
+      <span class="trustPill">Evidence-aware</span>
+    </div>
+    <div class="howGrid">
+      <div class="howItem"><b>1. Match the symptom</b><span>Start from what you can see or feel.</span></div>
+      <div class="howItem"><b>2. Separate similar causes</b><span>Use proof state, timing, moisture and dough clues.</span></div>
+      <div class="howItem"><b>3. Test one variable</b><span>The next batch should teach you something.</span></div>
+    </div>
+  </div>
+  <div class="heroPhoto">
+    <img src="../assets/bao-rescue/normal.jpg" alt="Well-steamed bao in a bamboo steamer">
+    <div class="heroNote"><strong>Normal reference</strong><br>Smooth, plump, light-feeling dough and a soft interior are the baseline before we call something a defect.</div>
+  </div>
+</section>
+
+<div class="steps" id="diagnoseStart">
   <div class="step active" id="step1"><div class="num">1</div><b>Your Bun</b></div>
   <div class="step" id="step2"><div class="num">2</div><b>Details</b></div>
   <div class="step" id="step3"><div class="num">3</div><b>More Info</b></div>
@@ -125,7 +167,7 @@ h1{font-size:46px;line-height:1.03;letter-spacing:-.04em;margin:14px 0 10px}
         <button class="card" data-key="crack"><img src="../assets/bao-rescue/cracked.jpg" alt=""><div class="copy"><strong>F. Cracked / opened</strong><span>Top or seal split open</span><i class="radio"></i></div></button>
       </div>
 
-      <button class="rowbtn" id="otherBtn"><div><strong>My buns look different / other issue</strong><span>For special cases such as freezing, high altitude, very dry dough, etc.</span></div><div>›</div></button>
+      <button class="rowbtn" id="otherBtn"><div><strong>My buns look different / other issue</strong><span>For special cases such as freezing, high altitude, very dry dough, etc.</span></div><div>‥</div></button>
       <button class="primaryCta" id="nextBtn" disabled>Next →</button>
     </section>
 
@@ -136,331 +178,4 @@ h1{font-size:46px;line-height:1.03;letter-spacing:-.04em;margin:14px 0 10px}
   <aside class="side">
     <h2>Not sure?</h2>
     <div class="sub">Compare with a good bun first.</div>
-    <div class="ref"><img src="../assets/bao-rescue/normal.jpg" alt=""><div class="tag">NORMAL REFERENCE</div></div>
-    <div class="checks">
-      <b>A normal, well-steamed bun should be:</b>
-      <div class="check"><span class="tick">✓</span><span>Smooth surface</span></div>
-      <div class="check"><span class="tick">✓</span><span>Round and plump</span></div>
-      <div class="check"><span class="tick">✓</span><span>Soft and fluffy inside</span></div>
-      <div class="check"><span class="tick">✓</span><span>No accidental wrinkles, water pits or cracks</span></div>
-    </div>
-    <div class="tip"><div class="ico">💡</div><div><strong>Tip</strong><p>Take one top photo and one cut-open photo. Those two views reduce a lot of ambiguity.</p></div></div>
-    <div class="noteBox"><div style="font-size:22px">📷</div><div><b>How to compare</b><span>Use natural light and pick the closest photo match, even if it is not exact.</span></div></div>
-    <div class="quote">“Every failed bun is a step closer to a better one.”</div>
-  </aside>
-</div>
-</div>
-
-<script>
-const IMGS = {
-  normal:'../assets/bao-rescue/normal.jpg',
-  smooth:'../assets/bao-rescue/normal.jpg',
-  underproof:'../assets/bao-rescue/underproofed.jpg',
-  dense:'../assets/bao-rescue/dense.jpg',
-  collapsed:'../assets/bao-rescue/collapsed.jpg',
-  wrinkled:'../assets/bao-rescue/wrinkled.jpg',
-  wet:'../assets/bao-rescue/condensation.jpg',
-  cracked:'../assets/bao-rescue/cracked.jpg',
-  spread:'../assets/bao-rescue/collapsed.jpg'
-};
-let selected = null;
-let answers = [];
-let qIndex = 0;
-
-const chooser = document.getElementById('chooser');
-const follow = document.getElementById('follow');
-const result = document.getElementById('result');
-const nextBtn = document.getElementById('nextBtn');
-
-document.querySelectorAll('#mainGrid .card').forEach(card => {
-  card.addEventListener('click', () => {
-    document.querySelectorAll('#mainGrid .card').forEach(c=>c.classList.remove('sel'));
-    card.classList.add('sel');
-    selected = card.dataset.key;
-    nextBtn.disabled = false;
-  });
-});
-document.getElementById('otherBtn').onclick = () => {
-  document.querySelectorAll('#mainGrid .card').forEach(c=>c.classList.remove('sel'));
-  selected = 'other'; nextBtn.disabled = false;
-};
-
-function setStep(n){
-  [1,2,3,4].forEach(i=>document.getElementById('step'+i).classList.toggle('active', i<=n));
-}
-
-const flows = {
-  collapse: [
-    {
-      type:'text',
-      title:'When did the bun lose volume?',
-      sub:'Timing helps separate proof-state failure from a post-steam transition clue.',
-      options:[
-        {label:'Before steaming / while waiting', value:'waiting', desc:'It was already spreading or weakening before the steamer.'},
-        {label:'Mostly after steaming or after lid opening', value:'after', desc:'The loss of volume showed up late.'},
-        {label:'Not sure', value:'unsure', desc:'You did not clearly see when it happened.'}
-      ]
-    },
-    {
-      type:'visual',
-      title:'Which pre-steam state was closer?',
-      sub:'These photos stand in for proof-state cues. Choose the one closest to what your shaped buns looked or felt like.',
-      options:[
-        {label:'Very puffy / fragile / spreading', value:'over', desc:'Strong over-proof cue', img:'spread'},
-        {label:'Plump but still stable', value:'ready', desc:'Closer to a ready proof', img:'normal'},
-        {label:'Tight and not very puffy', value:'under', desc:'Not an over-proof cue', img:'underproof'}
-      ]
-    }
-  ],
-  wrinkle: [
-    {
-      type:'text',
-      title:'Did the wrinkled bun also lose volume or flatten?',
-      sub:'Wrinkling and collapse overlap, but they are not the same observation.',
-      options:[
-        {label:'Yes', value:'yes', desc:'It also became flatter / smaller.'},
-        {label:'No', value:'no', desc:'It stayed roughly full-sized.'},
-        {label:'Not sure', value:'unsure', desc:'You only noticed the surface.'}
-      ]
-    },
-    {
-      type:'visual',
-      title:'Which surface looked closer?',
-      sub:'Visible moisture is a stronger clue than a generic wrinkle.',
-      options:[
-        {label:'Wet / pitted / water-marked', value:'wet', desc:'Moisture clue is visible', img:'wet'},
-        {label:'Dry wrinkle / puckered skin', value:'dry', desc:'No clear moisture clue', img:'wrinkled'},
-        {label:'Closer to smooth', value:'smooth', desc:'Maybe the match is weak', img:'normal'}
-      ]
-    }
-  ],
-  dense: [
-    {
-      type:'visual',
-      title:'Which pre-steam proof state was closer?',
-      sub:'If the dough never rose properly, diagnose that first before blaming flour.',
-      options:[
-        {label:'Still tight / small', value:'under', desc:'Weak rise before steaming', img:'underproof'},
-        {label:'Clearly puffed / normal-looking', value:'ready', desc:'Rise was broadly okay', img:'normal'},
-        {label:'Very puffy / spreading', value:'over', desc:'Could be over-proofed', img:'spread'}
-      ]
-    },
-    {
-      type:'text',
-      title:'Did the dough feel unusually dry or stiff, or did you change flour / add extra flour?',
-      sub:'This is a strong discriminator for a flour / hydration mismatch.',
-      options:[
-        {label:'Yes', value:'yes', desc:'There was a direct stiffness or formula clue.'},
-        {label:'No', value:'no', desc:'No strong flour or hydration clue.'}
-      ]
-    }
-  ],
-  wet: [
-    {
-      type:'visual',
-      title:'Which moisture clue was closer?',
-      sub:'Direct water evidence makes the condensation branch stronger.',
-      options:[
-        {label:'Clear droplets / shiny wet surface', value:'drip', desc:'Looks like water damage', img:'wet'},
-        {label:'No direct droplet clue', value:'none', desc:'Moisture source is less obvious', img:'normal'}
-      ]
-    }
-  ],
-  crack: [
-    {
-      type:'visual',
-      title:'Was this the style you intended?',
-      sub:'Some Cantonese char siu bao intentionally crack open. Do not diagnose the intended result as a defect.',
-      options:[
-        {label:'Yes, cracking-top style', value:'intentional', desc:'The opening is expected', img:'cracked'},
-        {label:'No, I wanted a smooth bun', value:'fault', desc:'Then this remains a failure path', img:'smooth'}
-      ]
-    }
-  ]
-};
-
-function renderQuestion(){
-  const flow = flows[selected] || [];
-  if(qIndex >= flow.length) return renderResult();
-  setStep(Math.min(3, 2 + qIndex));
-  const q = flow[qIndex];
-  let inner = `<div class="panel"><div class="kicker">Step ${Math.min(3,2+qIndex)} of 4</div><h2>${q.title}</h2><p>${q.sub}</p>`;
-  if(q.type === 'visual'){
-    inner += `<div class="grid">`;
-    q.options.forEach(opt=>{
-      inner += `<button class="card" data-value="${opt.value}" style="padding:8px"><img src="${IMGS[opt.img]}" alt=""><div class="copy"><strong>${opt.label}</strong><span>${opt.desc}</span></div></button>`;
-    });
-    inner += `</div>`;
-  } else {
-    inner += `<div class="answers">`;
-    q.options.forEach(opt=>{
-      inner += `<button class="answer" data-value="${opt.value}"><strong>${opt.label}</strong><span>${opt.desc}</span></button>`;
-    });
-    inner += `</div>`;
-  }
-  inner += `<div class="actions"><button class="btnS" id="backBtn">Back</button></div></div>`;
-  follow.innerHTML = inner;
-  chooser.style.display = 'none';
-  follow.style.display = 'block';
-  result.style.display = 'none';
-
-  follow.querySelectorAll('[data-value]').forEach(btn=>btn.onclick=()=>{
-    answers.push({step:q.title, value:btn.dataset.value, label:btn.querySelector('strong')?.textContent || btn.textContent});
-    qIndex++;
-    renderQuestion();
-  });
-  document.getElementById('backBtn').onclick = () => {
-    if(qIndex===0) {
-      follow.style.display='none'; chooser.style.display='block'; setStep(1);
-    } else {
-      qIndex--; answers.pop(); renderQuestion();
-    }
-  };
-}
-
-function renderResult(){
-  setStep(4);
-  follow.style.display = 'none';
-  result.style.display = 'block';
-
-  let title='This path is not validated yet', status='BETA', ranks=[], test='Record the exact symptom and expand the evidence-backed tree before giving a confident fix.', note='';
-  const vals = answers.map(a=>a.value);
-
-  if(selected==='normal'){
-    title='Your bun looks broadly normal'; status='REFERENCE';
-    ranks = [['No obvious failure detected','HIGH','The photo match is close to the normal reference.']];
-    test = 'If texture and taste are also good, do not change the formula just to chase cosmetic perfection.';
-  } else if(selected==='collapse'){
-    if(vals.includes('over')) {
-      title='Over-proofing is the first thing worth testing'; status='CORE LOGIC';
-      ranks = [
-        ['#1 Over-proofing / weakened structure','HIGH','The bun collapsed and your pre-steam cues looked over-proofed.'],
-        ['#2 Post-steam transition','LOW','Possible, but weaker than the proof-state evidence.']
-      ];
-      test = 'Keep the formula and steaming method unchanged. Steam one comparison batch at an earlier final-proof endpoint.';
-    } else {
-      title='Post-steam transition is possible, but not proven'; status='CONFLICTED EVIDENCE';
-      ranks = [
-        ['#1 Post-steam transition','MEDIUM','The match does not strongly support over-proofing.'],
-        ['#2 Hidden proof / structure weakness','MEDIUM','Still plausible because the proof-state evidence is not decisive.']
-      ];
-      test = 'After proofing is controlled, compare equivalent buns: one set opened immediately and one set given about a 3-minute covered rest.';
-      note = 'Sources disagree on whether a lid-rest is always necessary. Treat it as an A/B variable, not a universal rule.';
-    }
-  } else if(selected==='wrinkle'){
-    if(vals.includes('wet')) {
-      title='Condensation becomes the first branch to test'; status='CORE LOGIC';
-      ranks = [
-        ['#1 Direct water / condensation damage','HIGH','Wrinkling is paired with a wet or pitted surface.'],
-        ['#2 Proofing / structure','LOW','Possible, but the moisture clue is stronger.']
-      ];
-      test = 'Keep recipe, proofing and steaming time unchanged. Change only the anti-drip setup so water cannot fall directly onto the buns.';
-    } else if(vals.includes('yes')) {
-      title='Over-proofing becomes a stronger candidate'; status='CORE LOGIC';
-      ranks = [
-        ['#1 Over-proofing','HIGH','Wrinkling is paired with visible loss of volume.'],
-        ['#2 Surface process factor','LOW','Still possible, but weaker than the volume-loss clue.']
-      ];
-      test = 'Steam an earlier-proof comparison batch with formula and steaming unchanged.';
-    } else {
-      title='Wrinkling alone is not enough to name one cause'; status='NEEDS MORE INFO';
-      ranks = [
-        ['#1 Proofing mismatch','MEDIUM','Still plausible.'],
-        ['#2 Surface drying / process factor','LOW','Also plausible without visible moisture.']
-      ];
-      test = 'Next batch, record proof-state cues and whether the shaped skin dried before steaming. Change only one of those variables.';
-    }
-  } else if(selected==='dense'){
-    if(vals[0]==='under') {
-      title='Diagnose the rise before blaming flour'; status='CORE LOGIC';
-      ranks = [
-        ['#1 Insufficient proofing','HIGH','The pre-steam state looked under-proofed / barely risen.'],
-        ['#2 Yeast activity issue','MEDIUM','Possible if a state-based longer proof still does not improve rise.']
-      ];
-      test = 'Keep formula and steaming constant. Extend proof until the buns are visibly plumper/lighter and a gentle press returns slowly.';
-    } else if(vals[1]==='yes') {
-      title='Flour / hydration is the first variable worth testing'; status='CORE LOGIC';
-      ranks = [
-        ['#1 Flour / hydration mismatch','HIGH','The crumb is dense and you also reported a stiff/dry dough or flour change.'],
-        ['#2 Dough development','MEDIUM','Can coexist, but do not change both at once.']
-      ];
-      test = 'Keep flour brand, proofing and steaming constant. Make one measured hydration correction instead of adding flour by feel.';
-    } else {
-      title='The dense texture still has two live branches'; status='NEEDS MORE INFO';
-      ranks = [
-        ['#1 Proofing mismatch','MEDIUM','Still plausible.'],
-        ['#2 Dough development / flour mismatch','MEDIUM','Also plausible.']
-      ];
-      test = 'On the next attempt, record proof-state cues and whether the dough was smooth, elastic and cohesive before shaping.';
-    }
-  } else if(selected==='wet'){
-    if(vals.includes('drip')) {
-      title='Condensation is the first thing worth testing'; status='CORE LOGIC';
-      ranks = [
-        ['#1 Direct lid condensation / water damage','HIGH','You have a wet/pitted symptom plus a direct droplet clue.'],
-        ['#2 Proofing / structure','LOW','Can coexist, but moisture evidence is stronger.']
-      ];
-      test = 'Keep everything else unchanged and change only the anti-drip setup.';
-    } else {
-      title='Moisture is visible, but its source is not isolated'; status='NEEDS MORE INFO';
-      ranks = [
-        ['#1 Condensation / steam-water contact','MEDIUM','Still plausible.'],
-        ['#2 Thin wrapper / wet filling','MEDIUM','More relevant for filled bao.']
-      ];
-      test = 'Next time, note exactly where wet or translucent areas appear and whether lid droplets are present.';
-    }
-  } else if(selected==='crack'){
-    if(vals.includes('intentional')) {
-      title='This may be the intended result'; status='STYLE GATE';
-      ranks = [['Intentional cracking-top style','HIGH','Some Cantonese char siu bao intentionally crack open.']];
-      test = 'Do not “fix” the crack unless it differs from the style you intended.';
-    } else {
-      title='Cracking outside that style is still beta'; status='BETA';
-      ranks = [];
-      test = 'Record proof-state, surface dryness and whether the seal or the dough skin split. We do not rank a cause yet.';
-    }
-  } else {
-    title='This path is not validated yet'; status='BETA';
-  }
-
-  const cls = status.includes('BETA') || status.includes('NEEDS') || status.includes('CONFLICTED') ? 'beta' : (status.includes('OUT') ? 'out' : '');
-  let html = `<div class="panel"><span class="badge ${cls}">${status}</span><h2>${title}</h2>`;
-  if(answers.length){
-    html += `<div class="resultFacts"><b>What you told us</b><ul>${answers.map(a=>`<li>${a.label}</li>`).join('')}</ul></div>`;
-  }
-  ranks.forEach(r=>{
-    html += `<div class="rank"><div class="rankline"><div><h3>${r[0]}</h3><p>${r[2]}</p></div><div class="conf">${r[1]}</div></div></div>`;
-  });
-  html += `<div class="test"><b>Next-batch test</b><h3>Change one major variable</h3><p>${test}</p></div>`;
-  if(note) html += `<div class="warn">${note}</div>`;
-  html += `<div class="actions"><button class="btnP" id="restartBtn">Start over</button><button class="btnS" id="backResult">Back</button></div></div>`;
-  result.innerHTML = html;
-  document.getElementById('restartBtn').onclick = reset;
-  document.getElementById('backResult').onclick = () => {
-    result.style.display='none';
-    qIndex = Math.max(0, qIndex-1);
-    answers.pop();
-    renderQuestion();
-  };
-}
-
-function reset(){
-  selected = null; answers = []; qIndex = 0;
-  chooser.style.display = 'block'; follow.style.display='none'; result.style.display='none';
-  nextBtn.disabled = true;
-  document.querySelectorAll('#mainGrid .card').forEach(c=>c.classList.remove('sel'));
-  setStep(1);
-}
-
-nextBtn.onclick = () => {
-  if(!selected) return;
-  answers = []; qIndex = 0;
-  if(selected === 'normal' || selected === 'other') {
-    renderResult();
-  } else {
-    renderQuestion();
-  }
-};
-</script>
-</body>
-</html>
+    <div class="ref"><img src="../assets/bao-rescue/normal.jpg" alt=""><div class="tag">NORMAL
