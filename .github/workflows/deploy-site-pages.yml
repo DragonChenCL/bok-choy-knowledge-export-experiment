@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'site/**'
-      - '06-assets/bao-rescue/v3/source/**'
+      - '06-assets/bao-rescue/v4/sprite-q20.b64.part-*'
       - '.github/workflows/deploy-site-pages.yml'
   workflow_dispatch:
 
@@ -36,63 +36,67 @@ jobs:
           rm -rf _site
           mkdir -p _site
 
-          # Copy the latest site source from this exact commit.
+          # The repository site directory is the single deploy source.
           cp -R site/. _site/
 
-          # Stage current Bao photo assets.
+          # Rebuild the diagnostic photo sprite from committed text parts.
+          # This replaces the old 4 KB v3 thumbnails that caused blurry images.
           mkdir -p _site/assets/bao-rescue
-          cp 06-assets/bao-rescue/v3/source/normal.jpg _site/assets/bao-rescue/normal.jpg
-          cp 06-assets/bao-rescue/v3/source/underproofed.jpg _site/assets/bao-rescue/underproofed.jpg
-          cp 06-assets/bao-rescue/v3/source/dense.jpg _site/assets/bao-rescue/dense.jpg
-          cp 06-assets/bao-rescue/v3/source/collapsed.jpg _site/assets/bao-rescue/collapsed.jpg
-          cp 06-assets/bao-rescue/v3/source/wrinkled.jpg _site/assets/bao-rescue/wrinkled.jpg
-          cp 06-assets/bao-rescue/v3/source/condensation.jpg _site/assets/bao-rescue/condensation.jpg
-          cp 06-assets/bao-rescue/v3/source/cracked.jpg _site/assets/bao-rescue/cracked.jpg
+          PARTS=(06-assets/bao-rescue/v4/sprite-q20.b64.part-*)
+          test "${#PARTS[@]}" -eq 10
+          cat "${PARTS[@]}" | tr -d '\r\n' | base64 -d > _site/assets/bao-rescue/bao-sprite.webp
+          test -s _site/assets/bao-rescue/bao-sprite.webp
 
-          # Single source of truth: the diagnosis UI is the live product.
-          cp _site/diagnose/index.html _site/index.html
-
-          # Diagnose lives one directory deep; adjust only the promoted root copy.
-          sed -i 's#../assets/bao-rescue/#./assets/bao-rescue/#g' _site/index.html
-
-          # Add traceable build metadata for freshness checks.
+          # Trace the exact deployed commit.
           BUILD_TIME="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           cat > _site/build.json <<EOF
           {
             "commit": "${GITHUB_SHA}",
             "run_id": "${GITHUB_RUN_ID}",
             "run_number": "${GITHUB_RUN_NUMBER}",
-            "built_at": "${BUILD_TIME}"
+            "built_at": "${BUILD_TIME}",
+            "product_stage": "MVP_FREEZE"
           }
           EOF
 
-          # Stamp both live entry points with the exact deployed commit.
           python - <<'PY'
           from pathlib import Path
           import os
           sha = os.environ['GITHUB_SHA']
-          for path in [Path('_site/index.html'), Path('_site/diagnose/index.html')]:
-              text = path.read_text(encoding='utf-8')
-              marker = f'<!-- deployed-commit:{sha} -->'
-              if marker not in text:
-                  text = text.replace('</head>', f'  {marker}\n</head>', 1)
-              path.write_text(text, encoding='utf-8')
+          path = Path('_site/diagnose/index.html')
+          text = path.read_text(encoding='utf-8')
+          marker = f'<!-- deployed-commit:{sha} -->'
+          if marker not in text:
+              text = text.replace('</head>', f'  {marker}\n</head>', 1)
+          path.write_text(text, encoding='utf-8')
           PY
 
           touch _site/.nojekyll
 
-      - name: Verify staged entry points
+      - name: Verify staged MVP
         shell: bash
         run: |
           set -euo pipefail
           test -s _site/index.html
           test -s _site/diagnose/index.html
+          test -s _site/diagnose/styles.css
+          test -s _site/diagnose/data.js
+          test -s _site/diagnose/app.js
+          test -s _site/assets/bao-rescue/bao-sprite.webp
           test -s _site/build.json
-          grep -q "Why did my bao fail?" _site/index.html
-          grep -q "Why did my bao fail?" _site/diagnose/index.html
-          grep -q "${GITHUB_SHA}" _site/build.json
-          grep -q "deployed-commit:${GITHUB_SHA}" _site/index.html
-          grep -q "deployed-commit:${GITHUB_SHA}" _site/diagnose/index.html
+
+          grep -q 'diagnose/' _site/index.html
+          grep -q 'product-stage:MVP_FREEZE' _site/diagnose/index.html
+          grep -q 'Why did my bao fail?' _site/diagnose/index.html
+          grep -q 'bao-sprite.webp' _site/diagnose/styles.css
+          grep -q 'deployed-commit:${{ github.sha }}' _site/diagnose/index.html
+          grep -q '${{ github.sha }}' _site/build.json
+
+          # Prevent regression to the old thumbnail deployment path.
+          if grep -R 'v3/source' _site/diagnose _site/index.html; then
+            echo 'Old v3 thumbnail dependency detected'
+            exit 1
+          fi
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
