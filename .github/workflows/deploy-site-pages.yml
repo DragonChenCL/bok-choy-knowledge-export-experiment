@@ -23,15 +23,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout exact triggering commit
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
 
-      - name: Stage site
+      - name: Stage latest site
         shell: bash
         run: |
+          set -euo pipefail
           rm -rf _site
           mkdir -p _site
+
+          # Copy the latest site source from this exact commit.
           cp -R site/. _site/
+
+          # Stage current Bao photo assets.
           mkdir -p _site/assets/bao-rescue
           cp 06-assets/bao-rescue/v3/source/normal.jpg _site/assets/bao-rescue/normal.jpg
           cp 06-assets/bao-rescue/v3/source/underproofed.jpg _site/assets/bao-rescue/underproofed.jpg
@@ -40,7 +48,52 @@ jobs:
           cp 06-assets/bao-rescue/v3/source/wrinkled.jpg _site/assets/bao-rescue/wrinkled.jpg
           cp 06-assets/bao-rescue/v3/source/condensation.jpg _site/assets/bao-rescue/condensation.jpg
           cp 06-assets/bao-rescue/v3/source/cracked.jpg _site/assets/bao-rescue/cracked.jpg
+
+          # Single source of truth:
+          # site/diagnose/index.html is the latest product UI.
+          # Publish that same code to both / and /diagnose/ so the root can never lag behind.
+          cp _site/diagnose/index.html _site/index.html
+
+          # The diagnose source uses ../assets because it normally lives one directory deep.
+          # Adjust only the promoted root copy.
+          sed -i 's#../assets/bao-rescue/#./assets/bao-rescue/#g' _site/index.html
+
+          # Add traceable build metadata for freshness checks.
+          BUILD_TIME="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          cat > _site/build.json <<EOF
+          {
+            "commit": "${GITHUB_SHA}",
+            "run_id": "${GITHUB_RUN_ID}",
+            "run_number": "${GITHUB_RUN_NUMBER}",
+            "built_at": "${BUILD_TIME}"
+          }
+          EOF
+
+          # Stamp both live entry points with the exact deployed commit.
+          python - <<'PY'
+          from pathlib import Path
+          import os
+          sha = os.environ['GITHUB_SHA']
+          for path in [Path('_site/index.html'), Path('_site/diagnose/index.html')]:
+              text = path.read_text(encoding='utf-8')
+              marker = f'<!-- deployed-commit:{sha} -->'
+              if marker not in text:
+                  text = text.replace('</head>', f'  {marker}\n</head>', 1)
+              path.write_text(text, encoding='utf-8')
+          PY
+
           touch _site/.nojekyll
+
+      - name: Verify staged entry points
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s _site/index.html
+          test -s _site/diagnose/index.html
+          test -s _site/build.json
+          grep -q "Bao Rescue v4.3" _site/index.html
+          grep -q "Bao Rescue v4.3" _site/diagnose/index.html
+          grep -q "${GITHUB_SHA}" _site/build.json
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
