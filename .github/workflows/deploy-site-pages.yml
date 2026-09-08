@@ -1,4 +1,5 @@
 name: Deploy Bao Rescue Site
+# P0 closure trigger: reviewed HD sprite installed and byte-verified.
 
 on:
   push:
