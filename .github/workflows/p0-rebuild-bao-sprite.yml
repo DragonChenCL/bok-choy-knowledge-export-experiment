@@ -1,0 +1,54 @@
+name: P0 Rebuild Bao HD Sprite
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Rebuild exact reviewed WebP
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC="06-assets/bao-rescue/v4/p0-hd-upload"
+          TARGET="06-assets/bao-rescue/v4/bao-sprite.webp"
+          cat \
+            "$SRC/part-00" \
+            "$SRC/fix-01-0" "$SRC/fix-01-1" "$SRC/fix-01-2" \
+            "$SRC/part-02" "$SRC/part-03" "$SRC/part-04" \
+            "$SRC/part-05" "$SRC/part-06" "$SRC/part-07" "$SRC/part-08" \
+            > /tmp/bao-sprite.b64
+          base64 --decode /tmp/bao-sprite.b64 > "$TARGET"
+          test "$(stat -c%s "$TARGET")" -eq 108598
+          echo "fac8b73eee3440a03cbfbd521024527b9b7e000f64018a25d4d5b7f1ef084448  $TARGET" | sha256sum -c -
+          test "$(git hash-object "$TARGET")" = "81fb1a2754b493d61c5b58d132947d65a539ec07"
+          file "$TARGET"
+
+      - name: Run P0 decision-path QA
+        run: node scripts/qa-bao-mvp.cjs
+
+      - name: Commit reviewed sprite and remove staging chunks
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add 06-assets/bao-rescue/v4/bao-sprite.webp
+          git rm -r 06-assets/bao-rescue/v4/p0-hd-upload
+          if git diff --cached --quiet; then
+            echo "No sprite changes to commit"
+            exit 0
+          fi
+          git commit -m "p0: install reviewed HD Bao Rescue sprite"
+          git push origin HEAD:main
