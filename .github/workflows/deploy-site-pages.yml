@@ -1,0 +1,62 @@
+name: Deploy Bao Rescue Site
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'site/**'
+      - '06-assets/bao-rescue/v3/source/**'
+      - '.github/workflows/deploy-site-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Stage site
+        shell: bash
+        run: |
+          rm -rf _site
+          mkdir -p _site
+          cp -R site/. _site/
+          mkdir -p _site/assets/bao-rescue
+          cp 06-assets/bao-rescue/v3/source/normal.jpg _site/assets/bao-rescue/normal.jpg
+          cp 06-assets/bao-rescue/v3/source/underproofed.jpg _site/assets/bao-rescue/underproofed.jpg
+          cp 06-assets/bao-rescue/v3/source/dense.jpg _site/assets/bao-rescue/dense.jpg
+          cp 06-assets/bao-rescue/v3/source/collapsed.jpg _site/assets/bao-rescue/collapsed.jpg
+          cp 06-assets/bao-rescue/v3/source/wrinkled.jpg _site/assets/bao-rescue/wrinkled.jpg
+          cp 06-assets/bao-rescue/v3/source/condensation.jpg _site/assets/bao-rescue/condensation.jpg
+          cp 06-assets/bao-rescue/v3/source/cracked.jpg _site/assets/bao-rescue/cracked.jpg
+          touch _site/.nojekyll
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
