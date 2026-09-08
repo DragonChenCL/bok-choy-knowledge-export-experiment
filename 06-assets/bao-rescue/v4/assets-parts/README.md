@@ -1,0 +1,1 @@
+This directory contains split base64 parts of the v4.5 high-resolution WebP asset archive. GitHub Pages concatenates and extracts them during deployment so the public site gets the exact 1200x900 diagnostic image set.
