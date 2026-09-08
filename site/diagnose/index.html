@@ -1,181 +1,86 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bao Rescue v4.4 — Live Photo Diagnosis</title>
-<meta name="robots" content="noindex,nofollow">
-<style>
-:root{
-  --bg:#f7f3ed; --card:#fffdfa; --ink:#151612; --muted:#6d6f67;
-  --line:#dfdad2; --olive:#566848; --olive2:#76866a; --soft:#f1ece3;
-  --green:#48684d; --amber:#9b6b31; --red:#9d4d43;
-}
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(circle at 10% 0,#fff9f1 0,transparent 30%),var(--bg);color:var(--ink);font-family:Georgia,"Times New Roman",serif}
-button{font:inherit}
-.wrap{max-width:1280px;margin:0 auto;padding:26px 34px 56px}
-header{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;border-bottom:1px solid #ddd7cf;padding-bottom:18px}
-.logo{display:flex;gap:12px;align-items:center}
-.logo-mark{font-size:34px}
-.logo strong{display:block;font-size:25px;letter-spacing:-.04em}
-.logo span{display:block;font:13px Arial,sans-serif;color:var(--muted);margin-top:2px}
-.motto{font-size:14px;margin-top:6px}
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:22px 48px 34px}
-.step{text-align:center;position:relative;color:#a2a19b}
-.step:not(:last-child)::after{content:"";position:absolute;top:17px;left:58%;right:-42%;height:1px;background:#d9d6ce}
-.num{width:36px;height:36px;border-radius:50%;background:#e7e6e2;display:flex;align-items:center;justify-content:center;margin:0 auto 7px;font:bold 15px Arial,sans-serif;position:relative;z-index:1}
-.step.active{color:var(--ink)} .step.active .num{background:var(--olive);color:white} .step b{font-size:14px}
-.layout{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(300px,.95fr);gap:34px;align-items:start}
-.kicker{font:700 13px Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--olive)}
-h1{font-size:46px;line-height:1.03;letter-spacing:-.04em;margin:14px 0 10px}
-.lead{font:17px/1.6 Arial,sans-serif;color:#555751;margin:0 0 24px;max-width:820px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.card{border:1px solid var(--line);border-radius:11px;background:white;overflow:hidden;text-align:left;cursor:pointer;transition:.15s;position:relative}
-.card:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(45,38,29,.08);border-color:#c6c2b9}
-.card.sel{outline:3px solid rgba(86,104,72,.2);border-color:var(--olive)}
-.card img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#efebe4}
-.card .copy{padding:12px 14px 14px;min-height:92px}
-.card strong{display:block;font-size:15px;margin-bottom:5px}
-.card span{font:13px/1.45 Arial,sans-serif;color:#686a64}
-.radio{position:absolute;right:13px;bottom:14px;width:20px;height:20px;border-radius:50%;border:1px solid #a1a099;background:#fff}
-.card.sel .radio::after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--olive)}
-.rowbtn{width:100%;border:1px solid var(--line);border-radius:10px;background:#fff;padding:16px 18px;text-align:left;display:flex;justify-content:space-between;align-items:center;cursor:pointer;margin-top:18px}
-.rowbtn strong{font-size:15px} .rowbtn span{display:block;font:12.5px Arial,sans-serif;color:#7a7b75;margin-top:4px}
-.primaryCta{display:block;width:46%;min-width:280px;margin:25px auto 0;border:0;border-radius:999px;background:var(--olive);color:#fff;padding:15px 20px;font-size:18px;cursor:pointer}
-.primaryCta:disabled{opacity:.42;cursor:not-allowed}
-.side{background:#f1f2ec;border-radius:20px;padding:18px;position:sticky;top:18px}
-.side h2{font-size:25px;margin:4px 0 6px}
-.side .sub{font:14px/1.5 Arial,sans-serif;color:#61635d;margin-bottom:13px}
-.side .ref{position:relative;border-radius:10px;overflow:hidden}
-.side .ref img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
-.tag{position:absolute;left:10px;bottom:10px;background:rgba(255,255,255,.94);border-radius:999px;padding:6px 9px;font:bold 11px Arial,sans-serif}
-.side .checks{margin:17px 0 18px;border-bottom:1px solid #bbbeb4;padding-bottom:18px}
-.side .checks b{display:block;margin-bottom:10px}
-.check{display:flex;gap:9px;font:13px/1.5 Arial,sans-serif;color:#4d4f4a;margin:7px 0}
-.tick{width:20px;height:20px;border-radius:50%;background:#788d6d;color:white;display:flex;align-items:center;justify-content:center;font-size:12px;flex:0 0 20px}
-.tip{display:flex;gap:10px;margin:18px 0} .tip .ico{font-size:22px} .tip strong{font-size:16px} .tip p{font:13px/1.5 Arial,sans-serif;color:#5d5f5a;margin:4px 0 0}
-.noteBox{background:#f3dfc8;border-radius:12px;padding:15px;display:flex;gap:12px}
-.noteBox b{display:block} .noteBox span{font:12.5px/1.5 Arial,sans-serif;color:#645b50}
-.quote{font-style:italic;font-size:14px;line-height:1.5;margin:20px 8px 2px;color:#3f433c}
-#follow,#result{display:none}
-.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px}
-.panel h2{font-size:33px;line-height:1.06;letter-spacing:-.03em;margin:0 0 8px}
-.panel p{font:14px/1.55 Arial,sans-serif;color:var(--muted);margin:0 0 18px}
-.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.answer{border:1px solid var(--line);border-radius:10px;background:#fff;padding:14px;cursor:pointer;text-align:left;transition:.14s}
-.answer:hover{border-color:#adb7a5;background:#fafcf8}
-.answer strong{display:block;font-size:14px;margin-bottom:4px}
-.answer span{font:12px/1.45 Arial,sans-serif;color:#747670}
-.answer img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;margin-bottom:10px}
-.answer.visual{padding:8px}
-.badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#e7eee3;color:var(--green);font:bold 11px Arial,sans-serif;letter-spacing:.04em}
-.badge.beta{background:#f7ebdc;color:#8c622e} .badge.out{background:#f4e2e0;color:var(--red)}
-.resultFacts{margin:17px 0;background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:14px}
-.resultFacts b{display:block;font:11px Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px}
-.resultFacts ul{margin:0;padding-left:19px;font:13px/1.55 Arial,sans-serif;color:#676963}
-.rank{border-top:1px solid #e5e1da;padding:17px 0}
-.rank:first-of-type{border-top:0}
-.rankline{display:flex;justify-content:space-between;gap:18px}
-.rank h3{font-size:19px;margin:0 0 5px}
-.rank p{font:13px/1.55 Arial,sans-serif;color:#666;margin:0}
-.conf{font:bold 10px Arial,sans-serif;background:#efe3d5;border-radius:8px;padding:6px 8px;height:max-content}
-.test{background:#edf3e9;border:1px solid #c8d5c0;border-radius:12px;padding:17px;margin-top:8px}
-.test b{display:block;color:var(--green);font:11px Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}
-.test h3{font-size:19px;margin:6px 0} .test p{font:13px/1.55 Arial,sans-serif;margin:0;color:#474944}
-.warn{margin-top:12px;padding:13px;border:1px solid #e8d2b4;background:#fbf1e4;border-radius:10px;font:12.5px/1.5 Arial,sans-serif;color:#715331}
-.actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
-.actions button{border:0;border-radius:10px;padding:11px 14px;font-weight:bold;cursor:pointer}
-.btnP{background:var(--olive);color:white} .btnS{background:#ece9e2}
-
-.heroBand{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr);gap:34px;align-items:center;padding:42px 0 34px;border-bottom:1px solid #ddd7cf}
-.heroCopy h1{font-size:clamp(44px,6vw,76px);line-height:.96;letter-spacing:-.055em;margin:10px 0 16px}
-.heroCopy .heroLead{font:18px/1.6 Arial,sans-serif;color:#555751;max-width:720px;margin:0 0 20px}
-.heroCta{display:inline-flex;align-items:center;gap:10px;background:var(--olive);color:white;text-decoration:none;border-radius:999px;padding:14px 20px;font:700 15px Arial,sans-serif}
-.heroCta:hover{filter:brightness(.95)}
-.trustRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-.trustPill{border:1px solid var(--line);background:#fff;-border-radius:999px;padding:8px 11px;font:12px Arial,sans-serif;color:#5e605b}
-.heroPhoto{position:relative;border-radius:22px;overflow:hidden;box-shadow:0 16px 34px rgba(54,43,31,.13);min-height:330px;background:#e8e2d9}
-.heroPhoto img{width:100%;height:100%;min-height:330px;object-fit:cover;display:block}
-.heroNote{position:absolute;right:16px;bottom:16px;max-width:240px;background:rgba(255,253,249,.94);backdrop-filter:blur(5px);border-radius:14px;padding:13px 14px;font:13px/1.45 Arial,sans-serif;color:#4f514b;border:1px solid rgba(255,255,255,.65)}
-.howGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
-.howItem{background:#fff;border:1px solid var(--line);border-radius:13px;padding:13px 14px}
-.howItem b{display:block;font-size:14px;margin-bottom:4px}.howItem span{font:12px/1.45 Arial,sans-serif;color:#6f706b}
-.signalNote{margin-top:12px;background:#f5f3ee;border:1px solid var(--line);border-radius:10px;padding:11px 12px;font:12.5px/1.5 Arial,sans-serif;color:#62645e}
-.signalNote b{color:#3f4639}
-.evidenceLine{margin-top:12px;font:12px/1.45 Arial,sans-serif;color:#73756f}
-.evidenceLine a{color:var(--olive);font-weight:700;text-decoration:none}
-@media(max-width:920px){.lheroBand{grid-template-columns:1fr}.layout{grid-template-columns:1fr} .side{position:relative;top:auto}}
-@media(max-width:740px){.wrap{padding:18px 14px 40px} .steps{margin:18px 0 28px} .grid{grid-template-columns:1fr 1fr} .answers{grid-template-columns:1fr} h1{font-size:38px}}
-@media(max-width:520px){.grid{grid-template-columns:1fr} .motto{display:none} .step b{font-size:11px}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Bao Rescue — Photo-Guided Steamed Bun Diagnosis</title>
+  <meta name="description" content="Photo-guided steamed bun troubleshooting. Match the symptom, narrow likely causes, and change one variable in your next batch.">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="./styles.css">
+  <!-- product-stage:MVP_FREEZE -->
 </head>
 <body>
 <div class="wrap">
-<header>
-  <div class="logo">
-    <div class="logo-mark">🥻</div>
-    <div><strong>Bao Rescue</strong><span>Fix Your Steamed Buns — Step by Step</span></div>
-  </div>
-  <div class="motto">Real Problems. Real Solutions. Better Buns.</div>
-</header>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Bao Rescue home"><span class="brandMark">🥟</span><span><b>Bao Rescue</b><small>Fix your steamed buns — step by step</small></span></a>
+    <div class="motto">Observe. Narrow. Test.</div>
+  </header>
 
-<section class="heroBand">
-  <div class="heroCopy">
-    <div class="kicker">Photo-guided troubleshooting</div>
-    <h1>Why did my bao fail?</h1>
-    <p class="heroLead">Answer a few observable questions. Bao Rescue narrows the cause family, shows how confident that ranking is, and gives you one next-batch test instead of ten generic guesses.</p>
-    <a class="heroCta" href="#diagnoseStart">Start free diagnosis <span>→</span></a>
-    <div class="trustRow">
-      <span class="trustPill">Photo first</span>
-      <span class="trustPill">Cause ranking</span>
-      <span class="trustPill">One-variable test</span>
-      <span class="trustPill">Evidence-aware</span>
-    </div>
-    <div class="howGrid">
-      <div class="howItem"><b>1. Match the symptom</b><span>Start from what you can see or feel.</span></div>
-      <div class="howItem"><b>2. Separate similar causes</b><span>Use proof state, timing, moisture and dough clues.</span></div>
-      <div class="howItem"><b>3. Test one variable</b><span>The next batch should teach you something.</span></div>
-    </div>
-  </div>
-  <div class="heroPhoto">
-    <img src="../assets/bao-rescue/normal.jpg" alt="Well-steamed bao in a bamboo steamer">
-    <div class="heroNote"><strong>Normal reference</strong><br>Smooth, plump, light-feeling dough and a soft interior are the baseline before we call something a defect.</div>
-  </div>
-</section>
-
-<div class="steps" id="diagnoseStart">
-  <div class="step active" id="step1"><div class="num">1</div><b>Your Bun</b></div>
-  <div class="step" id="step2"><div class="num">2</div><b>Details</b></div>
-  <div class="step" id="step3"><div class="num">3</div><b>More Info</b></div>
-  <div class="step" id="step4"><div class="num">4</div><b>Your Result</b></div>
-</div>
-
-<div class="layout">
-  <main>
-    <section id="chooser">
-      <div class="kicker">Step 1 of 4</div>
-      <h1>What does your bun look like?</h1>
-      <p class="lead">Choose the closest match first. Later questions use what you actually observed, not what you think the cause was.</p>
-
-      <div class="grid" id="mainGrid">
-        <button class="card" data-key="normal"><img src="../assets/bao-rescue/normal.jpg" alt=""><div class="copy"><strong>A. Looks normal</strong><span>Smooth, round, plump</span><i class="radio"></i></div></button>
-        <button class="card" data-key="collapse"><img src="../assets/bao-rescue/collapsed.jpg" alt=""><div class="copy"><strong>B. Collapsed or flat</strong><span>Shrank or lost volume</span><i class="radio"></i></div></button>
-        <button class="card" data-key="wrinkle"><img src="../assets/bao-rescue/wrinkled.jpg" alt=""><div class="copy"><strong>C. Wrinkled skin</strong><span>Surface looks puckered</span><i class="radio"></i></div></button>
-        <button class="card" data-key="dense"><img src="../assets/bao-rescue/dense.jpg" alt=""><div class="copy"><strong>D. Dense / not fluffy</strong><span>Inside feels tight and heavy</span><i class="radio"></i></div></button>
-        <button class="card" data-key="wet"><img src="../assets/bao-rescue/condensation.jpg" alt=""><div class="copy"><strong>E. Wet or pitted skin</strong><span>Water droplets or pits</span><i class="radio"></i></div></button>
-        <button class="card" data-key="crack"><img src="../assets/bao-rescue/cracked.jpg" alt=""><div class="copy"><strong>F. Cracked / opened</strong><span>Top or seal split open</span><i class="radio"></i></div></button>
+  <section class="hero">
+    <div class="heroCopy">
+      <div class="eyebrow">Photo-guided troubleshooting</div>
+      <h1>Why did my bao fail?</h1>
+      <p>Answer a few things you actually saw or felt. Bao Rescue ranks the most likely cause family and gives you one next-batch test instead of ten generic guesses.</p>
+      <a class="heroCta" href="#diagnose">Start free diagnosis <span>→</span></a>
+      <div class="promiseGrid">
+        <div><b>1. Match the symptom</b><span>Start from the result, not a guessed cause.</span></div>
+        <div><b>2. Separate similar causes</b><span>Use proof state, timing, moisture and crumb.</span></div>
+        <div><b>3. Test one variable</b><span>The next batch should teach you something.</span></div>
       </div>
+    </div>
+    <div class="heroVisual">
+      <div class="photo p-normal" role="img" aria-label="Normal steamed bao reference"></div>
+      <div class="heroNote"><b>Normal reference</b><span>Smooth, plump and stable outside; soft, aerated crumb inside.</span></div>
+    </div>
+  </section>
 
-      <button class="rowbtn" id="otherBtn"><div><strong>My buns look different / other issue</strong><span>For special cases such as freezing, high altitude, very dry dough, etc.</span></div><div>‥</div></button>
-      <button class="primaryCta" id="nextBtn" disabled>Next →</button>
-    </section>
+  <div class="steps" id="diagnose">
+    <div class="step active" data-step="1"><i>1</i><b>Your bun</b></div>
+    <div class="step" data-step="2"><i>2</i><b>Details</b></div>
+    <div class="step" data-step="3"><i>3</i><b>More info</b></div>
+    <div class="step" data-step="4"><i>4</i><b>Your result</b></div>
+  </div>
 
-    <section id="follow"></section>
-    <section id="result"></section>
-  </main>
+  <div class="layout">
+    <main>
+      <section id="chooser">
+        <div class="eyebrow">Step 1 of 4</div>
+        <h2>What does your bun look like?</h2>
+        <p class="lead">Choose the closest match. The image helps recognition; it does not decide the cause by itself.</p>
 
-  <aside class="side">
-    <h2>Not sure?</h2>
-    <div class="sub">Compare with a good bun first.</div>
-    <div class="ref"><img src="../assets/bao-rescue/normal.jpg" alt=""><div class="tag">NORMAL
+        <div class="symptomGrid" id="symptomGrid">
+          <button class="symptom" data-key="normal"><div class="photo p-normal"></div><div class="copy"><b>Looks normal</b><span>Smooth, round, plump</span></div><i class="radio"></i></button>
+          <button class="symptom" data-key="norise"><div class="photo p-underproof"></div><div class="copy"><b>Didn't rise / stayed small</b><span>Small, tight, limited expansion</span></div><i class="radio"></i></button>
+          <button class="symptom" data-key="collapse"><div class="photo p-collapsed"></div><div class="copy"><b>Collapsed or flat</b><span>Lost volume or spread out</span></div><i class="radio"></i></button>
+          <button class="symptom" data-key="wrinkle"><div class="photo p-wrinkled"></div><div class="copy"><b>Wrinkled skin</b><span>Puckered or shrunk surface</span></div><i class="radio"></i></button>
+          <button class="symptom" data-key="dense"><div class="photo p-denseCrumb"></div><div class="copy"><b>Dense / not fluffy</b><span>Inside is tight and heavy</span></div><i class="radio"></i></button>
+          <button class="symptom" data-key="wet"><div class="photo p-wet"></div><div class="copy"><b>Wet or pitted skin</b><span>Droplets, pits or damp patches</span></div><i class="radio"></i></button>
+        </div>
+
+        <button class="specialRow" id="specialBtn"><span><b>My buns look different / special case</b><small>Cracked/opened, frozen/reheated, high altitude, very dry dough, etc.</small></span><strong>›</strong></button>
+        <button class="nextBtn" id="nextBtn" disabled>Next →</button>
+      </section>
+
+      <section id="question"></section>
+      <section id="result"></section>
+    </main>
+
+    <aside class="sidecard">
+      <h3>Not sure?</h3>
+      <p>Compare with a good bun first.</p>
+      <div class="reference"><div class="photo p-normal"></div><span>NORMAL REFERENCE</span></div>
+      <ul class="checks">
+        <li>Smooth surface</li>
+        <li>Round and plump</li>
+        <li>Soft, aerated crumb</li>
+        <li>Surface matches the intended style</li>
+      </ul>
+      <div class="tip"><b>Better diagnosis</b><span>Take one top photo and one cut-open photo before you start.</span></div>
+      <div class="scope"><b>MVP scope</b><span>Fresh, yeast-leavened wheat steamed buns. Special cases stay Beta until we have stronger evidence.</span></div>
+    </aside>
+  </div>
+</div>
+<script src="./data.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>
