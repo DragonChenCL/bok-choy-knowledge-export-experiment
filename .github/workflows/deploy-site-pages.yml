@@ -9,6 +9,7 @@ on:
     paths:
       - 'site/**'
       - '06-assets/bao-rescue/v4/bao-sprite.webp'
+      - '06-assets/bao-rescue/v4/web-v2-parts/**'
       - 'scripts/qa-bao-mvp.cjs'
       - '.github/workflows/deploy-site-pages.yml'
   workflow_dispatch:
@@ -45,12 +46,18 @@ jobs:
           # The repository site directory is the single deploy source.
           cp -R site/. _site/
 
-          # Publish the reviewed P0 sprite directly. Do not reconstruct old q20 parts.
+          # Keep the reviewed P0 sprite and its >100KB regression gate intact.
           mkdir -p _site/assets/bao-rescue
           cp 06-assets/bao-rescue/v4/bao-sprite.webp _site/assets/bao-rescue/bao-sprite.webp
           test -s _site/assets/bao-rescue/bao-sprite.webp
           test "$(stat -c%s _site/assets/bao-rescue/bao-sprite.webp)" -gt 100000
           file _site/assets/bao-rescue/bao-sprite.webp | grep -qi 'Web/P'
+
+          # Reconstruct the approved-image web sprite from text parts.
+          cat 06-assets/bao-rescue/v4/web-v2-parts/part-* | base64 -d > _site/assets/bao-rescue/bao-sprite-v2.webp
+          test "$(stat -c%s _site/assets/bao-rescue/bao-sprite-v2.webp)" -eq 60674
+          file _site/assets/bao-rescue/bao-sprite-v2.webp | grep -qi 'Web/P'
+          echo '98060136bf7b8c0fae74c4819d8d4f0a66fa15e5b07d70105c5878fbbb6827f2  _site/assets/bao-rescue/bao-sprite-v2.webp' | sha256sum -c -
 
           # Trace the exact deployed commit.
           BUILD_TIME="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
@@ -88,6 +95,7 @@ jobs:
           test -s _site/diagnose/data.js
           test -s _site/diagnose/app.js
           test -s _site/assets/bao-rescue/bao-sprite.webp
+          test -s _site/assets/bao-rescue/bao-sprite-v2.webp
           test -s _site/build.json
 
           grep -q 'diagnose/' _site/index.html
