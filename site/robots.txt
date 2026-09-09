@@ -1,4 +1,4 @@
 User-agent: *
-Disallow:
+Allow: /
 
-Sitemap: REPLACE_WITH_DOMAIN/sitemap.xml
+Sitemap: https://dragonchencl.github.io/bok-choy-knowledge-export-experiment/sitemap.xml
