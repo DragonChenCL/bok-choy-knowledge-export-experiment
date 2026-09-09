@@ -1,6 +1,5 @@
 name: Deploy Bao Rescue Site
-# P0 closure trigger: reviewed HD sprite installed and byte-verified.
-# P0 final deploy sync: deploy latest main after operations-log closure.
+# P0 remains frozen. Phase 1 adds analytics instrumentation + indexable SEO entry pages.
 
 on:
   push:
@@ -11,6 +10,7 @@ on:
       - '06-assets/bao-rescue/v4/bao-sprite.webp'
       - '06-assets/bao-rescue/v4/web-v2-parts/**'
       - 'scripts/qa-bao-mvp.cjs'
+      - 'scripts/qa-bao-phase1.cjs'
       - '.github/workflows/deploy-site-pages.yml'
   workflow_dispatch:
 
@@ -35,6 +35,9 @@ jobs:
 
       - name: Run P0 decision-path QA
         run: node scripts/qa-bao-mvp.cjs
+
+      - name: Run Phase 1 analytics and SEO QA
+        run: node scripts/qa-bao-phase1.cjs
 
       - name: Stage latest site
         shell: bash
@@ -62,7 +65,7 @@ jobs:
             "run_id": "${GITHUB_RUN_ID}",
             "run_number": "${GITHUB_RUN_NUMBER}",
             "built_at": "${BUILD_TIME}",
-            "product_stage": "MVP_FREEZE_P0"
+            "product_stage": "PHASE1_ANALYTICS_SEO"
           }
           EOF
 
@@ -79,7 +82,7 @@ jobs:
           PY
           touch _site/.nojekyll
 
-      - name: Verify staged MVP
+      - name: Verify staged site
         shell: bash
         run: |
           set -euo pipefail
@@ -88,6 +91,13 @@ jobs:
           test -s _site/diagnose/styles.css
           test -s _site/diagnose/data.js
           test -s _site/diagnose/app.js
+          test -s _site/analytics.js
+          test -s _site/seo.css
+          test -s _site/bao-buns-collapse-after-steaming/index.html
+          test -s _site/why-do-steamed-buns-wrinkle/index.html
+          test -s _site/why-are-bao-buns-not-fluffy/index.html
+          test -s _site/robots.txt
+          test -s _site/sitemap.xml
           test -s _site/assets/bao-rescue/bao-sprite.webp
           test -s _site/assets/bao-rescue/bao-sprite-v2.webp
           test -s _site/build.json
@@ -95,10 +105,12 @@ jobs:
           grep -q 'diagnose/' _site/index.html
           grep -q 'product-stage:MVP_FREEZE' _site/diagnose/index.html
           grep -q 'Why did my bao fail?' _site/diagnose/index.html
-          grep -q 'bao-sprite.webp' _site/diagnose/styles.css
+          grep -q 'bao-sprite-v2.webp' _site/diagnose/styles.css
           grep -q 'deployed-commit:${{ github.sha }}' _site/diagnose/index.html
           grep -q '${{ github.sha }}' _site/build.json
           grep -q 'Cracked/opened, frozen/reheated, or another unlisted case.' _site/diagnose/index.html
+          grep -q 'PHASE1_ANALYTICS_SEO' _site/build.json
+          grep -q 'sitemap.xml' _site/robots.txt
 
           if grep -R 'v3/source\|sprite-q20' _site/diagnose _site/index.html; then
             echo 'Old thumbnail dependency detected'
