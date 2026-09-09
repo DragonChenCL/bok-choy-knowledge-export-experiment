@@ -1,5 +1,5 @@
 name: Deploy Bao Rescue Site
-# P0 remains frozen. Phase 1 adds analytics instrumentation + indexable SEO entry pages.
+# Bao Rescue is served from the production root. Legacy /diagnose/ remains only as a compatibility redirect.
 
 on:
   push:
@@ -65,20 +65,37 @@ jobs:
             "run_id": "${GITHUB_RUN_ID}",
             "run_number": "${GITHUB_RUN_NUMBER}",
             "built_at": "${BUILD_TIME}",
-            "product_stage": "PHASE1_ANALYTICS_SEO"
+            "product_stage": "PHASE1_ANALYTICS_SEO_ROOT"
           }
           EOF
 
           python - <<'PY'
           from pathlib import Path
           import os
+
           sha = os.environ['GITHUB_SHA']
-          path = Path('_site/diagnose/index.html')
-          text = path.read_text(encoding='utf-8')
+          root = Path('_site/index.html')
+          text = root.read_text(encoding='utf-8')
           marker = f'<!-- deployed-commit:{sha} -->'
           if marker not in text:
               text = text.replace('</head>', f'  {marker}\n</head>', 1)
-          path.write_text(text, encoding='utf-8')
+          root.write_text(text, encoding='utf-8')
+
+          old_domain = 'https://dragonchencl.github.io/bok-choy-knowledge-export-experiment'
+          new_domain = 'https://bao.serunio.com'
+          seo_pages = [
+              Path('_site/bao-buns-collapse-after-steaming/index.html'),
+              Path('_site/why-do-steamed-buns-wrinkle/index.html'),
+              Path('_site/why-are-bao-buns-not-fluffy/index.html'),
+          ]
+          for path in seo_pages:
+              html = path.read_text(encoding='utf-8')
+              html = html.replace(old_domain, new_domain)
+              html = html.replace('../diagnose/?', '../?').replace('../diagnose/', '../')
+              if 'property="og:image"' not in html:
+                  meta = '<link rel="icon" type="image/png" sizes="64x64" href="../assets/bao-rescue/bao-rescue-icon-64.png"><meta property="og:image" content="https://bao.serunio.com/assets/bao-rescue/bao-rescue-icon-64.png"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://bao.serunio.com/assets/bao-rescue/bao-rescue-icon-64.png">'
+                  html = html.replace('<link rel="stylesheet"', meta + '<link rel="stylesheet"', 1)
+              path.write_text(html, encoding='utf-8')
           PY
           touch _site/.nojekyll
 
@@ -100,18 +117,32 @@ jobs:
           test -s _site/sitemap.xml
           test -s _site/assets/bao-rescue/bao-sprite.webp
           test -s _site/assets/bao-rescue/bao-sprite-v2.webp
+          test -s _site/assets/bao-rescue/bao-rescue-icon-64.png
           test -s _site/build.json
 
-          grep -q 'diagnose/' _site/index.html
-          grep -q 'product-stage:MVP_FREEZE' _site/diagnose/index.html
-          grep -q 'Why did my bao fail?' _site/diagnose/index.html
-          grep -q 'bao-sprite-v2.webp' _site/diagnose/styles.css
-          grep -q 'deployed-commit:${{ github.sha }}' _site/diagnose/index.html
+          grep -q 'product-stage:MVP_FREEZE' _site/index.html
+          grep -q 'Why did my bao fail?' _site/index.html
+          grep -q 'meta name="robots" content="index,follow' _site/index.html
+          grep -q 'rel="canonical" href="https://bao.serunio.com/"' _site/index.html
+          grep -q 'property="og:image"' _site/index.html
+          grep -q 'deployed-commit:${{ github.sha }}' _site/index.html
           grep -q '${{ github.sha }}' _site/build.json
-          grep -q 'Cracked/opened, frozen/reheated, or another unlisted case.' _site/diagnose/index.html
-          grep -q 'PHASE1_ANALYTICS_SEO' _site/build.json
-          grep -q 'sitemap.xml' _site/robots.txt
+          grep -q 'PHASE1_ANALYTICS_SEO_ROOT' _site/build.json
+          grep -q 'location.replace' _site/diagnose/index.html
+          grep -q 'Sitemap: https://bao.serunio.com/sitemap.xml' _site/robots.txt
+          grep -q '<loc>https://bao.serunio.com/</loc>' _site/sitemap.xml
+          grep -q 'href="../?entry=' _site/bao-buns-collapse-after-steaming/index.html
+          grep -q 'href="../?entry=' _site/why-do-steamed-buns-wrinkle/index.html
+          grep -q 'href="../?entry=' _site/why-are-bao-buns-not-fluffy/index.html
 
+          if grep -R --include='*.html' --include='*.xml' --include='*.txt' 'dragonchencl.github.io/bok-choy-knowledge-export-experiment' _site; then
+            echo 'Old GitHub Pages canonical/domain detected'
+            exit 1
+          fi
+          if grep -R '../diagnose/' _site/bao-buns-collapse-after-steaming _site/why-do-steamed-buns-wrinkle _site/why-are-bao-buns-not-fluffy; then
+            echo 'Legacy diagnosis CTA detected in SEO pages'
+            exit 1
+          fi
           if grep -R 'v3/source\|sprite-q20' _site/diagnose _site/index.html; then
             echo 'Old thumbnail dependency detected'
             exit 1
