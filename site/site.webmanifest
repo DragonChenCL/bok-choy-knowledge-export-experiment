@@ -1,0 +1,13 @@
+{
+  "name": "Bao Rescue",
+  "short_name": "Bao Rescue",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f7f3ed",
+  "theme_color": "#f4a62a",
+  "icons": [
+    {"src": "/favicon-32x32.png", "sizes": "32x32", "type": "image/png"},
+    {"src": "/assets/bao-rescue/bao-rescue-icon-64.png", "sizes": "64x64", "type": "image/png"}
+  ]
+}
