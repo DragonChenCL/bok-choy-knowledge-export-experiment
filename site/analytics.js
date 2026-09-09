@@ -1,20 +1,41 @@
 (()=> {
   const MAX_BUFFER=120;
   const KEY='bao_rescue_event_buffer_v1';
+  const CLARITY_ID='yfjx2b9bn4';
   const SUPPORTED_EVENTS=['page_view','symptom_select','diagnosis_start','question_answer','diagnosis_complete','diagnosis_back','diagnosis_restart','seo_diagnosis_cta','diagnosis_hero_cta'];
   const state={symptom:null,runId:null,completed:false};
+
+  // Microsoft Clarity. Initializing the queue synchronously means Bao Rescue events
+  // can be recorded even while the remote Clarity script is still loading.
+  try{
+    const c=window,l=document,a='clarity',r='script',i=CLARITY_ID;
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    const t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;
+    const y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  }catch{}
+
   const qp=new URLSearchParams(location.search);
   const sessionId=(()=>{try{let v=sessionStorage.getItem('bao_session_id');if(!v){v=(crypto.randomUUID?.()||`${Date.now()}-${Math.random().toString(16).slice(2)}`);sessionStorage.setItem('bao_session_id',v);}return v;}catch{return 'session-unavailable';}})();
   const context=()=>({page_path:location.pathname,page_title:document.title,referrer:document.referrer||'',session_id:sessionId,run_id:state.runId||'',symptom:state.symptom||'',utm_source:qp.get('utm_source')||'',utm_medium:qp.get('utm_medium')||'',utm_campaign:qp.get('utm_campaign')||'',entry:qp.get('entry')||''});
   const clean=o=>Object.fromEntries(Object.entries(o).filter(([,v])=>v!==''&&v!=null));
   const buffer=payload=>{try{const items=JSON.parse(localStorage.getItem(KEY)||'[]');items.push(payload);localStorage.setItem(KEY,JSON.stringify(items.slice(-MAX_BUFFER)));}catch{}};
   function track(name,props={}){
-    const payload={event:name,event_time:new Date().toISOString(),...clean(context()),...clean(props)};
+    const ctx=clean(context());
+    const eventProps=clean({...ctx,...props});
+    const payload={event:name,event_time:new Date().toISOString(),...eventProps};
     buffer(payload);window.dataLayer=window.dataLayer||[];window.dataLayer.push(payload);
-    try{if(typeof window.gtag==='function')window.gtag('event',name,clean({...context(),...props}));}catch{}
-    try{if(window.umami?.track)window.umami.track(name,clean({...context(),...props}));}catch{}
-    try{if(window.posthog?.capture)window.posthog.capture(name,clean({...context(),...props}));}catch{}
-    try{if(typeof window.clarity==='function')window.clarity('event',name);}catch{}
+    try{if(typeof window.gtag==='function')window.gtag('event',name,eventProps);}catch{}
+    try{if(window.umami?.track)window.umami.track(name,eventProps);}catch{}
+    try{if(window.posthog?.capture)window.posthog.capture(name,eventProps);}catch{}
+    try{
+      if(typeof window.clarity==='function'){
+        window.clarity('event',name);
+        if(eventProps.symptom)window.clarity('set','symptom',String(eventProps.symptom));
+        if(eventProps.entry)window.clarity('set','entry',String(eventProps.entry));
+        if(eventProps.utm_source)window.clarity('set','utm_source',String(eventProps.utm_source));
+        if(eventProps.result_status)window.clarity('set','result_status',String(eventProps.result_status));
+      }
+    }catch{}
     const endpoint=window.BAO_ANALYTICS_ENDPOINT;
     if(endpoint){try{const body=JSON.stringify(payload);if(navigator.sendBeacon)navigator.sendBeacon(endpoint,new Blob([body],{type:'application/json'}));else fetch(endpoint,{method:'POST',headers:{'content-type':'application/json'},body,keepalive:true}).catch(()=>{});}catch{}}
     return payload;
