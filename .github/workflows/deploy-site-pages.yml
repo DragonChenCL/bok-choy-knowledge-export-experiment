@@ -74,11 +74,26 @@ jobs:
           import os
 
           sha = os.environ['GITHUB_SHA']
+          ga_id = 'G-GVD03YFR9C'
+          ga_snippet = f'''<script async src="https://www.googletagmanager.com/gtag/js?id={ga_id}"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){{dataLayer.push(arguments);}}
+            gtag('js', new Date());
+            gtag('config', '{ga_id}', {{'send_page_view': false}});
+          </script>'''
+
+          def add_ga(html):
+              if ga_id not in html:
+                  html = html.replace('</head>', ga_snippet + '\n</head>', 1)
+              return html
+
           root = Path('_site/index.html')
           text = root.read_text(encoding='utf-8')
           marker = f'<!-- deployed-commit:{sha} -->'
           if marker not in text:
               text = text.replace('</head>', f'  {marker}\n</head>', 1)
+          text = add_ga(text)
           root.write_text(text, encoding='utf-8')
 
           old_domain = 'https://dragonchencl.github.io/bok-choy-knowledge-export-experiment'
@@ -95,6 +110,7 @@ jobs:
               if 'property="og:image"' not in html:
                   meta = '<link rel="icon" type="image/png" sizes="64x64" href="../assets/bao-rescue/bao-rescue-icon-64.png"><meta property="og:image" content="https://bao.serunio.com/assets/bao-rescue/bao-rescue-icon-64.png"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://bao.serunio.com/assets/bao-rescue/bao-rescue-icon-64.png">'
                   html = html.replace('<link rel="stylesheet"', meta + '<link rel="stylesheet"', 1)
+              html = add_ga(html)
               path.write_text(html, encoding='utf-8')
           PY
           touch _site/.nojekyll
@@ -134,6 +150,11 @@ jobs:
           grep -q 'href="../?entry=' _site/bao-buns-collapse-after-steaming/index.html
           grep -q 'href="../?entry=' _site/why-do-steamed-buns-wrinkle/index.html
           grep -q 'href="../?entry=' _site/why-are-bao-buns-not-fluffy/index.html
+          grep -q 'G-GVD03YFR9C' _site/index.html
+          grep -q 'G-GVD03YFR9C' _site/bao-buns-collapse-after-steaming/index.html
+          grep -q 'G-GVD03YFR9C' _site/why-do-steamed-buns-wrinkle/index.html
+          grep -q 'G-GVD03YFR9C' _site/why-are-bao-buns-not-fluffy/index.html
+          grep -q "send_page_view': false" _site/index.html
 
           if grep -R --include='*.html' --include='*.xml' --include='*.txt' 'dragonchencl.github.io/bok-choy-knowledge-export-experiment' _site; then
             echo 'Old GitHub Pages canonical/domain detected'
