@@ -15,71 +15,18 @@
     <a class="brand" href="./" aria-label="Bao Rescue home"><span class="brandMark">🥟</span><span><b>Bao Rescue</b><small>Fix your steamed buns — step by step</small></span></a>
     <div class="motto">Observe. Narrow. Test.</div>
   </header>
-
   <section class="hero">
-    <div class="heroCopy">
-      <div class="eyebrow">Photo-guided troubleshooting</div>
-      <h1>Why did my bao fail?</h1>
-      <p>Answer a few things you actually saw or felt. Bao Rescue ranks the most likely cause family and gives you one next-batch test instead of ten generic guesses.</p>
-      <a class="heroCta" href="#diagnose">Start free diagnosis <span>→</span></a>
-      <div class="promiseGrid">
-        <div><b>1. Match the symptom</b><span>Start from the result, not a guessed cause.</span></div>
-        <div><b>2. Separate similar causes</b><span>Use proof state, timing, moisture and crumb.</span></div>
-        <div><b>3. Test one variable</b><span>The next batch should teach you something.</span></div>
-      </div>
-    </div>
-    <div class="heroVisual">
-      <div class="photo p-normal" role="img" aria-label="Normal steamed bao reference"></div>
-      <div class="heroNote"><b>Normal reference</b><span>Smooth, plump and stable outside; soft, aerated crumb inside.</span></div>
-    </div>
+    <div class="heroCopy"><div class="eyebrow">Photo-guided troubleshooting</div><h1>Why did my bao fail?</h1><p>Answer a few things you actually saw or felt. Bao Rescue ranks the most likely cause family and gives you one next-batch test instead of ten generic guesses.</p><a class="heroCta" href="#diagnose">Start free diagnosis <span>→</span></a><div class="promiseGrid"><div><b>1. Match the symptom</b><span>Start from the result, not a guessed cause.</span></div><div><b>2. Separate similar causes</b><span>Use proof state, timing, moisture and crumb.</span></div><div><b>3. Test one variable</b><span>The next batch should teach you something.</span></div></div></div>
+    <div class="heroVisual"><div class="photo p-normal" role="img" aria-label="Normal steamed bao reference"></div><div class="heroNote"><b>Normal reference</b><span>Smooth, plump and stable outside; soft, aerated crumb inside.</span></div></div>
   </section>
-
-  <div class="steps" id="diagnose">
-    <div class="step active" data-step="1"><i>1</i><b>Your bun</b></div>
-    <div class="step" data-step="2"><i>2</i><b>Details</b></div>
-    <div class="step" data-step="3"><i>3</i><b>More info</b></div>
-    <div class="step" data-step="4"><i>4</i><b>Your result</b></div>
-  </div>
-
-  <div class="layout">
-    <main>
-      <section id="chooser">
-        <div class="eyebrow">Step 1 of 4</div>
-        <h2>What does your bun look like?</h2>
-        <p class="lead">Choose the closest match. The image helps recognition; it does not decide the cause by itself.</p>
-
-        <div class="symptomGrid" id="symptomGrid">
-          <button class="symptom" data-key="normal"><div class="photo p-normal"></div><div class="copy"><b>Looks normal</b><span>Smooth, round, plump</span></div><i class="radio"></i></button>
-          <button class="symptom" data-key="norise"><div class="photo p-underproof"></div><div class="copy"><b>Didn't rise / stayed small</b><span>Small, tight, limited expansion</span></div><i class="radio"></i></button>
-          <button class="symptom" data-key="collapse"><div class="photo p-collapsed"></div><div class="copy"><b>Collapsed or flat</b><span>Lost volume or spread out</span></div><i class="radio"></i></button>
-          <button class="symptom" data-key="wrinkle"><div class="photo p-wrinkled"></div><div class="copy"><b>Wrinkled skin</b><span>Puckered or shrunk surface</span></div><i class="radio"></i></button>
-          <button class="symptom" data-key="dense"><div class="photo p-denseCrumb"></div><div class="copy"><b>Dense / not fluffy</b><span>Inside is tight and heavy</span></div><i class="radio"></i></button>
-          <button class="symptom" data-key="wet"><div class="photo p-wet"></div><div class="copy"><b>Wet or pitted skin</b><span>Droplets, pits or damp patches</span></div><i class="radio"></i></button>
-        </div>
-
-        <button class="specialRow" id="specialBtn"><span><b>My buns look different / special case</b><small>Cracked/opened, frozen/reheated, or another unlisted case.</small></span><strong>›</strong></button>
-        <button class="nextBtn" id="nextBtn" disabled>Next →</button>
-      </section>
-
-      <section id="question"></section>
-      <section id="result"></section>
-    </main>
-
-    <aside class="sidecard">
-      <h3>Not sure?</h3>
-      <p>Compare with a good bun first.</p>
-      <div class="reference"><div class="photo p-normal"></div><span>NORMAL REFERENCE</span></div>
-      <ul class="checks">
-        <li>Smooth surface</li>
-        <li>Round and plump</li>
-        <li>Soft, aerated crumb</li>
-        <li>Surface matches the intended style</li>
-      </ul>
-      <div class="tip"><b>Better diagnosis</b><span>Take one top photo and one cut-open photo before you start.</span></div>
-      <div class="scope"><b>MVP scope</b><span>Fresh, yeast-leavened wheat steamed buns. Special cases stay Beta until we have stronger evidence.</span></div>
-    </aside>
+  <div class="steps" id="diagnose"><div class="step active" data-step="1"><i>1</i><b>Your bun</b></div><div class="step" data-step="2"><i>2</i><b>Details</b></div><div class="step" data-step="3"><i>3</i><b>More info</b></div><div class="step" data-step="4"><i>4</i><b>Your result</b></div></div>
+  <div class="layout"><main><section id="chooser"><div class="eyebrow">Step 1 of 4</div><h2>What does your bun look like?</h2><p class="lead">Choose the closest match. The image helps recognition; it does not decide the cause by itself.</p>
+    <div class="symptomGrid" id="symptomGrid"><button class="symptom" data-key="normal"><div class="photo p-normal"></div><div class="copy"><b>Looks normal</b><span>Smooth, round, plump</span></div><i class="radio"></i></button><button class="symptom" data-key="norise"><div class="photo p-underproof"></div><div class="copy"><b>Didn't rise / stayed small</b><span>Small, tight, limited expansion</span></div><i class="radio"></i></button><button class="symptom" data-key="collapse"><div class="photo p-collapsed"></div><div class="copy"><b>Collapsed or flat</b><span>Lost volume or spread out</span></div><i class="radio"></i></button><button class="symptom" data-key="wrinkle"><div class="photo p-wrinkled"></div><div class="copy"><b>Wrinkled skin</b><span>Puckered or shrunk surface</span></div><i class="radio"></i></button><button class="symptom" data-key="dense"><div class="photo p-denseCrumb"></div><div class="copy"><b>Dense / not fluffy</b><span>Inside is tight and heavy</span></div><i class="radio"></i></button><button class="symptom" data-key="wet"><div class="photo p-wet"></div><div class="copy"><b>Wet or pitted skin</b><span>Droplets, pits or damp patches</span></div><i class="radio"></i></button></div>
+    <button class="specialRow" id="specialBtn"><span><b>My buns look different / special case</b><small>Cracked/opened, frozen/reheated, or another unlisted case.</small></span><strong>›</strong></button><button class="nextBtn" id="nextBtn" disabled>Next →</button></section><section id="question"></section><section id="result"></section></main>
+    <aside class="sidecard"><h3>Not sure?</h3><p>Compare with a good bun first.</p><div class="reference"><div class="photo p-normal"></div><span>NORMAL REFERENCE</span></div><ul class="checks"><li>Smooth surface</li><li>Round and plump</li><li>Soft, aerated crumb</li><li>Surface matches the intended style</li></ul><div class="tip"><b>Better diagnosis</b><span>Take one top photo and one cut-open photo before you start.</span></div><div class="scope"><b>MVP scope</b><span>Fresh, yeast-leavened wheat steamed buns. Special cases stay Beta until we have stronger evidence.</span></div></aside>
   </div>
 </div>
+<script src="../analytics.js"></script>
 <script src="./data.js"></script>
 <script src="./app.js"></script>
 </body>
