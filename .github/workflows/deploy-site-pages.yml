@@ -42,24 +42,19 @@ jobs:
           set -euo pipefail
           rm -rf _site
           mkdir -p _site
-
-          # The repository site directory is the single deploy source.
           cp -R site/. _site/
 
-          # Keep the reviewed P0 sprite and its >100KB regression gate intact.
           mkdir -p _site/assets/bao-rescue
           cp 06-assets/bao-rescue/v4/bao-sprite.webp _site/assets/bao-rescue/bao-sprite.webp
           test -s _site/assets/bao-rescue/bao-sprite.webp
           test "$(stat -c%s _site/assets/bao-rescue/bao-sprite.webp)" -gt 100000
           file _site/assets/bao-rescue/bao-sprite.webp | grep -qi 'Web/P'
 
-          # Reconstruct the approved-image web sprite from text parts.
-          cat 06-assets/bao-rescue/v4/web-v2-parts/part-* | base64 -d > _site/assets/bao-rescue/bao-sprite-v2.webp
+          cat 06-assets/bao-rescue/v4/web-v2-parts/part-* | base64 --ignore-garbage -d > _site/assets/bao-rescue/bao-sprite-v2.webp
           test "$(stat -c%s _site/assets/bao-rescue/bao-sprite-v2.webp)" -eq 60674
           file _site/assets/bao-rescue/bao-sprite-v2.webp | grep -qi 'Web/P'
           echo '98060136bf7b8c0fae74c4819d8d4f0a66fa15e5b07d70105c5878fbbb6827f2  _site/assets/bao-rescue/bao-sprite-v2.webp' | sha256sum -c -
 
-          # Trace the exact deployed commit.
           BUILD_TIME="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           cat > _site/build.json <<EOF
           {
@@ -82,7 +77,6 @@ jobs:
               text = text.replace('</head>', f'  {marker}\n</head>', 1)
           path.write_text(text, encoding='utf-8')
           PY
-
           touch _site/.nojekyll
 
       - name: Verify staged MVP
@@ -106,7 +100,6 @@ jobs:
           grep -q '${{ github.sha }}' _site/build.json
           grep -q 'Cracked/opened, frozen/reheated, or another unlisted case.' _site/diagnose/index.html
 
-          # Prevent regression to the old thumbnail / q20 reconstruction path.
           if grep -R 'v3/source\|sprite-q20' _site/diagnose _site/index.html; then
             echo 'Old thumbnail dependency detected'
             exit 1
