@@ -20,9 +20,9 @@
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <link rel="stylesheet" href="../seo.css">
   <style>
-    .hubHero{padding-bottom:22px}.hubIntro{max-width:760px}.hubIntro p{max-width:720px}.topicGroup{margin:24px 0 34px}.topicGroup>h2{font-size:32px;margin:0 0 6px}.topicGroup>p{font:14px/1.6 Arial,sans-serif;color:var(--muted);margin:0 0 16px}.topicGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.topic{display:block;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;color:inherit;text-decoration:none;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}.topic:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(54,43,31,.10);border-color:#c9c2b7}.topic .photo{border-radius:0;box-shadow:none;aspect-ratio:16/10}.topicCopy{padding:16px}.topicCopy b{display:block;font-size:20px;margin-bottom:6px}.topicCopy span{display:block;font:13px/1.5 Arial,sans-serif;color:var(--muted)}.topicCopy em{display:block;margin-top:11px;color:var(--olive);font:700 12px Arial,sans-serif;font-style:normal}.hubCallout{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}.hubCallout h2{margin-bottom:7px}.hubCallout p{margin:0}.count{display:inline-flex;background:var(--soft);border:1px solid #c8d5c0;border-radius:999px;padding:7px 10px;color:var(--olive);font:700 11px Arial,sans-serif;margin-bottom:10px}
+    .hubHero{padding-bottom:22px}.hubIntro{max-width:760px}.hubIntro p{max-width:720px}.heroActions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:20px}.heroMicro{font:12px/1.5 Arial,sans-serif;color:var(--muted);max-width:300px}.pathChooser{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 28px}.pathCard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}.pathCard.primaryPath{background:linear-gradient(135deg,#eef4ea,#fffdfa);border-color:#c7d5bf}.pathCard b{display:block;font-size:21px;margin-bottom:7px}.pathCard p{font:13px/1.55 Arial,sans-serif;color:var(--muted);margin:0 0 14px}.pathLink{font:700 13px Arial,sans-serif;color:var(--olive);text-decoration:none}.pathCard .cta{margin-top:2px}.topicGroup{margin:24px 0 34px}.topicGroup>h2{font-size:32px;margin:0 0 6px}.topicGroup>p{font:14px/1.6 Arial,sans-serif;color:var(--muted);margin:0 0 16px}.topicGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.topic{display:block;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;color:inherit;text-decoration:none;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}.topic:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(54,43,31,.10);border-color:#c9c2b7}.topic .photo{border-radius:0;box-shadow:none;aspect-ratio:16/10}.topicCopy{padding:16px}.topicCopy b{display:block;font-size:20px;margin-bottom:6px}.topicCopy span{display:block;font:13px/1.5 Arial,sans-serif;color:var(--muted)}.topicCopy em{display:block;margin-top:11px;color:var(--olive);font:700 12px Arial,sans-serif;font-style:normal}.hubCallout{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}.hubCallout h2{margin-bottom:7px}.hubCallout p{margin:0}.count{display:inline-flex;background:var(--soft);border:1px solid #c8d5c0;border-radius:999px;padding:7px 10px;color:var(--olive);font:700 11px Arial,sans-serif;margin-bottom:10px}.finalCta{background:#171813;color:#fff;border-color:#171813}.finalCta h2{color:#fff}.finalCta p{color:#dedfd9}.finalCta .eyebrow{color:#b8c8af}.finalCta .cta{background:#fff;color:#171813}.cta:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(50,63,43,.18)}
     @media(max-width:860px){.topicGrid{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:600px){.topicGrid{grid-template-columns:1fr}.hubCallout{grid-template-columns:1fr}.hubHero{padding-top:34px}}
+    @media(max-width:600px){.topicGrid,.pathChooser{grid-template-columns:1fr}.hubCallout{grid-template-columns:1fr}.hubHero{padding-top:34px}.heroActions .cta,.pathCard .cta,.hubCallout .cta,.finalCta .cta{width:100%;justify-content:center}.heroMicro{max-width:none}}
   </style>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Bao Troubleshooting Guide","url":"https://bao.serunio.com/bao-troubleshooting/","description":"A symptom-first guide to common bao and steamed bun failures.","mainEntity":{"@type":"ItemList","numberOfItems":10,"itemListElement":[{"@type":"ListItem","position":1,"name":"Bao buns collapse after steaming","url":"https://bao.serunio.com/bao-buns-collapse-after-steaming/"},{"@type":"ListItem","position":2,"name":"Steamed buns wrinkle","url":"https://bao.serunio.com/why-do-steamed-buns-wrinkle/"},{"@type":"ListItem","position":3,"name":"Bao buns are dense or not fluffy","url":"https://bao.serunio.com/why-are-bao-buns-not-fluffy/"},{"@type":"ListItem","position":4,"name":"Bao buns are gummy inside","url":"https://bao.serunio.com/bao-buns-gummy-inside/"},{"@type":"ListItem","position":5,"name":"Bao buns are not smooth","url":"https://bao.serunio.com/bao-buns-not-smooth/"},{"@type":"ListItem","position":6,"name":"Bao buns are not rising","url":"https://bao.serunio.com/bao-buns-not-rising/"},{"@type":"ListItem","position":7,"name":"Bao buns are wet after steaming","url":"https://bao.serunio.com/bao-buns-wet-after-steaming/"},{"@type":"ListItem","position":8,"name":"Bao buns spread sideways","url":"https://bao.serunio.com/bao-buns-spread-sideways/"},{"@type":"ListItem","position":9,"name":"Bao buns crack while steaming","url":"https://bao.serunio.com/bao-buns-crack-while-steaming/"},{"@type":"ListItem","position":10,"name":"Bao buns are hard after steaming","url":"https://bao.serunio.com/bao-buns-hard-after-steaming/"}]}}</script>
 </head>
@@ -30,7 +30,7 @@
 <div class="wrap">
   <header class="top">
     <a class="brand" href="../">🥟 Bao Rescue<small>Observe. Narrow. Test.</small></a>
-    <nav class="nav"><a href="../?entry=bao-troubleshooting&utm_source=seo&utm_medium=organic&utm_campaign=bao-troubleshooting#diagnose">Start diagnosis →</a></nav>
+    <nav class="nav"><a data-track="seo_diagnosis_cta" data-placement="hub-nav" href="../?entry=bao-troubleshooting&utm_source=seo&utm_medium=organic&utm_campaign=bao-troubleshooting#diagnose">Start diagnosis →</a></nav>
   </header>
 
   <main>
@@ -39,9 +39,27 @@
         <div class="eyebrow">Bao troubleshooting hub</div>
         <h1>What went wrong with your bao?</h1>
         <p>Start with the result you can actually see or feel. Pick the closest symptom below, then use timing, proof state, moisture and crumb clues to narrow what deserves a controlled test next.</p>
-        <a class="cta" data-track="seo_diagnosis_cta" data-placement="hub-hero" href="../?entry=bao-troubleshooting&utm_source=seo&utm_medium=organic&utm_campaign=bao-troubleshooting#diagnose">Not sure? Start diagnosis →</a>
+        <div class="heroActions">
+          <a class="cta" data-track="seo_diagnosis_cta" data-placement="hub-hero" href="../?entry=bao-troubleshooting&utm_source=seo&utm_medium=organic&utm_campaign=bao-troubleshooting#diagnose">Not sure? Start diagnosis →</a>
+          <span class="heroMicro">A few observation-based questions. No login. One next-batch variable to test.</span>
+        </div>
       </div>
       <div class="photo p-normal" role="img" aria-label="Smooth normal steamed bao reference"></div>
+    </section>
+
+    <section class="pathChooser" aria-label="Choose a troubleshooting path">
+      <div class="pathCard primaryPath">
+        <div class="eyebrow">I am not sure what caused it</div>
+        <b>Let Bao Rescue narrow the cause.</b>
+        <p>Choose what your bun looked like, answer a few distinguishing questions, and get one controlled next-batch test.</p>
+        <a class="cta" data-track="seo_diagnosis_cta" data-placement="hub-path-diagnosis" href="../?entry=bao-troubleshooting&utm_source=seo&utm_medium=organic&utm_campaign=bao-troubleshooting#diagnose">Diagnose my bao →</a>
+      </div>
+      <div class="pathCard">
+        <div class="eyebrow">I know the symptom</div>
+        <b>Jump straight to the matching guide.</b>
+        <p>Use the symptom cards below for collapse, wrinkles, poor rise, gummy crumb, wet skin, cracking and other common failures.</p>
+        <a class="pathLink" href="#symptoms">Browse symptoms ↓</a>
+      </div>
     </section>
 
     <section class="section hubCallout">
@@ -53,6 +71,7 @@
       <a class="cta" data-track="seo_diagnosis_cta" data-placement="hub-callout" href="../?entry=bao-troubleshooting&utm_source=seo&utm_medium=organic&utm_campaign=bao-troubleshooting#diagnose">Diagnose mine →</a>
     </section>
 
+    <div id="symptoms"></div>
     <section class="topicGroup">
       <div class="eyebrow">Shape & rise</div>
       <h2>Volume changed or the bun never puffed</h2>
@@ -117,10 +136,12 @@
       </div>
     </section>
 
-    <section class="section">
-      <div class="eyebrow">Still not sure?</div>
-      <h2>Let the diagnosis choose the branch.</h2>
-      <p>Bao Rescue starts from what you saw, asks only the observations that separate plausible causes, and ends with one next-batch variable to test.</p>
+    <section class="section finalCta hubCallout">
+      <div>
+        <div class="eyebrow">Still not sure?</div>
+        <h2>Stop guessing. Let the diagnosis choose the branch.</h2>
+        <p>Bao Rescue starts from what you saw, asks only the observations that separate plausible causes, and ends with one next-batch variable to test.</p>
+      </div>
       <a class="cta" data-track="seo_diagnosis_cta" data-placement="hub-bottom" href="../?entry=bao-troubleshooting&utm_source=seo&utm_medium=organic&utm_campaign=bao-troubleshooting#diagnose">Start free diagnosis →</a>
     </section>
   </main>
