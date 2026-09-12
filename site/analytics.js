@@ -6,18 +6,21 @@
   const SUPPORTED_EVENTS=['page_view','symptom_select','diagnosis_start','question_answer','diagnosis_complete','diagnosis_back','diagnosis_restart','seo_diagnosis_cta','diagnosis_hero_cta'];
   const state={symptom:null,runId:null,completed:false};
 
-  // GA4. SEO landing pages only load analytics.js, so initialize gtag here.
-  // Root pages that already initialized gtag will skip the loader and reuse it.
+  // GA4. Keep one Google tag config per page and let GA4 own its native session fields.
+  // Important: never send our own value as `session_id`; GA4 uses that name internally.
   try{
     window.dataLayer=window.dataLayer||[];
-    if(typeof window.gtag!=='function'){
-      window.gtag=function(){window.dataLayer.push(arguments)};
+    if(typeof window.gtag!=='function')window.gtag=function(){window.dataLayer.push(arguments)};
+    if(!document.querySelector(`script[src*="googletagmanager.com/gtag/js?id=${GA4_ID}"]`)){
       const s=document.createElement('script');
       s.async=true;
       s.src='https://www.googletagmanager.com/gtag/js?id='+GA4_ID;
       document.head.appendChild(s);
+    }
+    if(!window.__baoGa4Configured){
       window.gtag('js',new Date());
       window.gtag('config',GA4_ID,{send_page_view:false});
+      window.__baoGa4Configured=true;
     }
   }catch{}
 
@@ -31,18 +34,30 @@
   }catch{}
 
   const qp=new URLSearchParams(location.search);
-  const sessionId=(()=>{try{let v=sessionStorage.getItem('bao_session_id');if(!v){v=(crypto.randomUUID?.()||`${Date.now()}-${Math.random().toString(16).slice(2)}`);sessionStorage.setItem('bao_session_id',v);}return v;}catch{return 'session-unavailable';}})();
-  const context=()=>({page_path:location.pathname,page_title:document.title,referrer:document.referrer||'',session_id:sessionId,run_id:state.runId||'',symptom:state.symptom||'',utm_source:qp.get('utm_source')||'',utm_medium:qp.get('utm_medium')||'',utm_campaign:qp.get('utm_campaign')||'',entry:qp.get('entry')||''});
+  const baoSessionId=(()=>{try{let v=sessionStorage.getItem('bao_session_id');if(!v){v=(crypto.randomUUID?.()||`${Date.now()}-${Math.random().toString(16).slice(2)}`);sessionStorage.setItem('bao_session_id',v);}return v;}catch{return 'session-unavailable';}})();
+  const context=()=>({page_path:location.pathname,page_title:document.title,referrer:document.referrer||'',bao_session_id:baoSessionId,run_id:state.runId||'',symptom:state.symptom||'',utm_source:qp.get('utm_source')||'',utm_medium:qp.get('utm_medium')||'',utm_campaign:qp.get('utm_campaign')||'',entry:qp.get('entry')||''});
   const clean=o=>Object.fromEntries(Object.entries(o).filter(([,v])=>v!==''&&v!=null));
   const buffer=payload=>{try{const items=JSON.parse(localStorage.getItem(KEY)||'[]');items.push(payload);localStorage.setItem(KEY,JSON.stringify(items.slice(-MAX_BUFFER)));}catch{}};
+
+  // Internal campaign tags overwrite the real acquisition source in GA4. Keep our
+  // `entry` marker, but strip UTM parameters from same-origin diagnosis links.
+  function sanitizeInternalAttributionLink(el){
+    try{
+      if(!el?.matches?.('a[href]'))return;
+      const url=new URL(el.href,location.href);
+      if(url.origin!==location.origin)return;
+      ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(k=>url.searchParams.delete(k));
+      el.href=url.pathname+(url.search||'')+(url.hash||'');
+    }catch{}
+  }
 
   function track(name,props={}){
     const ctx=clean(context());
     const eventProps=clean({...ctx,...props});
     const payload={event:name,event_time:new Date().toISOString(),...eventProps};
     buffer(payload);
-    window.dataLayer=window.dataLayer||[];
-    window.dataLayer.push(payload);
+    // Do not push a second {event: ...} object into dataLayer. gtag() below is the
+    // only GA4 event transport so the event stays attached to GA4's own session.
     try{if(typeof window.gtag==='function')window.gtag('event',name,eventProps);}catch{}
     try{if(window.umami?.track)window.umami.track(name,eventProps);}catch{}
     try{if(window.posthog?.capture)window.posthog.capture(name,eventProps);}catch{}
@@ -106,7 +121,10 @@
     if(e.target.closest?.('#backBtn,#backResult')){track('diagnosis_back');return;}
     if(e.target.closest?.('#restart')){track('diagnosis_restart');state.runId=null;state.completed=false;return;}
     const tracked=e.target.closest?.('[data-track]');
-    if(tracked)track(tracked.dataset.track,{target:tracked.getAttribute('href')||'',placement:tracked.dataset.placement||''});
+    if(tracked){
+      track(tracked.dataset.track,{target:tracked.getAttribute('href')||'',placement:tracked.dataset.placement||''});
+      sanitizeInternalAttributionLink(tracked);
+    }
     if(e.target.closest?.('.heroCta'))track('diagnosis_hero_cta');
   });
 
