@@ -10,6 +10,11 @@ must(analytics.includes('utm_source')&&analytics.includes('utm_campaign'),'analy
 must(analytics.includes('BAO_ANALYTICS_ENDPOINT'),'analytics supports external beacon endpoint');
 must(analytics.includes('G-GVD03YFR9C')&&analytics.includes('googletagmanager.com/gtag/js'),'analytics initializes GA4 for every landing page');
 must(analytics.includes('yfjx2b9bn4')&&analytics.includes('clarity.ms/tag'),'analytics initializes Microsoft Clarity');
+must(analytics.includes('bao_session_id:baoSessionId'),'custom session marker does not use GA4 reserved session_id');
+must(!analytics.includes('session_id:sessionId'),'GA4 reserved session_id is not overridden');
+must(!analytics.includes('window.dataLayer.push(payload)'),'custom events are not duplicated through raw dataLayer event pushes');
+must(analytics.includes('sanitizeInternalAttributionLink'),'same-origin CTA attribution sanitizer exists');
+must(analytics.includes("['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach"),'internal CTA strips campaign UTMs before navigation');
 
 const home=read('site/index.html');
 must(home.includes('./analytics.js'),'root diagnosis loads analytics layer');
@@ -40,10 +45,8 @@ for(const [p,h1,slug,isNew] of pages){
   must(html.includes('seo_diagnosis_cta'),`${slug} diagnosis CTA`);
   must(html.includes('../analytics.js'),`${slug} analytics`);
   must(!html.includes('REPLACE_WITH_'),`${slug} has no placeholder URLs`);
-  if(isNew){
-    must(html.includes(`entry=${slug}`)&&html.includes(`utm_campaign=${slug}`),`${slug} CTA attribution`);
-    must(html.includes('property="og:image"'),`${slug} Open Graph image`);
-  }
+  must(html.includes(`entry=${slug}`)||!isNew,`${slug} CTA keeps custom entry attribution`);
+  if(isNew)must(html.includes('property="og:image"'),`${slug} Open Graph image`);
 }
 
 const robots=read('site/robots.txt'),sitemap=read('site/sitemap.xml');
