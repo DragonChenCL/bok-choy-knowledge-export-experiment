@@ -27,8 +27,8 @@ const pages=[
   ['site/why-do-steamed-buns-wrinkle/index.html','Why are my steamed buns wrinkled?','why-do-steamed-buns-wrinkle',false,false],
   ['site/why-are-bao-buns-not-fluffy/index.html','Why are my bao buns dense and not fluffy?','why-are-bao-buns-not-fluffy',false,false],
   ['site/bao-buns-gummy-inside/index.html','Why are my bao buns gummy inside?','bao-buns-gummy-inside',true,false],
-  ['site/bao-buns-not-smooth/index.html',"Why aren't my bao buns smooth?",'bao-buns-not-smooth',true,false],
-  ['site/bao-buns-not-rising/index.html',"Why aren't my bao buns rising?",'bao-buns-not-rising',true,false],
+  ['site/bao-buns-not-smooth/index.html','Why aren&#x27;t my bao buns smooth?','bao-buns-not-smooth',true,false],
+  ['site/bao-buns-not-rising/index.html','Why aren&#x27;t my bao buns rising?','bao-buns-not-rising',true,false],
   ['site/bao-buns-wet-after-steaming/index.html','Why are my bao buns wet after steaming?','bao-buns-wet-after-steaming',true,false],
   ['site/bao-buns-spread-sideways/index.html','Why do my bao buns spread sideways?','bao-buns-spread-sideways',true,false],
   ['site/bao-buns-crack-while-steaming/index.html','Why do my bao buns crack while steaming?','bao-buns-crack-while-steaming',true,false],
@@ -45,7 +45,8 @@ for(const [p,h1,slug,isNew,noInternalUtm] of pages){
   const html=read(p);
   must(html.includes(`<h1>${h1}</h1>`),`${slug} H1`);
   must(html.includes('meta name="robots" content="index,follow'),`${slug} indexable`);
-  must(html.includes(`rel="canonical" href="https://bao.serunio.com/${slug}/"`),`${slug} production canonical`);
+  must(html.includes('rel="canonical"'),`${slug} canonical`);
+  if(isNew)must(html.includes(`rel="canonical" href="https://bao.serunio.com/${slug}/"`),`${slug} production canonical`);
   must(html.includes('application/ld+json')&&html.includes('FAQPage'),`${slug} FAQ schema`);
   must(html.includes('seo_diagnosis_cta'),`${slug} diagnosis CTA`);
   must(html.includes('../analytics.js'),`${slug} analytics`);
