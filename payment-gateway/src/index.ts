@@ -112,7 +112,7 @@ async function createCheckout(request: Request, env: Env): Promise<Response> {
     const client = new WaffoPancake({
       merchantId: env.WAFFO_MERCHANT_ID,
       privateKey: env.WAFFO_PRIVATE_KEY,
-      fetch,
+      fetch: globalThis.fetch.bind(globalThis),
     });
 
     // Price is intentionally NOT accepted from the browser. The Waffo product owns the price.
