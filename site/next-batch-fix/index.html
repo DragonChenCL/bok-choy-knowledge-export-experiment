@@ -8,32 +8,37 @@
   <meta name="theme-color" content="#f4a62a">
   <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20260909-2">
   <style>
-    :root{--bg:#f7f4ee;--card:#fffdf9;--text:#252922;--muted:#6b7167;--line:#ddd8cf;--green:#566848;--orange:#f4a62a;--red:#a14c43;--soft:#f1eee7}
+    :root{--bg:#f7f4ee;--card:#fffdf9;--text:#252922;--muted:#6b7167;--line:#ddd8cf;--green:#566848;--green2:#35462f;--orange:#f4a62a;--red:#a14c43;--soft:#f1eee7;--gold:#8b7041}
     *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.65}
-    .wrap{max-width:920px;margin:0 auto;padding:32px 20px 80px}.brand{display:flex;align-items:center;gap:10px;color:var(--text);text-decoration:none;font-weight:800;margin-bottom:22px}.brand img{width:38px;height:38px;border-radius:10px}
+    .wrap{max-width:980px;margin:0 auto;padding:32px 20px 80px}.brand{display:flex;align-items:center;gap:10px;color:var(--text);text-decoration:none;font-weight:800;margin-bottom:22px}.brand img{width:38px;height:38px;border-radius:10px}
     .hero,.section{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 30px rgba(35,39,32,.05)}
-    .hero{padding:34px;margin-bottom:18px}.eyebrow{font:700 11px/1 Arial,sans-serif;letter-spacing:.09em;text-transform:uppercase;color:#7b6d53;margin-bottom:10px}.hero h1{font-size:38px;line-height:1.12;margin:0 0 10px}.hero p{margin:0;color:var(--muted);max-width:760px}
-    .meta{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}.pill{border:1px solid #d9d4ca;background:#faf8f3;border-radius:999px;padding:7px 11px;font-size:12px;color:#596052}.pill strong{color:var(--text)}
-    .section{padding:28px;margin-top:16px}.section h2{margin:0 0 10px;font-size:23px}.section h3{margin:0 0 8px;font-size:18px}.section p{margin:0;color:#4f554d}.section ul{margin:12px 0 0;padding-left:22px}.section li{margin:7px 0}.focus{border-color:#c9d2c1;background:linear-gradient(180deg,#fffdf9,#f7faF4)}
-    .change{font-size:18px!important;color:#2d3e29!important;font-weight:700;background:#eef4ea;border-left:4px solid var(--green);padding:16px 18px;border-radius:10px;margin-top:14px!important}
-    .rank{margin-top:14px;padding:14px 16px;border:1px solid #e0dbd2;border-radius:12px;background:#fbfaf7}.rankTop{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.confidence{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--green);white-space:nowrap}
+    .hero{padding:34px;margin-bottom:18px}.eyebrow{font:700 11px/1 Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#7b6d53;margin-bottom:10px}.hero h1{font-size:40px;line-height:1.1;margin:0 0 10px}.hero>p{margin:0;color:var(--muted);max-width:760px}
+    .summaryGrid{display:grid;grid-template-columns:1.15fr .7fr 1fr 1.6fr;gap:10px;margin-top:24px}.summaryCard{border:1px solid #ddd8cf;border-radius:13px;padding:14px;background:#faf8f3}.summaryCard small{display:block;color:#7a7d76;font-size:11px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}.summaryCard strong{display:block;font-size:14px;line-height:1.4;color:var(--green2)}
+    .meta{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap}.pill{border:1px solid #d9d4ca;background:#fff;border-radius:999px;padding:6px 10px;font-size:11px;color:#596052}.pill strong{color:var(--text)}
+    .section{padding:28px;margin-top:16px}.section h2{margin:0 0 10px;font-size:24px}.section h3{margin:0 0 7px;font-size:17px}.section p{color:#4f554d}.focus{border-color:#c9d2c1;background:linear-gradient(180deg,#fffdf9,#f7faf4)}
+    .confidenceNote{margin:14px 0 0;padding:13px 15px;border-radius:11px;background:#eef4ea;color:#40503a;font-size:14px}.rank{margin-top:12px;padding:14px 16px;border:1px solid #e0dbd2;border-radius:12px;background:#fbfaf7}.rankTop{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.confidence{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--green);white-space:nowrap}
+    .evidenceList{display:grid;gap:9px;margin-top:14px}.evidenceItem{display:flex;gap:11px;align-items:flex-start;padding:12px 14px;border:1px solid #e4dfd6;border-radius:11px;background:#fff}.evidenceItem i{font-style:normal;width:22px;height:22px;flex:0 0 22px;border-radius:50%;background:#eef4ea;color:var(--green);display:grid;place-items:center;font-weight:800;font-size:12px}.evidenceItem span{font-size:14px;color:#4a5048}
+    .mechanism{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.mechanism p{margin:0;padding:16px;border-left:3px solid #d9c9a8;background:#fffaf1;border-radius:9px;font-size:14px}
+    .experimentBox{margin-top:14px;border:1px solid #c8d3c0;border-radius:15px;overflow:hidden}.experimentRow{display:grid;grid-template-columns:170px 1fr;border-top:1px solid #dfe5da}.experimentRow:first-child{border-top:0}.experimentRow b{padding:14px 16px;background:#f2f6ef;color:#46543e;font-size:13px}.experimentRow div{padding:14px 16px;font-size:14px;color:#3f453d}.experimentRow.change div{font-size:16px;font-weight:700;color:#2d3e29}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.subcard{border:1px solid #e0dbd2;border-radius:14px;padding:18px;background:#fbfaf7}.subcard h3{font-size:16px}.checklist{display:grid;gap:9px;margin-top:12px}.check{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:#444a42}.box{width:18px;height:18px;border:1.5px solid #8b9485;border-radius:4px;flex:0 0 18px;margin-top:2px;background:#fff}
+    .successList{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.success{padding:13px 14px;border-radius:11px;background:#f3f7f0;border:1px solid #d5dfcf;font-size:14px;color:#40503a}.success:before{content:'✓';font-weight:900;margin-right:9px;color:var(--green)}
+    .decisionTree{display:grid;gap:10px;margin-top:14px}.branch{display:grid;grid-template-columns:1fr 1fr 1.15fr;border:1px solid #dfdad0;border-radius:13px;overflow:hidden;background:#fff}.branch>div{padding:14px;border-left:1px solid #e7e2da}.branch>div:first-child{border-left:0}.branch small{display:block;font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#8a7a5c;margin-bottom:5px}.branch strong,.branch span{font-size:13px;line-height:1.45}.branch strong{color:#35462f}.branch span{color:#575c55}
     .warning{margin-top:14px;padding:14px 16px;border:1px solid #ecd3a6;background:#fff8e9;border-radius:12px;color:#725a2b}
+    .recordTable{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}.recordTable th,.recordTable td{border:1px solid #ddd8cf;padding:11px 12px;text-align:left;vertical-align:top}.recordTable th{background:#f3f0e9;color:#565c53}.recordTable td:last-child{color:#35462f;font-weight:700}
+    .answers{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.answerTag{border:1px solid #ded8ce;border-radius:999px;padding:7px 10px;background:#fbfaf7;font-size:12px;color:#565b54}
     .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.btn{appearance:none;border:0;border-radius:11px;padding:12px 17px;font:700 14px Arial,sans-serif;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.primary{background:var(--green);color:#fff}.secondary{background:#fff;color:var(--green);border:1px solid var(--line)}
     .status{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:34px;text-align:center}.status .icon{width:62px;height:62px;border-radius:50%;background:var(--soft);display:grid;place-items:center;margin:0 auto 16px;font-size:28px}.status h1{margin:0 0 8px}.status p{margin:0 auto;color:var(--muted);max-width:620px}.status.failed .icon{background:#faecea}.status.failed h1{color:var(--red)}
     .support{margin-top:18px;color:var(--muted);font-size:13px}.support a{color:var(--green)}.copyState{font-size:13px;color:var(--green);min-height:20px;margin-top:8px}
-    @media(max-width:620px){.hero,.section,.status{padding:24px 20px}.hero h1{font-size:32px}.rankTop{flex-direction:column;gap:6px}}
-    @media print{body{background:#fff}.wrap{max-width:none;padding:0}.brand,.actions,.support,.copyState{display:none!important}.hero,.section{box-shadow:none;break-inside:avoid;border-color:#bbb}.section{page-break-inside:avoid}}
+    @media(max-width:780px){.summaryGrid{grid-template-columns:1fr 1fr}.mechanism,.grid2,.successList{grid-template-columns:1fr}.branch{grid-template-columns:1fr}.branch>div{border-left:0;border-top:1px solid #e7e2da}.branch>div:first-child{border-top:0}.experimentRow{grid-template-columns:1fr}.experimentRow b{padding-bottom:4px}.experimentRow div{padding-top:4px}}
+    @media(max-width:560px){.hero,.section,.status{padding:24px 20px}.hero h1{font-size:32px}.summaryGrid{grid-template-columns:1fr}.rankTop{flex-direction:column;gap:6px}.recordTable{font-size:12px}.recordTable th,.recordTable td{padding:8px}}
+    @media print{body{background:#fff}.wrap{max-width:none;padding:0}.brand,.actions,.support,.copyState{display:none!important}.hero,.section{box-shadow:none;break-inside:avoid;border-color:#bbb}.section{page-break-inside:avoid}.branch,.subcard,.experimentBox{break-inside:avoid}.hero{padding-top:10px}}
   </style>
 </head>
 <body>
   <div class="wrap">
     <a class="brand" href="/"><img src="/assets/bao-rescue/bao-rescue-icon-64.png" alt=""><span>Bao Rescue</span></a>
     <main id="app">
-      <div class="status">
-        <div class="icon">…</div>
-        <h1>Unlocking your Next-Batch Fix</h1>
-        <p>We are verifying your paid access before showing the plan.</p>
-      </div>
+      <div class="status"><div class="icon">…</div><h1>Unlocking your Next-Batch Fix</h1><p>We are verifying your paid access before showing the plan.</p></div>
     </main>
   </div>
   <script src="/analytics.js"></script>
@@ -43,62 +48,103 @@
     const STORAGE_PREFIX='bao_purchase_v1:';
     const paymentId=new URLSearchParams(location.search).get('payment');
     const app=document.getElementById('app');
-
-    function esc(value){return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
-    function fail(title,message){
-      app.innerHTML=`<div class="status failed"><div class="icon">!</div><h1>${esc(title)}</h1><p>${esc(message)}</p><div class="actions" style="justify-content:center"><a class="btn primary" href="/">Back to Bao Rescue</a></div><div class="support">Need help? <a href="mailto:support@serunio.com">support@serunio.com</a></div></div>`;
-    }
-    function readRecord(){
-      if(!paymentId)return null;
-      try{return JSON.parse(localStorage.getItem(`${STORAGE_PREFIX}${paymentId}`)||'null');}catch{return null;}
-    }
-    function list(items){return `<ul>${(items||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`;}
+    const esc=value=>String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+    function fail(title,message){app.innerHTML=`<div class="status failed"><div class="icon">!</div><h1>${esc(title)}</h1><p>${esc(message)}</p><div class="actions" style="justify-content:center"><a class="btn primary" href="/">Back to Bao Rescue</a></div><div class="support">Need help? <a href="mailto:support@serunio.com">support@serunio.com</a></div></div>`;}
+    function readRecord(){if(!paymentId)return null;try{return JSON.parse(localStorage.getItem(`${STORAGE_PREFIX}${paymentId}`)||'null');}catch{return null;}}
+    function evidence(items){return `<div class="evidenceList">${(items||[]).map(x=>`<div class="evidenceItem"><i>✓</i><span>${esc(x)}</span></div>`).join('')}</div>`;}
+    function checklist(items){return `<div class="checklist">${(items||[]).map(x=>`<div class="check"><span class="box"></span><span>${esc(x)}</span></div>`).join('')}</div>`;}
+    function branches(items){return `<div class="decisionTree">${(items||[]).map(x=>`<div class="branch"><div><small>If you see</small><strong>${esc(x.when)}</strong></div><div><small>Then do</small><strong>${esc(x.then)}</strong></div><div><small>What it means</small><span>${esc(x.meaning)}</span></div></div>`).join('')}</div>`;}
 
     function renderPlan(record,entitlement){
       const snapshot=record.diagnosis||{};
       const plan=window.BaoPremiumPlan?.build(snapshot);
       if(!plan){fail('Plan unavailable','The paid plan builder could not load. Please refresh this page.');return;}
       const ranks=(plan.ranks||[]).map(r=>`<div class="rank"><div class="rankTop"><div><h3>${esc(r.title||'Candidate')}</h3><p>${esc(r.evidence||'')}</p></div><span class="confidence">${esc(r.confidence||'')}</span></div></div>`).join('');
+      const mechanisms=(plan.mechanism||[]).map(x=>`<p>${esc(x)}</p>`).join('');
+      const success=(plan.successCriteria||[]).map(x=>`<div class="success">${esc(x)}</div>`).join('');
+      const rows=(plan.experimentRows||[]).map(r=>`<tr><td>${esc(r.variable)}</td><td>${esc(r.failed)}</td><td>${esc(r.next)}</td></tr>`).join('');
+      const answerTags=(plan.answers||[]).map(x=>`<span class="answerTag">${esc(x)}</span>`).join('');
       app.innerHTML=`
         <section class="hero">
-          <div class="eyebrow">Paid diagnosis plan</div>
+          <div class="eyebrow">Bao Rescue Lab Report · Paid result</div>
           <h1>Your Next-Batch Fix</h1>
-          <p>This plan is tied to the diagnosis you completed before checkout. Change one major variable, keep the rest stable, and use the next batch as a controlled test.</p>
-          <div class="meta"><span class="pill"><strong>Order</strong> ${esc(paymentId)}</span><span class="pill"><strong>Diagnosis</strong> ${esc(entitlement.referenceId||plan.diagnosisId||'—')}</span><span class="pill"><strong>Status</strong> paid</span></div>
-          <div class="actions"><button id="copyPlan" class="btn primary" type="button">Copy my plan</button><button id="printPlan" class="btn secondary" type="button">Print / Save as PDF</button><a class="btn secondary" href="/">Start another diagnosis</a></div>
+          <p>This is not a list of generic causes. It is a controlled experiment built from the diagnosis you completed before checkout: one variable changes, the rest stay stable, and the next batch should teach you something.</p>
+          <div class="summaryGrid">
+            <div class="summaryCard"><small>Diagnosis</small><strong>${esc(plan.rootCause)}</strong></div>
+            <div class="summaryCard"><small>Confidence</small><strong>${esc(plan.confidence)}</strong></div>
+            <div class="summaryCard"><small>Experiment variable</small><strong>${esc(plan.experiment.variable)}</strong></div>
+            <div class="summaryCard"><small>Goal</small><strong>${esc(plan.experiment.goal)}</strong></div>
+          </div>
+          <div class="meta"><span class="pill"><strong>Order</strong> ${esc(paymentId)}</span><span class="pill"><strong>Diagnosis</strong> ${esc(entitlement.referenceId||plan.diagnosisId||'—')}</span><span class="pill"><strong>Access</strong> verified paid</span></div>
+          <div class="actions"><button id="copyPlan" class="btn primary" type="button">Copy my plan</button><button id="printPlan" class="btn secondary" type="button">Print / Save as PDF</button><a class="btn secondary" href="/">Run another diagnosis</a></div>
           <div id="copyState" class="copyState"></div>
         </section>
-        <section class="section focus"><div class="eyebrow">1 · Most likely root cause</div><h2>${esc(plan.rootCause)}</h2><p><strong>Confidence:</strong> ${esc(plan.confidence)}</p>${ranks}</section>
-        <section class="section"><div class="eyebrow">2 · Why we think this</div><h2>Evidence from your diagnosis</h2>${list(plan.why)}</section>
-        <section class="section focus"><div class="eyebrow">3 · Change only this</div><h2>Your next-batch experiment</h2><p class="change">${esc(plan.changeOnly)}</p></section>
-        <section class="section"><div class="eyebrow">4 · Keep these unchanged</div><h2>Protect the comparison</h2><p>If several variables move at once, the next batch will not tell you which change mattered.</p>${list(plan.keepUnchanged)}</section>
-        <section class="section"><div class="eyebrow">5 · Success criteria</div><h2>How to know the test worked</h2>${list(plan.successCriteria)}</section>
-        <section class="section"><div class="eyebrow">6 · If it still fails</div><h2>Your next branch</h2><p>${esc(plan.ifStillFails)}</p>${plan.warning?`<div class="warning">${esc(plan.warning)}</div>`:''}</section>
-        <section class="section"><div class="eyebrow">7 · Your diagnosis record</div><h2>What you told Bao Rescue</h2>${plan.answers.length?list(plan.answers):'<p>No answer summary was available for this diagnosis.</p>'}</section>
-        <div class="support" style="text-align:center">Questions about this purchase? <a href="mailto:support@serunio.com">support@serunio.com</a></div>`;
+
+        <section class="section focus">
+          <div class="eyebrow">1 · Diagnosis summary</div><h2>${esc(plan.rootCause)}</h2>
+          <p><strong>Confidence: ${esc(plan.confidence)}</strong></p><div class="confidenceNote">${esc(plan.confidenceNote)}</div>${ranks}
+        </section>
+
+        <section class="section">
+          <div class="eyebrow">2 · Evidence chain</div><h2>Why this diagnosis is first</h2><p>These are the clues that moved this branch ahead of the alternatives.</p>${evidence(plan.why)}
+        </section>
+
+        <section class="section">
+          <div class="eyebrow">3 · What probably happened</div><h2>The mechanism behind the symptom</h2><div class="mechanism">${mechanisms}</div>
+        </section>
+
+        <section class="section focus">
+          <div class="eyebrow">4 · Your exact experiment</div><h2>Change one thing, not five</h2>
+          <div class="experimentBox">
+            <div class="experimentRow"><b>Variable</b><div>${esc(plan.experiment.variable)}</div></div>
+            <div class="experimentRow"><b>Instead of</b><div>${esc(plan.experiment.insteadOf)}</div></div>
+            <div class="experimentRow change"><b>Do this</b><div>${esc(plan.experiment.doThis)}</div></div>
+            <div class="experimentRow"><b>Why this test</b><div>${esc(plan.experiment.why)}</div></div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="eyebrow">5 · Control the variables</div><h2>Keep these unchanged</h2><p>If several variables move together, even a better bun will not tell you which change worked.</p>${checklist(plan.keepUnchanged)}
+        </section>
+
+        <section class="section">
+          <div class="eyebrow">6 · Batch checklist</div><h2>What to observe before and after steaming</h2>
+          <div class="grid2"><div class="subcard"><h3>Before steaming</h3>${checklist(plan.beforeChecklist)}</div><div class="subcard"><h3>After steaming</h3>${checklist(plan.afterChecklist)}</div></div>
+        </section>
+
+        <section class="section focus">
+          <div class="eyebrow">7 · Success criteria</div><h2>What counts as a real improvement</h2><div class="successList">${success}</div>
+        </section>
+
+        <section class="section">
+          <div class="eyebrow">8 · If it still fails</div><h2>Do not guess — follow the next branch</h2><p>Your next action depends on what this controlled batch actually does.</p>${branches(plan.branches)}${plan.warning?`<div class="warning">${esc(plan.warning)}</div>`:''}
+        </section>
+
+        <section class="section">
+          <div class="eyebrow">9 · Experiment record</div><h2>Use this as your next-batch log</h2><p>Fill in the result after cooking. The point is to preserve enough information that the next decision is evidence-based.</p>
+          <table class="recordTable"><thead><tr><th>Variable</th><th>Failed batch</th><th>Next batch</th></tr></thead><tbody>${rows}</tbody></table>
+        </section>
+
+        <section class="section">
+          <div class="eyebrow">10 · Your diagnosis record</div><h2>What you told Bao Rescue</h2>
+          ${answerTags?`<div class="answers">${answerTags}</div>`:'<p>No answer summary was available for this diagnosis.</p>'}
+        </section>
+        <div class="support" style="text-align:center">Questions about the plan or purchase? <a href="mailto:support@serunio.com">support@serunio.com</a></div>`;
 
       document.getElementById('printPlan').addEventListener('click',()=>window.print());
       document.getElementById('copyPlan').addEventListener('click',async()=>{
         const target=document.getElementById('copyState');
         const value=window.BaoPremiumPlan.toText(plan);
-        try{
-          await navigator.clipboard.writeText(value);
-          target.textContent='Copied. You can paste the plan into Notes, email, or your cooking log.';
-        }catch{
-          const ta=document.createElement('textarea');ta.value=value;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();
-          target.textContent='Copied. You can paste the plan into Notes, email, or your cooking log.';
-        }
+        try{await navigator.clipboard.writeText(value);target.textContent='Copied. Paste it into Notes, email, or your cooking log.';}
+        catch{const ta=document.createElement('textarea');ta.value=value;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();target.textContent='Copied. Paste it into Notes, email, or your cooking log.';}
       });
-      try{window.BaoAnalytics?.track?.('premium_unlocked',{gateway_order_id:paymentId,diagnosis_id:entitlement.referenceId||plan.diagnosisId||'',result_status:plan.status||''});}catch{}
+      try{window.BaoAnalytics?.track?.('premium_unlocked',{gateway_order_id:paymentId,diagnosis_id:entitlement.referenceId||plan.diagnosisId||'',result_status:plan.status||'',plan_category:plan.category||''});}catch{}
     }
 
     async function boot(){
       if(!paymentId||!/^PG_[A-Za-z0-9]+$/.test(paymentId)){fail('Invalid payment link','This result link does not contain a valid payment reference.');return;}
       const record=readRecord();
-      if(!record?.accessToken||!record?.diagnosis){
-        fail('Paid order found, but the unlock key is missing','For security, the unlock key is stored only in the browser that started checkout. Open this link in that same browser, or contact support with your order ID so we can help.');
-        return;
-      }
+      if(!record?.accessToken||!record?.diagnosis){fail('Paid order found, but the unlock key is missing','For security, the unlock key is stored only in the browser that started checkout. Open this link in that same browser, or contact support with your order ID so we can help.');return;}
       try{
         const res=await fetch(`${API_BASE}/entitlement`,{headers:{authorization:`Bearer ${record.accessToken}`},cache:'no-store'});
         const body=await res.json().catch(()=>({}));
