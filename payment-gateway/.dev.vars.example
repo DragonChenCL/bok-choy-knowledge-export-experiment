@@ -1,0 +1,2 @@
+# Copy to .dev.vars for local testing. Never commit the real private key.
+WAFFO_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nREPLACE_ME\n-----END PRIVATE KEY-----"
