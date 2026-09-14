@@ -14,8 +14,8 @@
     "@waffo/pancake-ts": "^0.21.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20260910.0",
+    "@cloudflare/workers-types": "latest",
     "typescript": "^5.9.2",
-    "wrangler": "^4.36.0"
+    "wrangler": "latest"
   }
 }
