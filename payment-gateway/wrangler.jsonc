@@ -5,9 +5,9 @@
   "compatibility_date": "2026-09-14",
   "compatibility_flags": ["nodejs_compat"],
   "vars": {
-    "WAFFO_ENV": "test",
+    "WAFFO_ENV": "prod",
     "WAFFO_MERCHANT_ID": "MER_7Z6rdASdOjLTXSJw1Aun2T",
-    "BAO_NEXT_BATCH_PRODUCT_ID": "PROD_2TZGLUfIFUsELdxrz2QW1g",
+    "BAO_NEXT_BATCH_PRODUCT_ID": "PROD_2b2TqUlq9zqplZinQZVRjD",
     "BAO_SUCCESS_URL": "https://bao.serunio.com/payment-success/",
     "ALLOWED_ORIGINS": "https://bao.serunio.com,http://localhost:3000,http://127.0.0.1:5500"
   },
