@@ -80,7 +80,8 @@ jobs:
             window.dataLayer = window.dataLayer || [];
             function gtag(){{dataLayer.push(arguments);}}
             gtag('js', new Date());
-            gtag('config', '{ga_id}', {{'send_page_view': false}});
+            gtag('config', '{ga_id}', {{'send_page_view': true}});
+            window.__baoGa4Configured = true;
           </script>'''
 
           def add_ga(html):
@@ -154,7 +155,8 @@ jobs:
           grep -q 'G-GVD03YFR9C' _site/bao-buns-collapse-after-steaming/index.html
           grep -q 'G-GVD03YFR9C' _site/why-do-steamed-buns-wrinkle/index.html
           grep -q 'G-GVD03YFR9C' _site/why-are-bao-buns-not-fluffy/index.html
-          grep -q "send_page_view': false" _site/index.html
+          grep -q "send_page_view': true" _site/index.html
+          grep -q '__baoGa4Configured = true' _site/index.html
 
           if grep -R --include='*.html' --include='*.xml' --include='*.txt' 'dragonchencl.github.io/bok-choy-knowledge-export-experiment' _site; then
             echo 'Old GitHub Pages canonical/domain detected'
