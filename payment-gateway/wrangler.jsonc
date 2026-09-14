@@ -15,7 +15,7 @@
     {
       "binding": "PAYMENT_DB",
       "database_name": "payment-gateway-db",
-      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      "database_id": "9215f200-8095-4c9c-a817-4ed6e299c788",
       "migrations_dir": "migrations"
     }
   ]
