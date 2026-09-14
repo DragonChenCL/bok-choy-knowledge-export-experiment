@@ -5,16 +5,26 @@ const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 const must=(ok,msg)=>{if(!ok){console.error('FAIL',msg);process.exitCode=1}else console.log('PASS',msg)};
 
 const analytics=read('site/analytics.js');
-['page_view','symptom_select','diagnosis_start','question_answer','diagnosis_complete','diagnosis_back','diagnosis_restart','seo_diagnosis_cta'].forEach(e=>must(analytics.includes(`'${e}'`)||analytics.includes(`"${e}"`),`analytics event ${e}`));
+['page_view','symptom_select','diagnosis_start','question_answer','diagnosis_complete','diagnosis_back','diagnosis_restart','seo_diagnosis_cta','seo_diagnosis_start','seo_diagnosis_complete'].forEach(e=>must(analytics.includes(`'${e}'`)||analytics.includes(`"${e}"`),`analytics event ${e}`));
 must(analytics.includes('utm_source')&&analytics.includes('utm_campaign'),'analytics captures UTM attribution');
 must(analytics.includes('BAO_ANALYTICS_ENDPOINT'),'analytics supports external beacon endpoint');
 must(analytics.includes('G-GVD03YFR9C')&&analytics.includes('googletagmanager.com/gtag/js'),'analytics initializes GA4 for every landing page');
+must(analytics.includes("window.gtag('config',GA4_ID,{send_page_view:true})"),'GA4 uses native config-generated page view for session attribution');
+must(analytics.includes("track('page_view',{}, {skipGa:true})"),'custom page view does not duplicate GA4 native page view');
 must(analytics.includes('yfjx2b9bn4')&&analytics.includes('clarity.ms/tag'),'analytics initializes Microsoft Clarity');
 must(analytics.includes('bao_session_id:baoSessionId'),'custom session marker does not use GA4 reserved session_id');
 must(!analytics.includes('session_id:sessionId'),'GA4 reserved session_id is not overridden');
 must(!analytics.includes('window.dataLayer.push(payload)'),'custom events are not duplicated through raw dataLayer event pushes');
+must(analytics.includes("SEO_ENTRY_KEY='bao_seo_entry_v1'")&&analytics.includes('rememberSeoEntry'),'SEO entry attribution persists through diagnosis navigation');
+must(analytics.includes('prepareSeoDiagnosisLinks'),'legacy SEO diagnosis links are normalized before click');
 must(analytics.includes('sanitizeInternalAttributionLink'),'same-origin CTA attribution sanitizer exists');
 must(analytics.includes("['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach"),'internal CTA strips campaign UTMs before navigation');
+must(analytics.includes('event_callback')&&analytics.includes('event_timeout')&&analytics.includes("transportType:'beacon'"),'SEO CTA waits for analytics delivery before navigation');
+must(analytics.includes("track('seo_diagnosis_start'")&&analytics.includes("track('seo_diagnosis_complete'"),'SEO diagnosis funnel has explicit start and complete events');
+
+const css=read('site/seo.css');
+must(css.includes('.nav a{display:inline-flex')&&css.includes('background:var(--olive)'),'SEO top-nav diagnosis CTA is visually prominent');
+must(css.includes('.section .cta{width:100%'),'SEO section CTA expands to a mobile tap target');
 
 const home=read('site/index.html');
 must(home.includes('./analytics.js'),'root diagnosis loads analytics layer');
