@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "payment-gateway",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-14",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "WAFFO_ENV": "test",
+    "WAFFO_MERCHANT_ID": "MER_7Z6rdASdOjLTXSJw1Aun2T",
+    "BAO_NEXT_BATCH_PRODUCT_ID": "PROD_2TZGLUfIFUsELdxrz2QW1g",
+    "BAO_SUCCESS_URL": "https://bao.serunio.com/payment-success/",
+    "ALLOWED_ORIGINS": "https://bao.serunio.com,http://localhost:3000,http://127.0.0.1:5500"
+  },
+  "d1_databases": [
+    {
+      "binding": "PAYMENT_DB",
+      "database_name": "payment-gateway-db",
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      "migrations_dir": "migrations"
+    }
+  ]
+}
