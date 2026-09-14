@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Your Next-Batch Fix — Bao Rescue</title>
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#f4a62a">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20260909-2">
+  <style>
+    :root{--bg:#f7f4ee;--card:#fffdf9;--text:#252922;--muted:#6b7167;--line:#ddd8cf;--green:#566848;--orange:#f4a62a;--red:#a14c43;--soft:#f1eee7}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.65}
+    .wrap{max-width:920px;margin:0 auto;padding:32px 20px 80px}.brand{display:flex;align-items:center;gap:10px;color:var(--text);text-decoration:none;font-weight:800;margin-bottom:22px}.brand img{width:38px;height:38px;border-radius:10px}
+    .hero,.section{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 30px rgba(35,39,32,.05)}
+    .hero{padding:34px;margin-bottom:18px}.eyebrow{font:700 11px/1 Arial,sans-serif;letter-spacing:.09em;text-transform:uppercase;color:#7b6d53;margin-bottom:10px}.hero h1{font-size:38px;line-height:1.12;margin:0 0 10px}.hero p{margin:0;color:var(--muted);max-width:760px}
+    .meta{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}.pill{border:1px solid #d9d4ca;background:#faf8f3;border-radius:999px;padding:7px 11px;font-size:12px;color:#596052}.pill strong{color:var(--text)}
+    .section{padding:28px;margin-top:16px}.section h2{margin:0 0 10px;font-size:23px}.section h3{margin:0 0 8px;font-size:18px}.section p{margin:0;color:#4f554d}.section ul{margin:12px 0 0;padding-left:22px}.section li{margin:7px 0}.focus{border-color:#c9d2c1;background:linear-gradient(180deg,#fffdf9,#f7faF4)}
+    .change{font-size:18px!important;color:#2d3e29!important;font-weight:700;background:#eef4ea;border-left:4px solid var(--green);padding:16px 18px;border-radius:10px;margin-top:14px!important}
+    .rank{margin-top:14px;padding:14px 16px;border:1px solid #e0dbd2;border-radius:12px;background:#fbfaf7}.rankTop{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.confidence{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--green);white-space:nowrap}
+    .warning{margin-top:14px;padding:14px 16px;border:1px solid #ecd3a6;background:#fff8e9;border-radius:12px;color:#725a2b}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.btn{appearance:none;border:0;border-radius:11px;padding:12px 17px;font:700 14px Arial,sans-serif;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.primary{background:var(--green);color:#fff}.secondary{background:#fff;color:var(--green);border:1px solid var(--line)}
+    .status{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:34px;text-align:center}.status .icon{width:62px;height:62px;border-radius:50%;background:var(--soft);display:grid;place-items:center;margin:0 auto 16px;font-size:28px}.status h1{margin:0 0 8px}.status p{margin:0 auto;color:var(--muted);max-width:620px}.status.failed .icon{background:#faecea}.status.failed h1{color:var(--red)}
+    .support{margin-top:18px;color:var(--muted);font-size:13px}.support a{color:var(--green)}.copyState{font-size:13px;color:var(--green);min-height:20px;margin-top:8px}
+    @media(max-width:620px){.hero,.section,.status{padding:24px 20px}.hero h1{font-size:32px}.rankTop{flex-direction:column;gap:6px}}
+    @media print{body{background:#fff}.wrap{max-width:none;padding:0}.brand,.actions,.support,.copyState{display:none!important}.hero,.section{box-shadow:none;break-inside:avoid;border-color:#bbb}.section{page-break-inside:avoid}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/bao-rescue/bao-rescue-icon-64.png" alt=""><span>Bao Rescue</span></a>
+    <main id="app">
+      <div class="status">
+        <div class="icon">…</div>
+        <h1>Unlocking your Next-Batch Fix</h1>
+        <p>We are verifying your paid access before showing the plan.</p>
+      </div>
+    </main>
+  </div>
+  <script src="/analytics.js"></script>
+  <script src="/diagnose/premium-plan.js"></script>
+  <script>
+    const API_BASE='https://payment-gateway.chenlongqrr.workers.dev';
+    const STORAGE_PREFIX='bao_purchase_v1:';
+    const paymentId=new URLSearchParams(location.search).get('payment');
+    const app=document.getElementById('app');
+
+    function esc(value){return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
+    function fail(title,message){
+      app.innerHTML=`<div class="status failed"><div class="icon">!</div><h1>${esc(title)}</h1><p>${esc(message)}</p><div class="actions" style="justify-content:center"><a class="btn primary" href="/">Back to Bao Rescue</a></div><div class="support">Need help? <a href="mailto:support@serunio.com">support@serunio.com</a></div></div>`;
+    }
+    function readRecord(){
+      if(!paymentId)return null;
+      try{return JSON.parse(localStorage.getItem(`${STORAGE_PREFIX}${paymentId}`)||'null');}catch{return null;}
+    }
+    function list(items){return `<ul>${(items||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`;}
+
+    function renderPlan(record,entitlement){
+      const snapshot=record.diagnosis||{};
+      const plan=window.BaoPremiumPlan?.build(snapshot);
+      if(!plan){fail('Plan unavailable','The paid plan builder could not load. Please refresh this page.');return;}
+      const ranks=(plan.ranks||[]).map(r=>`<div class="rank"><div class="rankTop"><div><h3>${esc(r.title||'Candidate')}</h3><p>${esc(r.evidence||'')}</p></div><span class="confidence">${esc(r.confidence||'')}</span></div></div>`).join('');
+      app.innerHTML=`
+        <section class="hero">
+          <div class="eyebrow">Paid diagnosis plan</div>
+          <h1>Your Next-Batch Fix</h1>
+          <p>This plan is tied to the diagnosis you completed before checkout. Change one major variable, keep the rest stable, and use the next batch as a controlled test.</p>
+          <div class="meta"><span class="pill"><strong>Order</strong> ${esc(paymentId)}</span><span class="pill"><strong>Diagnosis</strong> ${esc(entitlement.referenceId||plan.diagnosisId||'—')}</span><span class="pill"><strong>Status</strong> paid</span></div>
+          <div class="actions"><button id="copyPlan" class="btn primary" type="button">Copy my plan</button><button id="printPlan" class="btn secondary" type="button">Print / Save as PDF</button><a class="btn secondary" href="/">Start another diagnosis</a></div>
+          <div id="copyState" class="copyState"></div>
+        </section>
+        <section class="section focus"><div class="eyebrow">1 · Most likely root cause</div><h2>${esc(plan.rootCause)}</h2><p><strong>Confidence:</strong> ${esc(plan.confidence)}</p>${ranks}</section>
+        <section class="section"><div class="eyebrow">2 · Why we think this</div><h2>Evidence from your diagnosis</h2>${list(plan.why)}</section>
+        <section class="section focus"><div class="eyebrow">3 · Change only this</div><h2>Your next-batch experiment</h2><p class="change">${esc(plan.changeOnly)}</p></section>
+        <section class="section"><div class="eyebrow">4 · Keep these unchanged</div><h2>Protect the comparison</h2><p>If several variables move at once, the next batch will not tell you which change mattered.</p>${list(plan.keepUnchanged)}</section>
+        <section class="section"><div class="eyebrow">5 · Success criteria</div><h2>How to know the test worked</h2>${list(plan.successCriteria)}</section>
+        <section class="section"><div class="eyebrow">6 · If it still fails</div><h2>Your next branch</h2><p>${esc(plan.ifStillFails)}</p>${plan.warning?`<div class="warning">${esc(plan.warning)}</div>`:''}</section>
+        <section class="section"><div class="eyebrow">7 · Your diagnosis record</div><h2>What you told Bao Rescue</h2>${plan.answers.length?list(plan.answers):'<p>No answer summary was available for this diagnosis.</p>'}</section>
+        <div class="support" style="text-align:center">Questions about this purchase? <a href="mailto:support@serunio.com">support@serunio.com</a></div>`;
+
+      document.getElementById('printPlan').addEventListener('click',()=>window.print());
+      document.getElementById('copyPlan').addEventListener('click',async()=>{
+        const target=document.getElementById('copyState');
+        const value=window.BaoPremiumPlan.toText(plan);
+        try{
+          await navigator.clipboard.writeText(value);
+          target.textContent='Copied. You can paste the plan into Notes, email, or your cooking log.';
+        }catch{
+          const ta=document.createElement('textarea');ta.value=value;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();
+          target.textContent='Copied. You can paste the plan into Notes, email, or your cooking log.';
+        }
+      });
+      try{window.BaoAnalytics?.track?.('premium_unlocked',{gateway_order_id:paymentId,diagnosis_id:entitlement.referenceId||plan.diagnosisId||'',result_status:plan.status||''});}catch{}
+    }
+
+    async function boot(){
+      if(!paymentId||!/^PG_[A-Za-z0-9]+$/.test(paymentId)){fail('Invalid payment link','This result link does not contain a valid payment reference.');return;}
+      const record=readRecord();
+      if(!record?.accessToken||!record?.diagnosis){
+        fail('Paid order found, but the unlock key is missing','For security, the unlock key is stored only in the browser that started checkout. Open this link in that same browser, or contact support with your order ID so we can help.');
+        return;
+      }
+      try{
+        const res=await fetch(`${API_BASE}/entitlement`,{headers:{authorization:`Bearer ${record.accessToken}`},cache:'no-store'});
+        const body=await res.json().catch(()=>({}));
+        if(!res.ok){fail('We could not verify access',body.error||'The entitlement check failed.');return;}
+        if(!body.granted){fail('Paid access is not active',body.status==='refunded'?'This order has been refunded, so the paid plan is no longer available.':'This order has not been confirmed as paid yet. Please wait a moment and refresh.');return;}
+        if(body.gatewayOrderId!==paymentId||body.referenceId!==record.diagnosis.diagnosisId){fail('Order verification mismatch','The saved diagnosis does not match this paid order. Please contact support with the order ID.');return;}
+        renderPlan(record,body);
+      }catch(err){fail('Verification service unavailable','We could not reach the payment gateway. Please refresh in a moment. Your paid access will remain available once the service is reachable.');}
+    }
+    boot();
+  </script>
+</body>
+</html>
