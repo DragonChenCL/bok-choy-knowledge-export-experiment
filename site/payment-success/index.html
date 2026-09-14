@@ -8,12 +8,12 @@
   <meta name="theme-color" content="#f4a62a">
   <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20260909-2">
   <style>
-    :root{--bg:#f7f4ee;--card:#fffdf9;--text:#252922;--muted:#6b7167;--line:#ddd8cf;--green:#566848;--orange:#f4a62a;--red:#a14c43}
+    :root{--bg:#f7f4ee;--card:#fffdf9;--text:#252922;--muted:#6b7167;--line:#ddd8cf;--green:#566848;--red:#a14c43}
     *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.6}
     .wrap{max-width:720px;margin:0 auto;padding:40px 20px 72px}.brand{display:flex;align-items:center;gap:10px;color:var(--text);text-decoration:none;font-weight:800;margin-bottom:24px}.brand img{width:38px;height:38px;border-radius:10px}
     .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:34px;box-shadow:0 10px 30px rgba(35,39,32,.05);text-align:center}.icon{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;margin:0 auto 18px;background:#f1eee7;font-size:30px}
     h1{margin:0 0 8px;font-size:32px}.lead{margin:0 auto 22px;color:var(--muted);max-width:560px}.details{margin:24px 0 0;text-align:left;border-top:1px solid var(--line);padding-top:18px}.row{display:flex;justify-content:space-between;gap:18px;padding:8px 0;font-size:14px}.row span:first-child{color:var(--muted)}.row span:last-child{font-weight:700;text-align:right;word-break:break-word}
-    .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px}.btn{display:inline-block;text-decoration:none;border-radius:10px;padding:12px 18px;font-weight:700;font-size:14px}.primary{background:var(--green);color:#fff}.secondary{border:1px solid var(--line);color:var(--green);background:#fff}
+    .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px}.btn{display:inline-block;text-decoration:none;border-radius:10px;padding:12px 18px;font-weight:700;font-size:14px}.primary{background:var(--green);color:#fff}.secondary{border:1px solid var(--line);color:var(--green);background:#fff;cursor:pointer}
     .pending .icon{animation:pulse 1.4s ease-in-out infinite}.paid .icon{background:#eef4ea}.failed .icon{background:#faecea}.paid h1{color:var(--green)}.failed h1{color:var(--red)}
     .support{margin-top:20px;color:var(--muted);font-size:13px}.support a{color:var(--green)}
     @keyframes pulse{50%{transform:scale(1.06);opacity:.72}}
@@ -35,102 +35,87 @@
       </div>
       <div class="actions">
         <a class="btn primary" href="/">Back to Bao Rescue</a>
-        <button id="retry" class="btn secondary" type="button" style="cursor:pointer">Check again</button>
+        <button id="retry" class="btn secondary" type="button">Check again</button>
       </div>
       <div class="support">Need help? <a href="mailto:support@serunio.com">support@serunio.com</a></div>
     </main>
   </div>
   <script>
-    const API_BASE = 'https://payment-gateway.chenlongqrr.workers.dev';
-    const paymentId = new URLSearchParams(location.search).get('payment');
-    const card = document.getElementById('card');
-    const icon = document.getElementById('icon');
-    const title = document.getElementById('title');
-    const lead = document.getElementById('lead');
-    const details = document.getElementById('details');
-    const retry = document.getElementById('retry');
-    let attempts = 0;
-    let timer = null;
+    const API_BASE='https://payment-gateway.chenlongqrr.workers.dev';
+    const STORAGE_PREFIX='bao_purchase_v1:';
+    const paymentId=new URLSearchParams(location.search).get('payment');
+    const card=document.getElementById('card');
+    const icon=document.getElementById('icon');
+    const title=document.getElementById('title');
+    const lead=document.getElementById('lead');
+    const details=document.getElementById('details');
+    const retry=document.getElementById('retry');
+    let attempts=0,timer=null,opening=false;
 
-    function showInvalid(message) {
-      card.className = 'card failed';
-      icon.textContent = '!';
-      title.textContent = 'We could not verify this payment';
-      lead.textContent = message;
-      retry.hidden = true;
+    function showInvalid(message){
+      card.className='card failed';icon.textContent='!';title.textContent='We could not verify this payment';lead.textContent=message;retry.hidden=true;
+    }
+    function savedPurchase(){try{return JSON.parse(localStorage.getItem(`${STORAGE_PREFIX}${paymentId}`)||'null');}catch{return null;}}
+    function fill(order){
+      details.hidden=false;
+      document.getElementById('orderId').textContent=order.gatewayOrderId||paymentId||'—';
+      document.getElementById('status').textContent=order.status||'unknown';
+      document.getElementById('product').textContent=order.sku==='next-batch-fix'?'Next-Batch Fix':(order.sku||'—');
+      document.getElementById('reference').textContent=order.referenceId||'—';
     }
 
-    function render(order) {
-      details.hidden = false;
-      document.getElementById('orderId').textContent = order.gatewayOrderId || paymentId || '—';
-      document.getElementById('status').textContent = order.status || 'unknown';
-      document.getElementById('product').textContent = order.sku === 'next-batch-fix' ? 'Next-Batch Fix' : (order.sku || '—');
-      document.getElementById('reference').textContent = order.referenceId || '—';
-
-      if (order.paid) {
-        clearTimeout(timer);
-        card.className = 'card paid';
-        icon.textContent = '✓';
-        title.textContent = 'Payment confirmed';
-        lead.textContent = 'Your payment was confirmed successfully. Your Next-Batch Fix can now be unlocked from the diagnosis result flow.';
-        retry.hidden = true;
-        return;
+    async function unlock(order){
+      if(opening)return;
+      const record=savedPurchase();
+      if(!record?.accessToken){
+        card.className='card paid';icon.textContent='✓';title.textContent='Payment confirmed';
+        lead.textContent='The payment succeeded, but this browser no longer has the private unlock key created before checkout. Please open this order in the same browser that started payment, or contact support with the order ID.';
+        retry.hidden=true;return;
       }
-
-      if (order.status === 'refunded') {
-        clearTimeout(timer);
-        card.className = 'card failed';
-        icon.textContent = '↩';
-        title.textContent = 'Payment refunded';
-        lead.textContent = 'This order has been refunded, so paid access is no longer active.';
-        retry.hidden = true;
-        return;
-      }
-
-      card.className = 'card pending';
-      icon.textContent = '…';
-      title.textContent = 'Payment is still processing';
-      lead.textContent = 'Waffo has returned you to Bao Rescue, but the server confirmation has not arrived yet. We will keep checking for a short time.';
-    }
-
-    async function checkPayment(auto = false) {
-      if (!paymentId || !/^PG_[A-Za-z0-9]+$/.test(paymentId)) {
-        showInvalid('The payment reference in this URL is missing or invalid.');
-        return;
-      }
-
-      attempts += 1;
-      try {
-        const res = await fetch(`${API_BASE}/payment/${encodeURIComponent(paymentId)}`, { cache: 'no-store' });
-        const body = await res.json().catch(() => ({}));
-        if (!res.ok) {
-          if (res.status === 404 && attempts < 8) {
-            if (auto) timer = setTimeout(() => checkPayment(true), 1800);
-            return;
-          }
-          showInvalid(body.error || 'The payment gateway could not find this order.');
-          return;
+      try{
+        const res=await fetch(`${API_BASE}/entitlement`,{headers:{authorization:`Bearer ${record.accessToken}`},cache:'no-store'});
+        const body=await res.json().catch(()=>({}));
+        if(!res.ok||!body.granted){
+          card.className='card paid';icon.textContent='✓';title.textContent='Payment confirmed';
+          lead.textContent='Payment is confirmed. We are still waiting for the paid entitlement to become active. Use “Check again” in a moment.';
+          retry.hidden=false;return;
         }
+        if(body.gatewayOrderId!==paymentId||body.referenceId!==record?.diagnosis?.diagnosisId){showInvalid('The saved diagnosis does not match this paid order. Please contact support with the order ID.');return;}
+        opening=true;card.className='card paid';icon.textContent='✓';title.textContent='Payment confirmed';lead.textContent='Your paid access is verified. Opening your personalized Next-Batch Fix…';retry.hidden=true;
+        setTimeout(()=>location.replace(`/next-batch-fix/?payment=${encodeURIComponent(paymentId)}`),550);
+      }catch{
+        card.className='card paid';icon.textContent='✓';title.textContent='Payment confirmed';lead.textContent='Payment succeeded, but the entitlement service is temporarily unavailable. Please try again in a moment.';retry.hidden=false;
+      }
+    }
 
+    function render(order){
+      fill(order);
+      if(order.paid){clearTimeout(timer);unlock(order);return;}
+      if(order.status==='refunded'){
+        clearTimeout(timer);card.className='card failed';icon.textContent='↩';title.textContent='Payment refunded';lead.textContent='This order has been refunded, so paid access is no longer active.';retry.hidden=true;return;
+      }
+      card.className='card pending';icon.textContent='…';title.textContent='Payment is still processing';lead.textContent='Waffo has returned you to Bao Rescue, but the server confirmation has not arrived yet. We will keep checking for a short time.';
+    }
+
+    async function checkPayment(auto=false){
+      if(!paymentId||!/^PG_[A-Za-z0-9]+$/.test(paymentId)){showInvalid('The payment reference in this URL is missing or invalid.');return;}
+      attempts+=1;
+      try{
+        const res=await fetch(`${API_BASE}/payment/${encodeURIComponent(paymentId)}`,{cache:'no-store'});
+        const body=await res.json().catch(()=>({}));
+        if(!res.ok){
+          if(res.status===404&&attempts<8){if(auto)timer=setTimeout(()=>checkPayment(true),1800);return;}
+          showInvalid(body.error||'The payment gateway could not find this order.');return;
+        }
         render(body);
-        if (!body.paid && body.status !== 'refunded' && auto && attempts < 10) {
-          timer = setTimeout(() => checkPayment(true), 1800);
-        }
-      } catch (err) {
-        if (auto && attempts < 6) {
-          timer = setTimeout(() => checkPayment(true), 2200);
-        } else {
-          showInvalid('The payment status service is temporarily unavailable. Please try again in a moment.');
-        }
+        if(!body.paid&&body.status!=='refunded'&&auto&&attempts<10)timer=setTimeout(()=>checkPayment(true),1800);
+      }catch{
+        if(auto&&attempts<6)timer=setTimeout(()=>checkPayment(true),2200);
+        else showInvalid('The payment status service is temporarily unavailable. Please try again in a moment.');
       }
     }
 
-    retry.addEventListener('click', () => {
-      clearTimeout(timer);
-      attempts = 0;
-      checkPayment(true);
-    });
-
+    retry.addEventListener('click',()=>{clearTimeout(timer);attempts=0;opening=false;checkPayment(true);});
     checkPayment(true);
   </script>
 </body>
