@@ -97,22 +97,24 @@
     const snapshot=extractSnapshot(panel,testText);
     test.innerHTML=`
       <div class="premiumLock">
-        <div class="premiumEyebrow">Your exact next-batch experiment</div>
-        <h3>Turn this diagnosis into one controlled cooking plan</h3>
-        <p>Your free result shows the strongest cause family. The paid Next-Batch Fix gives you the exact one-variable test, what to keep unchanged, success criteria, and the next branch to test if it still fails.</p>
+        <div class="premiumEyebrow">Bao Rescue Lab Report</div>
+        <h3>Turn this diagnosis into a controlled next-batch plan</h3>
+        <p>Your free result identifies the strongest cause family. The paid Next-Batch Fix turns it into a detailed experiment report built from the answers you just gave.</p>
         <ul>
-          <li>Most likely root cause + evidence</li>
-          <li>Exactly one variable to change next</li>
-          <li>What must stay unchanged for a clean comparison</li>
-          <li>Clear success criteria for the next batch</li>
-          <li>What to test next if the symptom remains</li>
+          <li>Diagnosis summary, confidence and evidence chain</li>
+          <li>What probably happened inside the dough/process</li>
+          <li>Exactly one variable to change next — and what not to change</li>
+          <li>Before-steam and after-steam observation checklists</li>
+          <li>Clear success criteria for deciding whether the test worked</li>
+          <li>A decision tree for what to test if the symptom remains</li>
+          <li>A next-batch experiment record you can print or save as PDF</li>
         </ul>
         <div class="premiumPrice">
           <div><strong>$4.99 USD</strong><small>One-time purchase · no subscription</small></div>
-          <button class="premiumBuy" type="button">Unlock My Next-Batch Fix →</button>
+          <button class="premiumBuy" type="button">Unlock My Lab Report →</button>
         </div>
         <div class="premiumError" aria-live="polite"></div>
-        <div class="premiumFreeNote">Payment is processed by Waffo Pancake. The basic diagnosis above remains free.</div>
+        <div class="premiumFreeNote">Payment is processed by Waffo Pancake. Your basic diagnosis remains free.</div>
       </div>`;
     const btn=test.querySelector('.premiumBuy');
     const errorBox=test.querySelector('.premiumError');
