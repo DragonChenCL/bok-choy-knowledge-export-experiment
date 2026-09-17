@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Bao Rescue — Photo-Guided Steamed Bun Diagnosis</title>
-  <meta name="description" content="Photo-guided steamed bun troubleshooting. Match the symptom, narrow likely causes, and change one variable in your next batch.">
+  <title>Bao Rescue — Steamed Bun Troubleshooting, One Test at a Time</title>
+  <meta name="description" content="Stop guessing why your bao failed. Match the symptom, narrow look-alike causes, and change one variable in your next batch.">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="https://bao.serunio.com/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Bao Rescue">
-  <meta property="og:title" content="Bao Rescue — Photo-Guided Steamed Bun Diagnosis">
-  <meta property="og:description" content="Match what went wrong with your steamed buns, narrow the likely cause, and test one variable in your next batch.">
+  <meta property="og:title" content="Bao Rescue — Stop Guessing Why Your Bao Failed">
+  <meta property="og:description" content="Match what happened, narrow the likely cause, and test one variable next batch instead of changing everything at once.">
   <meta property="og:url" content="https://bao.serunio.com/">
   <meta property="og:image" content="https://bao.serunio.com/assets/bao-rescue/bao-rescue-icon-64.png">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Bao Rescue — Steamed Bun Diagnosis">
-  <meta name="twitter:description" content="Photo-guided steamed bun troubleshooting with one controlled next-batch test.">
+  <meta name="twitter:title" content="Bao Rescue — Steamed Bun Troubleshooting">
+  <meta name="twitter:description" content="Observe the symptom, narrow look-alike causes, and test one thing next batch.">
   <meta name="twitter:image" content="https://bao.serunio.com/assets/bao-rescue/bao-rescue-icon-64.png">
   <meta name="theme-color" content="#f4a62a">
   <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20260909-2">
@@ -25,7 +25,15 @@
   <link rel="apple-touch-icon" href="/assets/bao-rescue/bao-rescue-icon-64.png?v=20260909-2">
   <link rel="manifest" href="/site.webmanifest?v=20260909-2">
   <link rel="stylesheet" href="./diagnose/styles.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Bao Rescue","url":"https://bao.serunio.com/","description":"Photo-guided troubleshooting for fresh yeast-leavened steamed buns.","applicationCategory":"LifestyleApplication","operatingSystem":"Web","isAccessibleForFree":true,"offers":{"@type":"Offer","name":"Next-Batch Fix","price":"4.99","priceCurrency":"USD","url":"https://bao.serunio.com/#pricing"},"contactPoint":{"@type":"ContactPoint","contactType":"customer support","email":"support@serunio.com"}}</script>
+  <style>
+    .heroMicro{margin-top:9px;font:12.5px/1.5 Arial,sans-serif;color:#74766f}
+    .whyBlock{margin:0 0 28px;padding:22px 24px;border:1px solid #d7d0c4;border-radius:18px;background:#fffdf9;box-shadow:0 8px 24px rgba(35,39,32,.035)}
+    .whyBlock h2{font-size:30px;margin:8px 0 8px}.whyBlock p{margin:0;max-width:860px;color:#5e6259;font:15px/1.65 Arial,sans-serif}
+    .valuePills{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.valuePills span{padding:7px 10px;border:1px solid #d5ddd0;border-radius:999px;background:#f7faf4;color:#526149;font:700 11px Arial,sans-serif}
+    .premiumSection{margin:34px 0 28px;padding:24px;border:1px solid #d7d0c4;border-radius:18px;background:#fffdf9;box-shadow:0 8px 24px rgba(35,39,32,.04)}
+    @media(max-width:740px){.whyBlock,.premiumSection{padding:18px}.whyBlock h2{font-size:26px}}
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Bao Rescue","url":"https://bao.serunio.com/","description":"Symptom-first troubleshooting for fresh yeast-leavened steamed buns that narrows look-alike causes and recommends one controlled next-batch test.","applicationCategory":"LifestyleApplication","operatingSystem":"Web","isAccessibleForFree":true,"offers":{"@type":"Offer","name":"Next-Batch Fix","price":"4.99","priceCurrency":"USD","url":"https://bao.serunio.com/#pricing"},"contactPoint":{"@type":"ContactPoint","contactType":"customer support","email":"support@serunio.com"}}</script>
   <!-- product-stage:MVP_FREEZE -->
 </head>
 <body>
@@ -34,45 +42,66 @@
     <a class="brand" href="./" aria-label="Bao Rescue home"><span class="brandMark"><img src="./assets/bao-rescue/bao-rescue-icon-64.png" alt="" width="36" height="36" style="display:block;border-radius:10px"></span><span><b>Bao Rescue</b><small>Fix your steamed buns — step by step</small></span></a>
     <div class="motto">Observe. Narrow. Test.</div>
   </header>
+
   <section class="hero">
-    <div class="heroCopy"><div class="eyebrow">Photo-guided troubleshooting</div><h1>Why did my bao fail?</h1><p>Answer a few things you actually saw or felt. Bao Rescue ranks the most likely cause family and gives you one next-batch test instead of ten generic guesses.</p><a class="heroCta" href="#diagnose">Start free diagnosis <span>→</span></a><div class="promiseGrid"><div><b>1. Match the symptom</b><span>Start from the result, not a guessed cause.</span></div><div><b>2. Separate similar causes</b><span>Use proof state, timing, moisture and crumb.</span></div><div><b>3. Test one variable</b><span>The next batch should teach you something.</span></div></div></div>
+    <div class="heroCopy">
+      <div class="eyebrow">Visual symptom-guided troubleshooting</div>
+      <h1>Your bao failed. Don’t guess what to change.</h1>
+      <p>Match what you actually saw and felt. Bao Rescue separates look-alike failures, narrows the likely cause, and gives you <b>one variable to change next batch</b> — instead of a long list of generic possibilities.</p>
+      <a class="heroCta" href="#diagnose">Diagnose my bao — free <span>→</span></a>
+      <div class="heroMicro">About 2 minutes · No signup · Basic diagnosis is free</div>
+      <div class="promiseGrid">
+        <div><b>1. Match what happened</b><span>Start from the symptom you can actually observe.</span></div>
+        <div><b>2. Narrow look-alike causes</b><span>Use proof state, timing, moisture and crumb to separate branches.</span></div>
+        <div><b>3. Test one thing</b><span>Keep the rest unchanged so the next batch teaches you something.</span></div>
+      </div>
+    </div>
     <div class="heroVisual"><div class="photo p-normal" role="img" aria-label="Normal steamed bao reference"></div><div class="heroNote"><b>Normal reference</b><span>Smooth, plump and stable outside; soft, aerated crumb inside.</span></div></div>
   </section>
 
-  <section id="pricing" style="margin:0 0 28px;padding:24px;border:1px solid #d7d0c4;border-radius:18px;background:#fffdf9;box-shadow:0 8px 24px rgba(35,39,32,.04)">
-    <div style="display:flex;justify-content:space-between;gap:28px;align-items:flex-start;flex-wrap:wrap">
-      <div style="min-width:240px;flex:1 1 360px">
-        <div style="font:700 12px/1 Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#7b6d53;margin-bottom:8px">Optional premium result</div>
-        <h2 style="margin:0 0 8px;font-size:26px">Next-Batch Fix</h2>
-        <p style="margin:0;color:#65685f;font:15px/1.6 Arial,sans-serif">A detailed troubleshooting plan tailored to your diagnosis, designed to tell you exactly what to change in your next batch.</p>
-        <ul style="margin:16px 0 0;padding-left:20px;color:#42473f;font:14px/1.7 Arial,sans-serif">
-          <li>Most likely root cause and why</li>
-          <li>One variable to change next</li>
-          <li>What to keep unchanged</li>
-          <li>Success criteria for the next batch</li>
-          <li>What to test next if the problem continues</li>
-        </ul>
-      </div>
-      <div style="min-width:240px;flex:0 1 300px;border:1px solid #ddd8cf;border-radius:14px;padding:20px;background:#faf8f3">
-        <div style="font:700 13px Arial,sans-serif;color:#65685f">One-time purchase</div>
-        <div style="font:800 34px/1.15 Arial,sans-serif;color:#252922;margin:6px 0 4px">$4.99 <span style="font-size:14px;font-weight:700;color:#777">USD</span></div>
-        <div style="font:13px/1.5 Arial,sans-serif;color:#777;margin-bottom:16px">No subscription. Basic diagnosis remains free.</div>
-        <a href="#diagnose" style="display:block;text-align:center;padding:12px 16px;border-radius:10px;background:#566848;color:#fff;text-decoration:none;font:700 14px Arial,sans-serif">Start free diagnosis →</a>
-        <p style="margin:12px 0 0;font:12px/1.5 Arial,sans-serif;color:#777">How to buy: complete the free diagnosis first. The premium unlock is offered from the result flow. Payment is processed securely by Waffo Pancake.</p>
-      </div>
-    </div>
+  <section class="whyBlock">
+    <div class="eyebrow">Built for troubleshooting, not brainstorming</div>
+    <h2>Don’t change five things at once.</h2>
+    <p>Generic advice can give you several plausible reasons. Bao Rescue asks follow-up questions to decide which branch deserves a test first, so you can learn from the next batch instead of restarting from scratch.</p>
+    <div class="valuePills"><span>Symptom first</span><span>Separate similar failures</span><span>One controlled variable</span><span>Clear next step</span></div>
   </section>
 
   <div style="margin:0 0 28px;padding:16px 18px;border:1px solid #ddd8cf;border-radius:14px;background:#fffdfa;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap">
-    <div><b style="display:block;margin-bottom:4px">Know the symptom, but not ready to diagnose?</b><span style="font:13px/1.5 Arial,sans-serif;color:#65685f">Browse all 16 bao troubleshooting guides from dough handling through shape, surface, moisture and crumb.</span></div>
+    <div><b style="display:block;margin-bottom:4px">Already know the symptom?</b><span style="font:13px/1.5 Arial,sans-serif;color:#65685f">Browse all 16 bao troubleshooting guides. If several causes still fit, come back to the diagnosis to narrow the branch.</span></div>
     <a href="./bao-troubleshooting/" style="color:#566848;text-decoration:none;font:700 13px Arial,sans-serif">Browse troubleshooting guide →</a>
   </div>
+
   <div class="steps" id="diagnose"><div class="step active" data-step="1"><i>1</i><b>Your bun</b></div><div class="step" data-step="2"><i>2</i><b>Details</b></div><div class="step" data-step="3"><i>3</i><b>More info</b></div><div class="step" data-step="4"><i>4</i><b>Your result</b></div></div>
   <div class="layout"><main><section id="chooser"><div class="eyebrow">Step 1 of 4</div><h2>What does your bun look like?</h2><p class="lead">Choose the closest match. The image helps recognition; it does not decide the cause by itself.</p>
     <div class="symptomGrid" id="symptomGrid"><button class="symptom" data-key="normal"><div class="photo p-normal"></div><div class="copy"><b>Looks normal</b><span>Smooth, round, plump</span></div><i class="radio"></i></button><button class="symptom" data-key="norise"><div class="photo p-underproof"></div><div class="copy"><b>Didn't rise / stayed small</b><span>Small, tight, limited expansion</span></div><i class="radio"></i></button><button class="symptom" data-key="collapse"><div class="photo p-collapsed"></div><div class="copy"><b>Collapsed or flat</b><span>Lost volume or spread out</span></div><i class="radio"></i></button><button class="symptom" data-key="wrinkle"><div class="photo p-wrinkled"></div><div class="copy"><b>Wrinkled skin</b><span>Puckered or shrunk surface</span></div><i class="radio"></i></button><button class="symptom" data-key="dense"><div class="photo p-denseCrumb"></div><div class="copy"><b>Dense / not fluffy</b><span>Inside is tight and heavy</span></div><i class="radio"></i></button><button class="symptom" data-key="wet"><div class="photo p-wet"></div><div class="copy"><b>Wet or pitted skin</b><span>Droplets, pits or damp patches</span></div><i class="radio"></i></button></div>
     <button class="specialRow" id="specialBtn"><span><b>My buns look different / special case</b><small>Cracked/opened, frozen/reheated, or another unlisted case.</small></span><strong>›</strong></button><button class="nextBtn" id="nextBtn" disabled>Next →</button></section><section id="question"></section><section id="result"></section></main>
     <aside class="sidecard"><h3>Not sure?</h3><p>Compare with a good bun first.</p><div class="reference"><div class="photo p-normal"></div><span>NORMAL REFERENCE</span></div><ul class="checks"><li>Smooth surface</li><li>Round and plump</li><li>Soft, aerated crumb</li><li>Surface matches the intended style</li></ul><div class="tip"><b>Better diagnosis</b><span>Take one top photo and one cut-open photo before you start.</span></div><div class="scope"><b>MVP scope</b><span>Fresh, yeast-leavened wheat steamed buns. Special cases stay Beta until we have stronger evidence.</span></div></aside>
   </div>
+
+  <section id="pricing" class="premiumSection">
+    <div style="display:flex;justify-content:space-between;gap:28px;align-items:flex-start;flex-wrap:wrap">
+      <div style="min-width:240px;flex:1 1 360px">
+        <div style="font:700 12px/1 Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#7b6d53;margin-bottom:8px">After your free diagnosis</div>
+        <h2 style="margin:0 0 8px;font-size:30px">Want a controlled plan for your next batch?</h2>
+        <p style="margin:0;color:#65685f;font:15px/1.6 Arial,sans-serif">Basic diagnosis stays free. The optional Next-Batch Fix turns the diagnosis into a small experiment so you know what to change — and what <b>not</b> to change.</p>
+        <ul style="margin:16px 0 0;padding-left:20px;color:#42473f;font:14px/1.7 Arial,sans-serif">
+          <li><b>The one variable to change next</b></li>
+          <li>Why that variable is the strongest live branch</li>
+          <li>What to keep exactly the same</li>
+          <li>What success should look like</li>
+          <li>What to test next if the problem continues</li>
+        </ul>
+      </div>
+      <div style="min-width:240px;flex:0 1 300px;border:1px solid #ddd8cf;border-radius:14px;padding:20px;background:#faf8f3">
+        <div style="font:700 13px Arial,sans-serif;color:#65685f">Optional one-time unlock</div>
+        <div style="font:800 34px/1.15 Arial,sans-serif;color:#252922;margin:6px 0 4px">$4.99 <span style="font-size:14px;font-weight:700;color:#777">USD</span></div>
+        <div style="font:13px/1.5 Arial,sans-serif;color:#777;margin-bottom:16px">No subscription. Finish the free diagnosis before deciding.</div>
+        <a href="#diagnose" style="display:block;text-align:center;padding:12px 16px;border-radius:10px;background:#566848;color:#fff;text-decoration:none;font:700 14px Arial,sans-serif">Run free diagnosis first →</a>
+        <p style="margin:12px 0 0;font:12px/1.5 Arial,sans-serif;color:#777">The premium unlock is offered from the result flow. Payment is processed securely by Waffo Pancake.</p>
+      </div>
+    </div>
+  </section>
+
   <footer style="margin:36px 0 8px;padding-top:20px;border-top:1px solid #ddd8cf;text-align:center;color:#777;font:12px/1.7 Arial,sans-serif">Bao Rescue · Free basic diagnosis · Optional Next-Batch Fix $4.99 USD one-time<br><span>Customer support: <a href="mailto:support@serunio.com" style="color:#566848;font-weight:700">support@serunio.com</a></span><br><a href="/terms/" style="color:#566848;margin:0 8px">Terms</a><a href="/privacy/" style="color:#566848;margin:0 8px">Privacy</a><a href="#pricing" style="color:#566848;margin:0 8px">Pricing</a></footer>
 </div>
 <script src="./analytics.js"></script>
