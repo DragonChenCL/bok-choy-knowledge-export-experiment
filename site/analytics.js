@@ -3,9 +3,11 @@
   const KEY='bao_rescue_event_buffer_v1';
   const SEO_ENTRY_KEY='bao_seo_entry_v1';
   const SEO_ENTRY_TTL=30*60*1000;
+  const SEO_CTA_RECEIPT_KEY='bao_seo_cta_receipt_v2';
+  const SEO_CTA_ARRIVAL_KEY='bao_seo_cta_arrival_v2';
   const GA4_ID='G-GVD03YFR9C';
   const CLARITY_ID='yfjx2b9bn4';
-  const SUPPORTED_EVENTS=['page_view','symptom_select','diagnosis_start','question_answer','diagnosis_complete','diagnosis_back','diagnosis_restart','seo_diagnosis_cta','seo_diagnosis_start','seo_diagnosis_complete','diagnosis_hero_cta'];
+  const SUPPORTED_EVENTS=['page_view','diagnosis_view','symptom_select','diagnosis_start','question_answer','diagnosis_complete','diagnosis_back','diagnosis_restart','seo_diagnosis_cta','seo_diagnosis_view','seo_diagnosis_start','seo_diagnosis_complete','diagnosis_hero_cta'];
   const state={symptom:null,runId:null,completed:false};
 
   // GA4: use the native config-generated page_view so session_start, source/medium,
@@ -55,7 +57,10 @@
   }
 
   const queryEntry=qp.get('entry')||'';
-  if(queryEntry)rememberSeoEntry(queryEntry);
+  if(queryEntry){
+    const existing=readSeoEntry();
+    if(!existing||existing.entry!==queryEntry)rememberSeoEntry(queryEntry);
+  }
 
   const currentEntry=()=>{
     const stored=readSeoEntry();
@@ -155,6 +160,20 @@
     return payload;
   }
 
+  function rememberSeoCtaClick(entry,placement,target){
+    try{sessionStorage.setItem(SEO_CTA_RECEIPT_KEY,JSON.stringify({entry,placement,target,sourcePath:location.pathname,time:Date.now()}));}catch{}
+  }
+
+  function readSeoCtaClick(){
+    try{
+      const raw=sessionStorage.getItem(SEO_CTA_RECEIPT_KEY);
+      if(!raw)return null;
+      const value=JSON.parse(raw);
+      if(!value?.entry||!value?.time||Date.now()-value.time>SEO_ENTRY_TTL){sessionStorage.removeItem(SEO_CTA_RECEIPT_KEY);return null;}
+      return value;
+    }catch{return null;}
+  }
+
   function trackSeoNavigation(e,el){
     const normalized=sanitizeInternalAttributionLink(el);
     const entry=el.dataset.baoEntry||normalized?.entry||location.pathname.split('/').filter(Boolean)[0]||'';
@@ -167,15 +186,27 @@
       seo_landing_path:location.pathname
     };
 
-    const isPlainPrimaryClick=e.button===0&&!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&!e.altKey&&!el.hasAttribute('download')&&el.target!=='_blank';
-    if(!isPlainPrimaryClick){track('seo_diagnosis_cta',props);return;}
+    // Do not hold navigation open while gtag.js is still loading. A fast SEO visitor can
+    // otherwise leave before the queued click is transmitted. Keep the source click in
+    // our local buffer, persist a receipt, and confirm the GA4 event on the destination.
+    rememberSeoCtaClick(entry,props.placement,props.target);
+    track('seo_diagnosis_cta',{...props,delivery:'source-buffer'},{skipGa:true});
+  }
 
-    e.preventDefault();
-    const href=el.href;
-    let navigated=false;
-    const go=()=>{if(navigated)return;navigated=true;location.assign(href);};
-    track('seo_diagnosis_cta',props,{eventCallback:go,eventTimeout:350,transportType:'beacon'});
-    setTimeout(go,420);
+  function trackSeoArrival(){
+    if(!queryEntry)return;
+    const key=`${queryEntry}|${location.pathname}|${location.hash||''}`;
+    try{if(sessionStorage.getItem(SEO_CTA_ARRIVAL_KEY)===key)return;}catch{}
+    const stored=readSeoEntry();
+    const receipt=readSeoCtaClick();
+    track('seo_diagnosis_cta',{
+      target:location.pathname+location.search+location.hash,
+      placement:receipt?.placement||'destination',
+      entry:queryEntry,
+      seo_landing_path:stored?.landingPath||receipt?.sourcePath||'',
+      delivery:'destination-confirmed'
+    });
+    try{sessionStorage.setItem(SEO_CTA_ARRIVAL_KEY,key);}catch{}
   }
 
   window.BaoAnalytics={
@@ -188,6 +219,21 @@
   // GA4 already receives the native page_view from gtag('config'). Keep this local
   // page_view for our debug buffer / optional analytics providers without duplicating GA4.
   track('page_view',{}, {skipGa:true});
+  trackSeoArrival();
+
+  const diagnosisTarget=document.querySelector('#diagnose');
+  if(diagnosisTarget&&'IntersectionObserver' in window){
+    let diagnosisSeen=false;
+    const observer=new IntersectionObserver(entries=>{
+      if(diagnosisSeen||!entries.some(x=>x.isIntersecting))return;
+      diagnosisSeen=true;
+      observer.disconnect();
+      track('diagnosis_view',{placement:'diagnosis-stepper'});
+      const entry=currentEntry();
+      if(entry)track('seo_diagnosis_view',{entry,seo_landing_path:readSeoEntry()?.landingPath||''});
+    },{threshold:.2});
+    observer.observe(diagnosisTarget);
+  }
 
   document.addEventListener('click',e=>{
     const symptom=e.target.closest?.('.symptom');
