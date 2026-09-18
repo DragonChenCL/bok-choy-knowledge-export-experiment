@@ -19,7 +19,8 @@ must(analytics.includes("SEO_ENTRY_KEY='bao_seo_entry_v1'")&&analytics.includes(
 must(analytics.includes('prepareSeoDiagnosisLinks'),'legacy SEO diagnosis links are normalized before click');
 must(analytics.includes('sanitizeInternalAttributionLink'),'same-origin CTA attribution sanitizer exists');
 must(analytics.includes("['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach"),'internal CTA strips campaign UTMs before navigation');
-must(analytics.includes('event_callback')&&analytics.includes('event_timeout')&&analytics.includes("transportType:'beacon'"),'SEO CTA waits for analytics delivery before navigation');
+must(analytics.includes("SEO_CTA_RECEIPT_KEY='bao_seo_cta_receipt_v2'")&&analytics.includes("delivery:'destination-confirmed'"),'SEO CTA is confirmed on diagnosis arrival instead of relying on unload delivery');
+must(analytics.includes("track('diagnosis_view'")&&analytics.includes("track('seo_diagnosis_view'"),'diagnosis visibility is measurable before symptom selection');
 must(analytics.includes("track('seo_diagnosis_start'")&&analytics.includes("track('seo_diagnosis_complete'"),'SEO diagnosis funnel has explicit start and complete events');
 
 const css=read('site/seo.css');
