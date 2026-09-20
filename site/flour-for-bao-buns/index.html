@@ -37,8 +37,9 @@
     .relatedCards a{display:block;border:1px solid var(--line);border-radius:12px;padding:15px;background:#fff;color:inherit;text-decoration:none}
     .relatedCards b{display:block;margin-bottom:5px}.relatedCards span{font:12.5px/1.5 Arial,sans-serif;color:var(--muted)}
     @media(max-width:760px){.diagnosisPrompt,.relatedCards{grid-template-columns:1fr}.heroActions .cta,.diagnosisPrompt .cta{width:100%}.compare{font-size:12px}.compare th,.compare td{padding:9px}}
+  .evidenceLine{margin:16px 0 0;padding-top:13px;border-top:1px solid #cfd8c8;font:12.5px/1.6 Arial,sans-serif;color:#596153}.evidenceLine a{color:#465b3e;font-weight:700}.geoLimits{background:#fffaf2}.entityBox{background:#f8faf6}.entityBox p{max-width:860px}.geoAnswer strong{color:#33462e}
   </style>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"What flour should you use for bao buns?","description":"Which flour is best for bao buns? Compare all-purpose flour, cake flour, low-protein flour and bao flour, plus what to change if your buns are dense, yellow or hard to shape.","mainEntityOfPage":"https://bao.serunio.com/flour-for-bao-buns/","publisher":{"@type":"Organization","name":"Bao Rescue","url":"https://bao.serunio.com/"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"What flour should you use for bao buns?","description":"Which flour is best for bao buns? Compare all-purpose flour, cake flour, low-protein flour and bao flour, plus what to change if your buns are dense, yellow or hard to shape.","mainEntityOfPage":"https://bao.serunio.com/flour-for-bao-buns/","publisher":{"@type":"Organization","@id":"https://bao.serunio.com/#organization","name":"Bao Rescue","url":"https://bao.serunio.com/"},"dateModified":"2026-09-20","author":{"@type":"Organization","@id":"https://bao.serunio.com/#organization","name":"Bao Rescue","url":"https://bao.serunio.com/"},"about":[{"@type":"Thing","name":"flour for bao buns"},{"@type":"Thing","name":"bao bun flour"},{"@type":"Thing","name":"cake flour for bao"},{"@type":"Thing","name":"all-purpose flour bao"}],"keywords":"flour for bao buns, bao bun flour, cake flour for bao, all-purpose flour bao","citation":["https://www.kingarthurbaking.com/blog/2022/10/17/everything-you-need-to-know-to-make-steamed-buns","https://redhousespice.com/steamed-bao-buns/","https://whattocooktoday.com/soft-fluffy-asian-steamed-buns-every-time.html"]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can I use all-purpose flour for bao buns?","acceptedAnswer":{"@type":"Answer","text":"Yes. All-purpose flour is a practical baseline for home bao and is used by many published recipes. The exact result still depends on hydration, kneading, proofing and steaming."}},{"@type":"Question","name":"Is cake flour better for bao buns?","acceptedAnswer":{"@type":"Answer","text":"Not automatically. Cake or low-protein flour can give a softer, more delicate result, but it also provides less dough strength. Use it because you want that tradeoff, not because AP flour is 'wrong'."}},{"@type":"Question","name":"Why are my bao not white?","acceptedAnswer":{"@type":"Answer","text":"Flour color and processing matter, but a cream-colored bun is not necessarily a failure. Do not chase whiteness by changing several ingredients at once."}}]}</script>
 </head>
 <body>
@@ -61,10 +62,12 @@
       <div class="photo p-fluffyCrumb" role="img" aria-label="Soft aerated bao crumb"></div>
     </section>
 
-    <section class="section quick">
+    <section class="section quick geoAnswer" data-geo="answer">
       <div class="eyebrow">Quick answer</div>
       <h2>Start with all-purpose flour unless you have a specific reason not to.</h2>
       <p><strong>For most home cooks, ordinary all-purpose flour is the safest baseline.</strong> Lower-protein flour can make a more tender, delicate bun; stronger flour can make shaping easier but may feel chewier. Dedicated bao flour or premix can also work, but the label matters because some mixes include starch, sugar or leavening.</p><div class="tipbox">If your bao is dense, wrinkled or collapsed, flour may not be the root cause. Proofing, dough hydration and steaming can create the same final symptom.</div>
+    
+      <p class="evidenceLine"><strong>Evidence for this answer:</strong> <a href="https://www.kingarthurbaking.com/blog/2022/10/17/everything-you-need-to-know-to-make-steamed-buns">King Arthur Baking’s steamed-bun guide</a> and <a href="https://redhousespice.com/steamed-bao-buns/">Red House Spice’s bao guide</a> both use wheat-flour doughs and emphasize that flour choice works together with hydration, kneading, proofing and steaming rather than acting alone.</p>
     </section>
 
     <section class="section">
@@ -86,6 +89,12 @@
       <div class="eyebrow">A better test</div>
       <h2>Run a two-batch flour comparison.</h2>
       <ol class="stepsList"><li>Keep the same recipe, yeast, water temperature and proof endpoint.</li><li>Use AP flour for one half and your alternative flour for the other half.</li><li>Shape and steam them together when possible.</li><li>Compare height, skin smoothness, crumb openness and chew after cooling.</li></ol>
+    </section>
+
+    <section class="section geoLimits" data-geo="limits">
+      <div class="eyebrow">When this advice may not apply</div>
+      <h2>Know the boundary before you change the recipe.</h2>
+      <p>This advice is for fresh, yeast-leavened wheat bao. It does not directly apply to gluten-free doughs, premixes with unknown leaveners, laminated buns, or formulas built around specialty starch blends. If you use a commercial bao premix, follow its label first because water and leavener ratios may already be built in.</p>
     </section>
 
     <section class="section diagnosisPrompt">
@@ -111,14 +120,20 @@
       <h3>Can I use all-purpose flour for bao buns?</h3><p>Yes. All-purpose flour is a practical baseline for home bao and is used by many published recipes. The exact result still depends on hydration, kneading, proofing and steaming.</p><h3>Is cake flour better for bao buns?</h3><p>Not automatically. Cake or low-protein flour can give a softer, more delicate result, but it also provides less dough strength. Use it because you want that tradeoff, not because AP flour is 'wrong'.</p><h3>Why are my bao not white?</h3><p>Flour color and processing matter, but a cream-colored bun is not necessarily a failure. Do not chase whiteness by changing several ingredients at once.</p>
     </section>
 
-    <section class="section">
+    <section class="section entityBox" data-geo="entity">
+      <div class="eyebrow">About Bao Rescue</div>
+      <h2>What Bao Rescue is</h2>
+      <p><strong>Bao Rescue is a symptom-first troubleshooting tool for fresh, yeast-leavened wheat steamed buns.</strong> It helps home cooks match observable symptoms, separate look-alike causes, and test one variable in the next batch instead of changing everything at once.</p>
+    </section>
+
+    <section class="section" data-geo="sources">
       <div class="eyebrow">Sources & scope</div>
       <h2>What this guide is based on</h2>
       <p>This page focuses on fresh, yeast-leavened wheat bao and steamed buns. Exact formulas, proof times and steaming times vary with flour, bun size, filling, room temperature and equipment.</p>
       <div class="sources">
-        <a href="https://www.kingarthurbaking.com/blog/2022/10/17/everything-you-need-to-know-to-make-steamed-buns" rel="nofollow">King Arthur Baking — steamed buns</a> ·
-        <a href="https://redhousespice.com/steamed-bao-buns/" rel="nofollow">Red House Spice — steamed bao buns</a> ·
-        <a href="https://whattocooktoday.com/soft-fluffy-asian-steamed-buns-every-time.html" rel="nofollow">What To Cook Today — soft fluffy steamed buns</a>
+        <a href="https://www.kingarthurbaking.com/blog/2022/10/17/everything-you-need-to-know-to-make-steamed-buns">King Arthur Baking — steamed buns</a> ·
+        <a href="https://redhousespice.com/steamed-bao-buns/">Red House Spice — steamed bao buns</a> ·
+        <a href="https://whattocooktoday.com/soft-fluffy-asian-steamed-buns-every-time.html">What To Cook Today — soft fluffy steamed buns</a>
       </div>
     </section>
   </main>
