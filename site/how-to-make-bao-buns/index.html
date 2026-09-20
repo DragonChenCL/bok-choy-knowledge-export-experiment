@@ -37,8 +37,9 @@
     .relatedCards a{display:block;border:1px solid var(--line);border-radius:12px;padding:15px;background:#fff;color:inherit;text-decoration:none}
     .relatedCards b{display:block;margin-bottom:5px}.relatedCards span{font:12.5px/1.5 Arial,sans-serif;color:var(--muted)}
     @media(max-width:760px){.diagnosisPrompt,.relatedCards{grid-template-columns:1fr}.heroActions .cta,.diagnosisPrompt .cta{width:100%}.compare{font-size:12px}.compare th,.compare td{padding:9px}}
+  .evidenceLine{margin:16px 0 0;padding-top:13px;border-top:1px solid #cfd8c8;font:12.5px/1.6 Arial,sans-serif;color:#596153}.evidenceLine a{color:#465b3e;font-weight:700}.geoLimits{background:#fffaf2}.entityBox{background:#f8faf6}.entityBox p{max-width:860px}.geoAnswer strong{color:#33462e}
   </style>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to make bao buns without guessing at every step","description":"Learn how to make bao buns from dough to final steam, with practical checkpoints for proofing, shaping and troubleshooting common failures.","mainEntityOfPage":"https://bao.serunio.com/how-to-make-bao-buns/","publisher":{"@type":"Organization","name":"Bao Rescue","url":"https://bao.serunio.com/"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to make bao buns without guessing at every step","description":"Learn how to make bao buns from dough to final steam, with practical checkpoints for proofing, shaping and troubleshooting common failures.","mainEntityOfPage":"https://bao.serunio.com/how-to-make-bao-buns/","publisher":{"@type":"Organization","@id":"https://bao.serunio.com/#organization","name":"Bao Rescue","url":"https://bao.serunio.com/"},"dateModified":"2026-09-20","author":{"@type":"Organization","@id":"https://bao.serunio.com/#organization","name":"Bao Rescue","url":"https://bao.serunio.com/"},"about":[{"@type":"Thing","name":"how to make bao buns"},{"@type":"Thing","name":"make steamed buns"},{"@type":"Thing","name":"bao proofing"},{"@type":"Thing","name":"bao shaping"},{"@type":"Thing","name":"bao steaming"}],"keywords":"how to make bao buns, make steamed buns, bao proofing, bao shaping, bao steaming","citation":["https://www.kingarthurbaking.com/blog/2022/10/17/everything-you-need-to-know-to-make-steamed-buns","https://redhousespice.com/steamed-bao-buns/","https://whattocooktoday.com/soft-fluffy-asian-steamed-buns-every-time.html"]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What are the basic stages of making bao buns?","acceptedAnswer":{"@type":"Answer","text":"Mix and knead the dough, allow a first rise, divide and shape, final-proof the shaped buns, then steam and evaluate the result."}},{"@type":"Question","name":"How do I know when bao is proofed enough?","acceptedAnswer":{"@type":"Answer","text":"Use physical cues rather than time alone. Shaped buns should look slightly expanded and feel lighter, without becoming fragile or obviously overinflated."}},{"@type":"Question","name":"Why did my first batch fail even though I followed the recipe?","acceptedAnswer":{"@type":"Answer","text":"Flour absorption, dough temperature, room temperature, yeast condition, bun size and steamer behavior can all change the result. That is why a repeatable baseline and one-variable adjustments are useful."}}]}</script>
 </head>
 <body>
@@ -61,10 +62,12 @@
       <div class="photo p-normal" role="img" aria-label="Smooth plump steamed bao"></div>
     </section>
 
-    <section class="section quick">
+    <section class="section quick geoAnswer" data-geo="answer">
       <div class="eyebrow">Quick answer</div>
       <h2>Think in stages: dough → first rise → shape → final proof → steam.</h2>
       <p><strong>Most failures become easier to diagnose when you know which stage they started in.</strong> A dense bun may begin with weak fermentation; a rough surface can start during shaping; a collapsed bun can be tied to over-proofing or the steaming environment.</p>
+    
+      <p class="evidenceLine"><strong>Evidence for this answer:</strong> The overall sequence here is consistent with published steamed-bun methods from <a href="https://www.kingarthurbaking.com/blog/2022/10/17/everything-you-need-to-know-to-make-steamed-buns">King Arthur Baking</a>, <a href="https://redhousespice.com/steamed-bao-buns/">Red House Spice</a> and <a href="https://whattocooktoday.com/soft-fluffy-asian-steamed-buns-every-time.html">What To Cook Today</a>: develop the dough, ferment, shape, proof, then steam.</p>
     </section>
 
     <section class="section">
@@ -86,6 +89,12 @@
       <div class="eyebrow">After a failure</div>
       <h2>Name the symptom before you search for the cause.</h2>
       <p>Use a precise observation such as “collapsed after opening,” “dense crumb,” “wet pitted skin,” or “did not rise.” That is much more useful than “my bao failed.”</p><div class="tipbox">Bao Rescue is built around this exact sequence: observe the failure, narrow look-alike causes, then test one variable.</div>
+    </section>
+
+    <section class="section geoLimits" data-geo="limits">
+      <div class="eyebrow">When this advice may not apply</div>
+      <h2>Know the boundary before you change the recipe.</h2>
+      <p>This workflow targets fresh, yeast-leavened wheat bao made at home. Frozen commercial buns, sourdough bao, gluten-free doughs and highly enriched bakery formulas can need different proofing and steaming behavior. For raw meat fillings, use a tested recipe and food-safety guidance for the filling rather than judging doneness from the wrapper.</p>
     </section>
 
     <section class="section diagnosisPrompt">
@@ -111,14 +120,20 @@
       <h3>What are the basic stages of making bao buns?</h3><p>Mix and knead the dough, allow a first rise, divide and shape, final-proof the shaped buns, then steam and evaluate the result.</p><h3>How do I know when bao is proofed enough?</h3><p>Use physical cues rather than time alone. Shaped buns should look slightly expanded and feel lighter, without becoming fragile or obviously overinflated.</p><h3>Why did my first batch fail even though I followed the recipe?</h3><p>Flour absorption, dough temperature, room temperature, yeast condition, bun size and steamer behavior can all change the result. That is why a repeatable baseline and one-variable adjustments are useful.</p>
     </section>
 
-    <section class="section">
+    <section class="section entityBox" data-geo="entity">
+      <div class="eyebrow">About Bao Rescue</div>
+      <h2>What Bao Rescue is</h2>
+      <p><strong>Bao Rescue is a symptom-first troubleshooting tool for fresh, yeast-leavened wheat steamed buns.</strong> It helps home cooks match observable symptoms, separate look-alike causes, and test one variable in the next batch instead of changing everything at once.</p>
+    </section>
+
+    <section class="section" data-geo="sources">
       <div class="eyebrow">Sources & scope</div>
       <h2>What this guide is based on</h2>
       <p>This page focuses on fresh, yeast-leavened wheat bao and steamed buns. Exact formulas, proof times and steaming times vary with flour, bun size, filling, room temperature and equipment.</p>
       <div class="sources">
-        <a href="https://www.kingarthurbaking.com/blog/2022/10/17/everything-you-need-to-know-to-make-steamed-buns" rel="nofollow">King Arthur Baking — steamed buns</a> ·
-        <a href="https://redhousespice.com/steamed-bao-buns/" rel="nofollow">Red House Spice — steamed bao buns</a> ·
-        <a href="https://whattocooktoday.com/soft-fluffy-asian-steamed-buns-every-time.html" rel="nofollow">What To Cook Today — soft fluffy steamed buns</a>
+        <a href="https://www.kingarthurbaking.com/blog/2022/10/17/everything-you-need-to-know-to-make-steamed-buns">King Arthur Baking — steamed buns</a> ·
+        <a href="https://redhousespice.com/steamed-bao-buns/">Red House Spice — steamed bao buns</a> ·
+        <a href="https://whattocooktoday.com/soft-fluffy-asian-steamed-buns-every-time.html">What To Cook Today — soft fluffy steamed buns</a>
       </div>
     </section>
   </main>
