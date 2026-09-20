@@ -37,8 +37,9 @@
     .relatedCards a{display:block;border:1px solid var(--line);border-radius:12px;padding:15px;background:#fff;color:inherit;text-decoration:none}
     .relatedCards b{display:block;margin-bottom:5px}.relatedCards span{font:12.5px/1.5 Arial,sans-serif;color:var(--muted)}
     @media(max-width:760px){.diagnosisPrompt,.relatedCards{grid-template-columns:1fr}.heroActions .cta,.diagnosisPrompt .cta{width:100%}.compare{font-size:12px}.compare th,.compare td{padding:9px}}
+  .evidenceLine{margin:16px 0 0;padding-top:13px;border-top:1px solid #cfd8c8;font:12.5px/1.6 Arial,sans-serif;color:#596153}.evidenceLine a{color:#465b3e;font-weight:700}.geoLimits{background:#fffaf2}.entityBox{background:#f8faf6}.entityBox p{max-width:860px}.geoAnswer strong{color:#33462e}
   </style>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to steam buns so the last step does not ruin the batch","description":"How to steam buns with steady heat, proper spacing and moisture control. Includes practical timing ranges and troubleshooting for wet, dense or collapsed buns.","mainEntityOfPage":"https://bao.serunio.com/how-to-steam-buns/","publisher":{"@type":"Organization","name":"Bao Rescue","url":"https://bao.serunio.com/"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to steam buns so the last step does not ruin the batch","description":"How to steam buns with steady heat, proper spacing and moisture control. Includes practical timing ranges and troubleshooting for wet, dense or collapsed buns.","mainEntityOfPage":"https://bao.serunio.com/how-to-steam-buns/","publisher":{"@type":"Organization","@id":"https://bao.serunio.com/#organization","name":"Bao Rescue","url":"https://bao.serunio.com/"},"dateModified":"2026-09-20","author":{"@type":"Organization","@id":"https://bao.serunio.com/#organization","name":"Bao Rescue","url":"https://bao.serunio.com/"},"about":[{"@type":"Thing","name":"how to steam buns"},{"@type":"Thing","name":"how long to steam buns"},{"@type":"Thing","name":"steam buns timing"},{"@type":"Thing","name":"steamed bun condensation"}],"keywords":"how to steam buns, how long to steam buns, steam buns timing, steamed bun condensation","citation":["https://www.kingarthurbaking.com/blog/2022/10/17/everything-you-need-to-know-to-make-steamed-buns","https://redhousespice.com/steamed-bao-buns/","https://whattocooktoday.com/soft-fluffy-asian-steamed-buns-every-time.html"]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How long should I steam buns?","acceptedAnswer":{"@type":"Answer","text":"Many fresh yeast-leavened buns fall around 10–15 minutes, but bun size, filling and steamer setup can shift the time. Use the recipe or package directions as the primary guide."}},{"@type":"Question","name":"Should the water touch the buns?","acceptedAnswer":{"@type":"Answer","text":"No. The buns should sit above the water so they cook in steam rather than boiling water."}},{"@type":"Question","name":"Why are my steamed buns wet on top?","acceptedAnswer":{"@type":"Answer","text":"Condensation dripping from the lid is a common possibility, especially when wet spots or pits are localized on the upper surface."}}]}</script>
 </head>
 <body>
@@ -61,10 +62,12 @@
       <div class="photo p-normal" role="img" aria-label="Steamed buns arranged with space around them"></div>
     </section>
 
-    <section class="section quick">
+    <section class="section quick geoAnswer" data-geo="answer">
       <div class="eyebrow">Quick answer</div>
       <h2>Use steady steam, leave space, and keep lid condensation off the buns.</h2>
       <p>Bring the steamer to the heat level required by your recipe, arrange buns with room to expand, and keep them above—not in—the water. For fresh yeast-leavened buns, many home recipes land roughly in the <strong>10–15 minute</strong> range, but size, filling and equipment change the time.</p><div class="warningBox">For meat or other perishable fillings, follow a tested recipe and appropriate food-safety guidance. Do not use surface appearance alone to judge filling safety.</div>
+    
+      <p class="evidenceLine"><strong>Evidence for this answer:</strong> <a href="https://www.kingarthurbaking.com/blog/2022/10/17/everything-you-need-to-know-to-make-steamed-buns">King Arthur Baking</a> and <a href="https://whattocooktoday.com/soft-fluffy-asian-steamed-buns-every-time.html">What To Cook Today</a> both describe steamed-bun methods where proofing, spacing, steam and the post-steam transition work together; that is why a single timing number cannot explain every failure.</p>
     </section>
 
     <section class="section">
@@ -86,6 +89,12 @@
       <div class="eyebrow">After steaming</div>
       <h2>Treat the finish as a variable, not a superstition.</h2>
       <p>Some recipes recommend a brief rest before opening the lid to soften the temperature transition; others open promptly. There is no single rule that fixes every bun. If your buns collapse after opening, control proofing first and then test the lid-rest as one variable.</p>
+    </section>
+
+    <section class="section geoLimits" data-geo="limits">
+      <div class="eyebrow">When this advice may not apply</div>
+      <h2>Know the boundary before you change the recipe.</h2>
+      <p>Timing ranges are only starting points. Bun diameter, wrapper thickness, filling temperature, steamer material, altitude and heat output can all change the required time. For packaged frozen buns, follow the package instructions. For raw meat fillings, use appropriate food-safety guidance and a tested recipe.</p>
     </section>
 
     <section class="section diagnosisPrompt">
@@ -111,14 +120,20 @@
       <h3>How long should I steam buns?</h3><p>Many fresh yeast-leavened buns fall around 10–15 minutes, but bun size, filling and steamer setup can shift the time. Use the recipe or package directions as the primary guide.</p><h3>Should the water touch the buns?</h3><p>No. The buns should sit above the water so they cook in steam rather than boiling water.</p><h3>Why are my steamed buns wet on top?</h3><p>Condensation dripping from the lid is a common possibility, especially when wet spots or pits are localized on the upper surface.</p>
     </section>
 
-    <section class="section">
+    <section class="section entityBox" data-geo="entity">
+      <div class="eyebrow">About Bao Rescue</div>
+      <h2>What Bao Rescue is</h2>
+      <p><strong>Bao Rescue is a symptom-first troubleshooting tool for fresh, yeast-leavened wheat steamed buns.</strong> It helps home cooks match observable symptoms, separate look-alike causes, and test one variable in the next batch instead of changing everything at once.</p>
+    </section>
+
+    <section class="section" data-geo="sources">
       <div class="eyebrow">Sources & scope</div>
       <h2>What this guide is based on</h2>
       <p>This page focuses on fresh, yeast-leavened wheat bao and steamed buns. Exact formulas, proof times and steaming times vary with flour, bun size, filling, room temperature and equipment.</p>
       <div class="sources">
-        <a href="https://www.kingarthurbaking.com/blog/2022/10/17/everything-you-need-to-know-to-make-steamed-buns" rel="nofollow">King Arthur Baking — steamed buns</a> ·
-        <a href="https://redhousespice.com/steamed-bao-buns/" rel="nofollow">Red House Spice — steamed bao buns</a> ·
-        <a href="https://whattocooktoday.com/soft-fluffy-asian-steamed-buns-every-time.html" rel="nofollow">What To Cook Today — soft fluffy steamed buns</a>
+        <a href="https://www.kingarthurbaking.com/blog/2022/10/17/everything-you-need-to-know-to-make-steamed-buns">King Arthur Baking — steamed buns</a> ·
+        <a href="https://redhousespice.com/steamed-bao-buns/">Red House Spice — steamed bao buns</a> ·
+        <a href="https://whattocooktoday.com/soft-fluffy-asian-steamed-buns-every-time.html">What To Cook Today — soft fluffy steamed buns</a>
       </div>
     </section>
   </main>
