@@ -37,8 +37,9 @@
     .relatedCards a{display:block;border:1px solid var(--line);border-radius:12px;padding:15px;background:#fff;color:inherit;text-decoration:none}
     .relatedCards b{display:block;margin-bottom:5px}.relatedCards span{font:12.5px/1.5 Arial,sans-serif;color:var(--muted)}
     @media(max-width:760px){.diagnosisPrompt,.relatedCards{grid-template-columns:1fr}.heroActions .cta,.diagnosisPrompt .cta{width:100%}.compare{font-size:12px}.compare th,.compare td{padding:9px}}
+  .evidenceLine{margin:16px 0 0;padding-top:13px;border-top:1px solid #cfd8c8;font:12.5px/1.6 Arial,sans-serif;color:#596153}.evidenceLine a{color:#465b3e;font-weight:700}.geoLimits{background:#fffaf2}.entityBox{background:#f8faf6}.entityBox p{max-width:860px}.geoAnswer strong{color:#33462e}
   </style>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"A bao dough recipe you can actually troubleshoot","description":"A practical bao dough recipe built as a repeatable baseline, with baker's percentages, proofing checkpoints and fixes for sticky, dense or tearing dough.","mainEntityOfPage":"https://bao.serunio.com/bao-dough-recipe/","publisher":{"@type":"Organization","name":"Bao Rescue","url":"https://bao.serunio.com/"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"A bao dough recipe you can actually troubleshoot","description":"A practical bao dough recipe built as a repeatable baseline, with baker's percentages, proofing checkpoints and fixes for sticky, dense or tearing dough.","mainEntityOfPage":"https://bao.serunio.com/bao-dough-recipe/","publisher":{"@type":"Organization","@id":"https://bao.serunio.com/#organization","name":"Bao Rescue","url":"https://bao.serunio.com/"},"dateModified":"2026-09-20","author":{"@type":"Organization","@id":"https://bao.serunio.com/#organization","name":"Bao Rescue","url":"https://bao.serunio.com/"},"about":[{"@type":"Thing","name":"bao dough recipe"},{"@type":"Thing","name":"bao dough hydration"},{"@type":"Thing","name":"bao proofing"},{"@type":"Thing","name":"steamed bun dough"}],"keywords":"bao dough recipe, bao dough hydration, bao proofing, steamed bun dough","citation":["https://www.kingarthurbaking.com/blog/2022/10/17/everything-you-need-to-know-to-make-steamed-buns","https://redhousespice.com/steamed-bao-buns/","https://whattocooktoday.com/soft-fluffy-asian-steamed-buns-every-time.html"]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much water should bao dough use?","acceptedAnswer":{"@type":"Answer","text":"A practical starting range is roughly 52–58% liquid relative to flour by weight, but flour absorption differs. Start conservatively and adjust in small increments."}},{"@type":"Question","name":"Do bao buns need baking powder?","acceptedAnswer":{"@type":"Answer","text":"Not every formula does. Many yeast-leavened bao recipes work without it, while others use a small amount for additional lift or tenderness. Follow one formula consistently before comparing."}},{"@type":"Question","name":"Why is my bao dough sticky?","acceptedAnswer":{"@type":"Answer","text":"It can be normal early in mixing. Flour hydration, kneading, resting time and actual liquid ratio all matter. Avoid adding large amounts of flour before the dough has had time to hydrate."}}]}</script>
 </head>
 <body>
@@ -61,10 +62,12 @@
       <div class="photo p-normal" role="img" aria-label="Smooth bao dough and finished steamed bun reference"></div>
     </section>
 
-    <section class="section quick">
+    <section class="section quick geoAnswer" data-geo="answer">
       <div class="eyebrow">Quick answer</div>
       <h2>Use baker’s percentages so the formula scales cleanly.</h2>
       <p>A useful starting range is <strong>flour 100%, liquid about 52–58%, sugar 5–10%, instant yeast about 0.8–1.2%, and oil 2–4%</strong>. Some recipes also use a small amount of baking powder. Flour absorption varies, so treat hydration as a range, not a magic number.</p><div class="tipbox"><b>Example starting batch:</b> 300 g flour, 165–174 g water or milk, 15–24 g sugar, 3 g instant yeast, 6–9 g neutral oil. Keep notes and adjust only after you see the result.</div>
+    
+      <p class="evidenceLine"><strong>Evidence for this answer:</strong> <a href="https://www.kingarthurbaking.com/blog/2022/10/17/everything-you-need-to-know-to-make-steamed-buns">King Arthur Baking</a>, <a href="https://redhousespice.com/steamed-bao-buns/">Red House Spice</a> and <a href="https://whattocooktoday.com/soft-fluffy-asian-steamed-buns-every-time.html">What To Cook Today</a> all show that successful steamed-bun dough depends on the full process — mixing, gluten development, fermentation, shaping and steaming — not a single hydration number.</p>
     </section>
 
     <section class="section">
@@ -86,6 +89,12 @@
       <div class="eyebrow">Troubleshooting baseline</div>
       <h2>Record five things every batch.</h2>
       <p>Write down flour brand/type, liquid amount, room or dough temperature, proof duration plus visual endpoint, and steaming setup. Those five notes make a failed batch far easier to diagnose than a recipe screenshot alone.</p><div class="warningBox">If a batch fails, do not immediately add more yeast, more water and a longer proof. That produces a new recipe, not a useful experiment.</div>
+    </section>
+
+    <section class="section geoLimits" data-geo="limits">
+      <div class="eyebrow">When this advice may not apply</div>
+      <h2>Know the boundary before you change the recipe.</h2>
+      <p>The percentage ranges here are a troubleshooting baseline, not a universal formula. Flour absorption, milk versus water, sugar level, fat, filling weight and room temperature can all shift the ideal dough. If you are following a tested recipe for a specific style, use that recipe as the baseline and change only one variable at a time.</p>
     </section>
 
     <section class="section diagnosisPrompt">
@@ -111,14 +120,20 @@
       <h3>How much water should bao dough use?</h3><p>A practical starting range is roughly 52–58% liquid relative to flour by weight, but flour absorption differs. Start conservatively and adjust in small increments.</p><h3>Do bao buns need baking powder?</h3><p>Not every formula does. Many yeast-leavened bao recipes work without it, while others use a small amount for additional lift or tenderness. Follow one formula consistently before comparing.</p><h3>Why is my bao dough sticky?</h3><p>It can be normal early in mixing. Flour hydration, kneading, resting time and actual liquid ratio all matter. Avoid adding large amounts of flour before the dough has had time to hydrate.</p>
     </section>
 
-    <section class="section">
+    <section class="section entityBox" data-geo="entity">
+      <div class="eyebrow">About Bao Rescue</div>
+      <h2>What Bao Rescue is</h2>
+      <p><strong>Bao Rescue is a symptom-first troubleshooting tool for fresh, yeast-leavened wheat steamed buns.</strong> It helps home cooks match observable symptoms, separate look-alike causes, and test one variable in the next batch instead of changing everything at once.</p>
+    </section>
+
+    <section class="section" data-geo="sources">
       <div class="eyebrow">Sources & scope</div>
       <h2>What this guide is based on</h2>
       <p>This page focuses on fresh, yeast-leavened wheat bao and steamed buns. Exact formulas, proof times and steaming times vary with flour, bun size, filling, room temperature and equipment.</p>
       <div class="sources">
-        <a href="https://www.kingarthurbaking.com/blog/2022/10/17/everything-you-need-to-know-to-make-steamed-buns" rel="nofollow">King Arthur Baking — steamed buns</a> ·
-        <a href="https://redhousespice.com/steamed-bao-buns/" rel="nofollow">Red House Spice — steamed bao buns</a> ·
-        <a href="https://whattocooktoday.com/soft-fluffy-asian-steamed-buns-every-time.html" rel="nofollow">What To Cook Today — soft fluffy steamed buns</a>
+        <a href="https://www.kingarthurbaking.com/blog/2022/10/17/everything-you-need-to-know-to-make-steamed-buns">King Arthur Baking — steamed buns</a> ·
+        <a href="https://redhousespice.com/steamed-bao-buns/">Red House Spice — steamed bao buns</a> ·
+        <a href="https://whattocooktoday.com/soft-fluffy-asian-steamed-buns-every-time.html">What To Cook Today — soft fluffy steamed buns</a>
       </div>
     </section>
   </main>
