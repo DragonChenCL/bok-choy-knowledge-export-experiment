@@ -49,7 +49,13 @@ const pages=[
   ['site/bao-filling-leaking/index.html','Why is my bao filling leaking out?','bao-filling-leaking',true,true],
   ['site/bao-dough-tears-when-pleating/index.html','Why does my bao dough tear when pleating?','bao-dough-tears-when-pleating',true,true],
   ['site/bao-buns-yellow-after-steaming/index.html','Why do my bao buns turn yellow after steaming?','bao-buns-yellow-after-steaming',true,true],
-  ['site/bao-buns-chewy-rubbery/index.html','Why are my bao buns chewy or rubbery?','bao-buns-chewy-rubbery',true,true]
+  ['site/bao-buns-chewy-rubbery/index.html','Why are my bao buns chewy or rubbery?','bao-buns-chewy-rubbery',true,true],
+  ['site/flour-for-bao-buns/index.html','What flour should you use for bao buns?','flour-for-bao-buns',true,false],
+  ['site/bao-dough-recipe/index.html','A bao dough recipe you can actually troubleshoot','bao-dough-recipe',true,false],
+  ['site/how-to-make-bao-buns/index.html','How to make bao buns without guessing at every step','how-to-make-bao-buns',true,false],
+  ['site/how-to-steam-buns/index.html','How to steam buns so the last step does not ruin the batch','how-to-steam-buns',true,false],
+  ['site/how-to-steam-buns-without-a-steamer/index.html','How to steam buns without a bamboo steamer','how-to-steam-buns-without-a-steamer',true,false],
+  ['site/how-to-steam-bao-buns/index.html','How to steam bao buns — and how long to steam them','how-to-steam-bao-buns',true,false]
 ];
 
 for(const [p,h1,slug,isNew,noInternalUtm] of pages){
