@@ -58,6 +58,11 @@ const pages=[
   ['site/how-to-steam-bao-buns/index.html','How to steam bao buns — and how long to steam them','how-to-steam-bao-buns',true,false]
 ];
 
+const geoPages=new Set([
+  'flour-for-bao-buns','bao-dough-recipe','how-to-make-bao-buns',
+  'how-to-steam-buns','how-to-steam-buns-without-a-steamer','how-to-steam-bao-buns'
+]);
+
 for(const [p,h1,slug,isNew,noInternalUtm] of pages){
   const html=read(p);
   must(html.includes(`<h1>${h1}</h1>`),`${slug} H1`);
@@ -70,6 +75,15 @@ for(const [p,h1,slug,isNew,noInternalUtm] of pages){
   must(!html.includes('REPLACE_WITH_'),`${slug} has no placeholder URLs`);
   must(html.includes(`entry=${slug}`)||!isNew,`${slug} CTA keeps custom entry attribution`);
   if(isNew)must(html.includes('property="og:image"'),`${slug} Open Graph image`);
+  if(geoPages.has(slug)){
+    must(html.includes('data-geo="answer"'),`${slug} has extractable answer-first block`);
+    must(html.includes('class="evidenceLine"'),`${slug} places evidence beside the direct answer`);
+    must(html.includes('data-geo="limits"'),`${slug} states when advice may not apply`);
+    must(html.includes('data-geo="entity"'),`${slug} has stable Bao Rescue entity description`);
+    must(html.includes('data-geo="sources"'),`${slug} has explicit sources section`);
+    must(html.includes('"citation":[')&&html.includes('"keywords":'),`${slug} Article schema exposes citations and topical keywords`);
+    must(html.includes('https://bao.serunio.com/#organization'),`${slug} uses stable Organization entity id`);
+  }
   if(noInternalUtm)must(!html.includes('utm_source=seo')&&!html.includes('utm_medium=organic'),`${slug} internal CTA does not overwrite source attribution`);
 }
 
