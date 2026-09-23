@@ -7,6 +7,8 @@ interface Env {
   WAFFO_ENV: "test" | "prod";
   BAO_NEXT_BATCH_PRODUCT_ID: string;
   BAO_SUCCESS_URL: string;
+  COOPCHECK_PRODUCT_ID: string;
+  COOPCHECK_SUCCESS_URL: string;
   ALLOWED_ORIGINS: string;
 }
 
@@ -284,6 +286,13 @@ function resolveProduct(app: string, sku: string, env: Env): ProductConfig | nul
       productId: env.BAO_NEXT_BATCH_PRODUCT_ID,
       currency: "USD",
       successUrl: env.BAO_SUCCESS_URL,
+    };
+  }
+  if (app === "coopcheck" && sku === "permit-report") {
+    return {
+      productId: env.COOPCHECK_PRODUCT_ID,
+      currency: "USD",
+      successUrl: env.COOPCHECK_SUCCESS_URL,
     };
   }
   return null;
