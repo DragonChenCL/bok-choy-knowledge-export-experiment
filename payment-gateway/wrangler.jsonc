@@ -4,13 +4,10 @@
   "main": "src/index.ts",
   "compatibility_date": "2026-09-14",
   "compatibility_flags": ["nodejs_compat"],
+  "keep_vars": true,
   "vars": {
     "WAFFO_ENV": "prod",
-    "WAFFO_MERCHANT_ID": "MER_7Z6rdASdOjLTXSJw1Aun2T",
-    // Production Waffo product: https://pancake.waffo.ai/store/bao-rescue-ohh1336m/product/PROD_2b2TqUlq9zqplZinQZVRjD?type=onetime&currency=USD
-    "BAO_NEXT_BATCH_PRODUCT_ID": "PROD_2b2TqUlq9zqplZinQZVRjD",
-    "BAO_SUCCESS_URL": "https://bao.serunio.com/payment-success/",
-    "ALLOWED_ORIGINS": "https://bao.serunio.com,http://localhost:3000,http://127.0.0.1:5500"
+    "WAFFO_MERCHANT_ID": "MER_7Z6rdASdOjLTXSJw1Aun2T"
   },
   "d1_databases": [
     {

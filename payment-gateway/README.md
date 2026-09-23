@@ -12,13 +12,34 @@ Reusable Cloudflare Worker payment gateway. The first provider is Waffo Pancake;
 
 The browser never supplies the price. Price and tax configuration stay in the Waffo product.
 
-## Current Bao mapping
+## Product catalog
 
-- app: `bao-rescue`
-- sku: `next-batch-fix`
-- Waffo product: `PROD_2TZGLUfIFUsELdxrz2QW1g`
-- currency: `USD`
-- mode: `test`
+Products are configured through the Worker environment variable `PRODUCT_CATALOG`. The gateway code does not contain per-product branches.
+
+Current production catalog:
+
+```json
+{
+  "bao-rescue:next-batch-fix": {
+    "productId": "PROD_2b2TqUlq9zqplZinQZVRjD",
+    "currency": "USD",
+    "successUrl": "https://bao.serunio.com/payment-success/"
+  },
+  "coopcheck:permit-report": {
+    "productId": "PROD_3bUkTKRP0CwDVB1skadqe4",
+    "currency": "USD",
+    "successUrl": "https://coopcheck.serunio.com/payment-success/"
+  }
+}
+```
+
+Also configure `ALLOWED_ORIGINS` in the Worker, for example:
+
+```text
+https://bao.serunio.com,https://coopcheck.serunio.com
+```
+
+`wrangler.jsonc` uses `keep_vars: true`, so dashboard-managed variables are preserved when deploying with Wrangler.
 
 ## 1. Install
 
@@ -178,19 +199,21 @@ This is safer than treating a Waffo order number as the password: knowing an ord
 
 ## Adding another product later
 
-Add another mapping in `resolveProduct()`:
+No code change is required.
 
-```ts
-if (app === "bead-studio" && sku === "pro-export") {
-  return {
-    productId: env.BEAD_PRO_EXPORT_PRODUCT_ID,
-    currency: "USD",
-    successUrl: "https://bead.example.com/payment-success/",
-  };
+Create the product in Waffo, then add one entry to the Worker `PRODUCT_CATALOG` variable:
+
+```json
+{
+  "bead-studio:pro-export": {
+    "productId": "PROD_xxx",
+    "currency": "USD",
+    "successUrl": "https://bead.example.com/payment-success/"
+  }
 }
 ```
 
-Then add the product id to Worker vars. No payment logic needs to be duplicated.
+If the new project uses a new domain, also append that origin to `ALLOWED_ORIGINS`.
 
 ## Production checklist
 

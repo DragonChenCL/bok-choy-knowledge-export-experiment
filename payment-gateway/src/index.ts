@@ -5,8 +5,7 @@ interface Env {
   WAFFO_MERCHANT_ID: string;
   WAFFO_PRIVATE_KEY: string;
   WAFFO_ENV: "test" | "prod";
-  BAO_NEXT_BATCH_PRODUCT_ID: string;
-  BAO_SUCCESS_URL: string;
+  PRODUCT_CATALOG: string | Record<string, ProductConfig>;
   ALLOWED_ORIGINS: string;
 }
 
@@ -279,14 +278,44 @@ async function getEntitlement(request: Request, env: Env): Promise<Response> {
 }
 
 function resolveProduct(app: string, sku: string, env: Env): ProductConfig | null {
-  if (app === "bao-rescue" && sku === "next-batch-fix") {
-    return {
-      productId: env.BAO_NEXT_BATCH_PRODUCT_ID,
-      currency: "USD",
-      successUrl: env.BAO_SUCCESS_URL,
-    };
+  let catalog: Record<string, ProductConfig>;
+  try {
+    catalog =
+      typeof env.PRODUCT_CATALOG === "string"
+        ? (JSON.parse(env.PRODUCT_CATALOG) as Record<string, ProductConfig>)
+        : env.PRODUCT_CATALOG;
+  } catch {
+    throw new Error("invalid_product_catalog");
   }
-  return null;
+
+  const product = catalog?.[`${app}:${sku}`];
+  if (!product) return null;
+
+  if (
+    typeof product.productId !== "string" ||
+    !product.productId ||
+    typeof product.currency !== "string" ||
+    !/^[A-Z]{3}$/.test(product.currency) ||
+    typeof product.successUrl !== "string"
+  ) {
+    throw new Error("invalid_product_catalog");
+  }
+
+  let successUrl: URL;
+  try {
+    successUrl = new URL(product.successUrl);
+  } catch {
+    throw new Error("invalid_product_catalog");
+  }
+  if (successUrl.protocol !== "https:" && successUrl.hostname !== "localhost" && successUrl.hostname !== "127.0.0.1") {
+    throw new Error("invalid_product_catalog");
+  }
+
+  return {
+    productId: product.productId,
+    currency: product.currency,
+    successUrl: successUrl.toString(),
+  };
 }
 
 function json(data: unknown, status = 200): Response {
