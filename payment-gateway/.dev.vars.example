@@ -1,2 +1,6 @@
 # Copy to .dev.vars for local testing. Never commit the real private key.
 WAFFO_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nREPLACE_ME\n-----END PRIVATE KEY-----"
+
+# Dashboard-managed production variables.
+ALLOWED_ORIGINS="https://bao.serunio.com,https://coopcheck.serunio.com,http://localhost:3000,http://127.0.0.1:5500"
+PRODUCT_CATALOG='{"bao-rescue:next-batch-fix":{"productId":"PROD_2b2TqUlq9zqplZinQZVRjD","currency":"USD","successUrl":"https://bao.serunio.com/payment-success/"},"coopcheck:permit-report":{"productId":"PROD_3bUkTKRP0CwDVB1skadqe4","currency":"USD","successUrl":"https://coopcheck.serunio.com/payment-success/"}}'
