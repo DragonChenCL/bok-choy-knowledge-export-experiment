@@ -34,13 +34,13 @@ must(home.includes('rel="canonical" href="https://bao.serunio.com/"'),'root cano
 must(home.includes('property="og:title"')&&home.includes('property="og:image"'),'root has Open Graph metadata');
 
 const pages=[
-  ['site/bao-buns-collapse-after-steaming/index.html','Why did my bao collapse after steaming?','bao-buns-collapse-after-steaming',false,true],
-  ['site/why-do-steamed-buns-wrinkle/index.html','Why are my steamed buns wrinkled?','why-do-steamed-buns-wrinkle',false,true],
+  ['site/bao-buns-collapse-after-steaming/index.html','Bao buns collapse after steaming? Check these 3 causes.','bao-buns-collapse-after-steaming',false,true],
+  ['site/why-do-steamed-buns-wrinkle/index.html','Steamed buns wrinkled? Check these 3 causes.','why-do-steamed-buns-wrinkle',false,true],
   ['site/why-are-bao-buns-not-fluffy/index.html','Why are my bao buns dense and not fluffy?','why-are-bao-buns-not-fluffy',false,true],
   ['site/bao-buns-gummy-inside/index.html','Why are my bao buns gummy inside?','bao-buns-gummy-inside',true,false],
   ['site/bao-buns-not-smooth/index.html','Why aren&#x27;t my bao buns smooth?','bao-buns-not-smooth',true,false],
   ['site/bao-buns-not-rising/index.html','Why aren&#x27;t my bao buns rising?','bao-buns-not-rising',true,false],
-  ['site/bao-buns-wet-after-steaming/index.html','Why are my bao buns wet after steaming?','bao-buns-wet-after-steaming',true,true],
+  ['site/bao-buns-wet-after-steaming/index.html','Bao buns wet after steaming? Check these 3 causes.','bao-buns-wet-after-steaming',true,true],
   ['site/bao-buns-spread-sideways/index.html','Why do my bao buns spread sideways?','bao-buns-spread-sideways',true,true],
   ['site/bao-buns-crack-while-steaming/index.html','Why do my bao buns crack while steaming?','bao-buns-crack-while-steaming',true,false],
   ['site/bao-buns-hard-after-steaming/index.html','Why are my bao buns hard after steaming?','bao-buns-hard-after-steaming',true,false],
@@ -97,7 +97,7 @@ for(const p of legacySourcePages){
   must(!html.includes('../diagnose/'),`${p} has no legacy diagnose path`);
 }
 const collapse=read('site/bao-buns-collapse-after-steaming/index.html');
-must(collapse.includes('Bao Buns Collapse After Steaming? 3 Causes to Check'),'collapse page keeps query-first CTR title');
+must(collapse.includes('Bao Buns Collapse After Steaming? 3 Causes + Fixes'),'collapse page keeps query-first CTR title');
 must(collapse.includes('../bao-buns-spread-sideways/')&&collapse.includes('../bao-buns-wet-after-steaming/')&&collapse.includes('../bao-buns-not-rising/'),'collapse page links to adjacent troubleshooting branches');
 
 const robots=read('site/robots.txt'),sitemap=read('site/sitemap.xml');
