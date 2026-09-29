@@ -7,8 +7,8 @@
   const SEO_CTA_ARRIVAL_KEY='bao_seo_cta_arrival_v2';
   const GA4_ID='G-GVD03YFR9C';
   const CLARITY_ID='yfjx2b9bn4';
-  const SUPPORTED_EVENTS=['page_view','diagnosis_view','symptom_select','diagnosis_start','question_answer','diagnosis_complete','diagnosis_back','diagnosis_restart','seo_diagnosis_cta','seo_diagnosis_view','seo_diagnosis_start','seo_diagnosis_complete','diagnosis_hero_cta'];
-  const state={symptom:null,runId:null,completed:false};
+  const SUPPORTED_EVENTS=['page_view','diagnosis_view','symptom_select','diagnosis_start','question_answer','diagnosis_complete','diagnosis_abandon','diagnosis_back','diagnosis_restart','seo_diagnosis_cta','seo_diagnosis_view','seo_diagnosis_start','seo_diagnosis_complete','diagnosis_hero_cta'];
+  const state={symptom:null,runId:null,completed:false,viewed:false,started:false,answerCount:0,abandonSent:false};
 
   // GA4: use the native config-generated page_view so session_start, source/medium,
   // landing page and page_view are created by the same Google tag session.
@@ -228,6 +228,7 @@
       if(diagnosisSeen||!entries.some(x=>x.isIntersecting))return;
       diagnosisSeen=true;
       observer.disconnect();
+      state.viewed=true;
       track('diagnosis_view',{placement:'diagnosis-stepper'});
       const entry=currentEntry();
       if(entry)track('seo_diagnosis_view',{entry,seo_landing_path:readSeoEntry()?.landingPath||''});
@@ -251,6 +252,9 @@
     if(next&&!next.disabled){
       state.runId=(crypto.randomUUID?.()||`${Date.now()}-${Math.random().toString(16).slice(2)}`);
       state.completed=false;
+      state.started=true;
+      state.answerCount=0;
+      state.abandonSent=false;
       track('diagnosis_start');
       const entry=currentEntry();
       if(entry)track('seo_diagnosis_start',{entry});
@@ -258,6 +262,7 @@
     }
     const answer=e.target.closest?.('#question [data-value],#question [data-v]');
     if(answer){
+      state.answerCount+=1;
       track('question_answer',{
         question:answer.closest('.panel')?.querySelector('h2')?.textContent||'',
         answer_value:answer.dataset.value||answer.dataset.v||'',
@@ -275,6 +280,17 @@
     if(tracked)track(tracked.dataset.track,{target:tracked.getAttribute('href')||'',placement:tracked.dataset.placement||''});
     if(e.target.closest?.('.heroCta'))track('diagnosis_hero_cta');
   });
+
+  function trackDiagnosisAbandon(){
+    if(state.abandonSent||state.completed||!state.viewed)return;
+    state.abandonSent=true;
+    track('diagnosis_abandon',{
+      started:state.started?'yes':'no',
+      answer_count:state.answerCount,
+      last_symptom:state.symptom||''
+    },{transportType:'beacon'});
+  }
+  window.addEventListener('pagehide',trackDiagnosisAbandon);
 
   const result=document.querySelector('#result');
   if(result){
