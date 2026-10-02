@@ -34,7 +34,7 @@ must(home.includes('rel="canonical" href="https://bao.serunio.com/"'),'root cano
 must(home.includes('property="og:title"')&&home.includes('property="og:image"'),'root has Open Graph metadata');
 
 const pages=[
-  ['site/bao-buns-collapse-after-steaming/index.html','Bao buns collapse after steaming? Check these 3 causes.','bao-buns-collapse-after-steaming',false,true],
+  ['site/bao-buns-collapse-after-steaming/index.html','Why do bao buns collapse, shrink, or deflate after steaming?','bao-buns-collapse-after-steaming',false,true],
   ['site/why-do-steamed-buns-wrinkle/index.html','Steamed buns wrinkled? Check these 3 causes.','why-do-steamed-buns-wrinkle',false,true],
   ['site/why-are-bao-buns-not-fluffy/index.html','Why are my bao buns dense and not fluffy?','why-are-bao-buns-not-fluffy',false,true],
   ['site/bao-buns-gummy-inside/index.html','Why are my bao buns gummy inside?','bao-buns-gummy-inside',true,false],
