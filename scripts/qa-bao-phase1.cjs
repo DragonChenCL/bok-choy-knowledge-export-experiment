@@ -97,7 +97,7 @@ for(const p of legacySourcePages){
   must(!html.includes('../diagnose/'),`${p} has no legacy diagnose path`);
 }
 const collapse=read('site/bao-buns-collapse-after-steaming/index.html');
-must(collapse.includes('Bao Buns Collapse After Steaming? 3 Causes + Fixes'),'collapse page keeps query-first CTR title');
+must(collapse.includes('Bao Buns Collapse After Steaming? Causes & Fixes'),'collapse page keeps query-first CTR title');
 must(collapse.includes('../bao-buns-spread-sideways/')&&collapse.includes('../bao-buns-wet-after-steaming/')&&collapse.includes('../bao-buns-not-rising/'),'collapse page links to adjacent troubleshooting branches');
 
 const robots=read('site/robots.txt'),sitemap=read('site/sitemap.xml');
