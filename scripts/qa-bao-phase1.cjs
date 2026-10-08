@@ -128,5 +128,23 @@ must(read('site/seo.css').includes('.symptom-visual img{'), 'semantic hero image
 const imgBuilder=read('scripts/build_bao_seo_images.py');
 must(imgBuilder.includes('TILES = (') && imgBuilder.includes('bao-sprite-v2.webp'), 'symptom tiles derive from reviewed source atlas');
 
+/* High-resolution custom symptom assets are part of the checked-in source. */
+for (const file of ['collapsed.webp','wrinkled.webp','wet.webp','normal-collapse-wrinkle-compare.webp']) {
+  const imagePath=path.join(root,'site/assets/bao-rescue/symptoms',file);
+  must(fs.existsSync(imagePath) && fs.statSync(imagePath).size>70000, `approved image ${file} exists and is nonempty`);
+  if(fs.existsSync(imagePath)) {
+    const bytes=fs.readFileSync(imagePath);
+    must(bytes.toString('ascii',0,4)==='RIFF' && bytes.toString('ascii',8,12)==='WEBP', `approved image ${file} is valid WebP container`);
+  }
+}
+for (const page of ['site/index.html','site/bao-troubleshooting/index.html','site/why-do-steamed-buns-wrinkle/index.html']) {
+  must(read(page).includes('normal-collapse-wrinkle-compare.webp'), `three-state visual on ${page}`);
+}
+for (const css of ['site/seo.css','site/diagnose/styles.css']) {
+  for (const symptom of ['collapsed','wrinkled','wet'])
+    must(read(css).includes(`symptoms/${symptom}.webp`), `custom ${symptom} image used in ${css}`);
+}
+must(read('scripts/build_bao_seo_images.py').includes('OVERRIDE_IMAGES'), 'deployment preserves authored high-resolution images');
+
 if(process.exitCode)process.exit(process.exitCode);
 console.log(`PASS Phase 1 analytics + SEO QA (${pages.length} troubleshooting landing pages)`);

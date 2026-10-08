@@ -1,7 +1,8 @@
 """Generate semantic, individually indexable symptom illustrations for Bao Rescue.
 
-The existing 2x5 WebP atlas remains the single source of truth. These are visual
-references, not photographs of a controlled experiment or evidence of results.
+The existing 2x5 WebP atlas supplies fallback images only. Authored, high-resolution
+symptom references in site/assets/bao-rescue/symptoms must never be overwritten.
+Generated or illustrative images are not photographs of a controlled experiment.
 Run after the deploy workflow stages bao-sprite-v2.webp.
 """
 from pathlib import Path
@@ -10,6 +11,7 @@ from PIL import Image
 SITE = Path("_site")
 ATLAS = SITE / "assets/bao-rescue/bao-sprite-v2.webp"
 DEST = SITE / "assets/bao-rescue/symptoms"
+OVERRIDE_IMAGES = {"collapsed", "wrinkled", "wet"}
 TILES = (
     ("normal", 0, 0),
     ("underproof", 1, 0),
@@ -33,12 +35,26 @@ def build():
             raise ValueError(f"Unexpected 2x5 atlas size: {width}x{height}")
         tile_w, tile_h = width // 2, height // 5
         for name, col, row in TILES:
-            tile = atlas.crop((col*tile_w, row*tile_h, (col+1)*tile_w, (row+1)*tile_h)).convert("RGB")
             dest = DEST / f"{name}.webp"
+            if name in OVERRIDE_IMAGES:
+                if not dest.exists():
+                    raise FileNotFoundError(f"Missing approved high-resolution illustration: {dest}")
+                with Image.open(dest) as authored:
+                    authored.load()
+                    if authored.width < 1200 or authored.height < 900:
+                        raise ValueError(f"Low-resolution replacement image: {dest}: {authored.size}")
+                print(f"Preserved approved illustration {dest}: {dest.stat().st_size} bytes")
+                continue
+            tile = atlas.crop((col*tile_w, row*tile_h, (col+1)*tile_w, (row+1)*tile_h)).convert("RGB")
             tile.save(dest, "WEBP", quality=88, method=6)
             if dest.stat().st_size < 1500:
                 raise ValueError(f"Unexpectedly small symptom tile: {dest}")
             print(f"Generated {dest}: {tile_w}x{tile_h}, {dest.stat().st_size} bytes")
+    comparison = DEST / "normal-collapse-wrinkle-compare.webp"
+    with Image.open(comparison) as img:
+        if img.width < 2000 or img.height < 700:
+            raise ValueError(f"Comparison image resolution too low: {img.size}")
+    print(f"Preserved three-state comparison: {comparison}")
 
 
 if __name__ == "__main__":

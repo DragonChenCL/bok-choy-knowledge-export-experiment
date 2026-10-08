@@ -18,3 +18,9 @@
 .section .checklist{padding-left:21px}
 .section .checklist li{padding:3px 0}
 @media(max-width:760px){.compare-grid{grid-template-columns:1fr}.field-notes{font-size:12px}.field-notes th,.field-notes td{padding:9px 7px}}
+
+/* Authored 1448x1086 symptom photos override low-resolution atlas tiles in chooser/cards. */
+.p-collapsed{background-image:url('./assets/bao-rescue/symptoms/collapsed.webp');background-size:cover;background-position:center}
+.p-wrinkled{background-image:url('./assets/bao-rescue/symptoms/wrinkled.webp');background-size:cover;background-position:center}
+.p-wet{background-image:url('./assets/bao-rescue/symptoms/wet.webp');background-size:cover;background-position:center}
+.three-state-photo{display:block;max-width:100%;width:100%;height:auto;border-radius:12px;box-shadow:0 8px 24px rgba(54,43,31,.1)}
