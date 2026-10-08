@@ -11,6 +11,7 @@ on:
       - '06-assets/bao-rescue/v4/web-v2-parts/**'
       - 'scripts/qa-bao-mvp.cjs'
       - 'scripts/qa-bao-phase1.cjs'
+      - 'scripts/build_bao_seo_images.py'
       - '.github/workflows/deploy-site-pages.yml'
   workflow_dispatch:
 

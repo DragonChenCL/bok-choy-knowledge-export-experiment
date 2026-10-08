@@ -107,5 +107,23 @@ for(const [, ,slug] of pages)must(sitemap.includes(`https://bao.serunio.com/${sl
 must(!sitemap.includes('dragonchencl.github.io'),'sitemap has no old GitHub Pages domain');
 must(!sitemap.includes('REPLACE_WITH_'),'sitemap has no placeholder domain');
 
+
+/* SEO production-quality gate: no CSS-only hero images or internal campaign UTMs. */
+const photoSlugs = ["bao-buns-collapse-after-steaming","why-do-steamed-buns-wrinkle","bao-buns-hard-after-steaming","bao-buns-wet-after-steaming","bao-buns-not-rising","why-are-bao-buns-not-fluffy","bao-buns-gummy-inside","bao-buns-not-smooth","bao-buns-spread-sideways","bao-buns-crack-while-steaming","bao-dough-too-sticky","bao-buns-stick-to-paper","bao-filling-leaking","bao-dough-tears-when-pleating","bao-buns-yellow-after-steaming","bao-buns-chewy-rubbery","flour-for-bao-buns","bao-dough-recipe","how-to-make-bao-buns","how-to-steam-buns","how-to-steam-buns-without-a-steamer","how-to-steam-bao-buns"]; 
+for(const slug of photoSlugs){
+  const html=read(`site/${slug}/index.html`);
+  must(html.includes('class="symptom-visual"') && html.includes('alt="') && html.includes('/assets/bao-rescue/symptoms/'),`${slug} has accessible semantic symptom image`);
+  must(!html.includes('utm_source=seo') && !html.includes('utm_medium=organic'),`${slug} internal CTAs do not set fake organic campaign`);
+  must(html.includes('name="twitter:card" content="summary_large_image"'),`${slug} social sharing uses symptom preview`);
+  const match=html.match(/<script type="application\\/ld\\+json">([\\s\\S]*?)<\\/script>/);
+  let structured=null;
+  try{structured=JSON.parse(match?.[1]||'');}catch{}
+  const graph=structured?.['@graph']||[structured];
+  must(!!structured && graph.some(x=>x?.['@type']==='Article' && String(x.image||'').includes('/assets/bao-rescue/symptoms/')),`${slug} has parsable Article image data`);
+}
+must(read('site/seo.css').includes('.symptom-visual img{'), 'semantic hero image CSS present');
+const imgBuilder=read('scripts/build_bao_seo_images.py');
+must(imgBuilder.includes('TILES = (') && imgBuilder.includes('bao-sprite-v2.webp'), 'symptom tiles derive from reviewed source atlas');
+
 if(process.exitCode)process.exit(process.exitCode);
 console.log(`PASS Phase 1 analytics + SEO QA (${pages.length} troubleshooting landing pages)`);
