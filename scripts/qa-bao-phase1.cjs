@@ -115,9 +115,12 @@ for(const slug of photoSlugs){
   must(html.includes('class="symptom-visual"') && html.includes('alt="') && html.includes('/assets/bao-rescue/symptoms/'),`${slug} has accessible semantic symptom image`);
   must(!html.includes('utm_source=seo') && !html.includes('utm_medium=organic'),`${slug} internal CTAs do not set fake organic campaign`);
   must(html.includes('name="twitter:card" content="summary_large_image"'),`${slug} social sharing uses symptom preview`);
-  const match=html.match(/<script type="application\\/ld\\+json">([\\s\\S]*?)<\\/script>/);
+  const scriptTag='<script type="application/ld+json">';
+  const ldStart=html.indexOf(scriptTag);
+  const ldEnd=ldStart>=0?html.indexOf('</script>',ldStart):-1;
+  const ldText=ldEnd>ldStart?html.slice(ldStart+scriptTag.length,ldEnd):'';
   let structured=null;
-  try{structured=JSON.parse(match?.[1]||'');}catch{}
+  try{structured=JSON.parse(ldText);}catch{}
   const graph=structured?.['@graph']||[structured];
   must(!!structured && graph.some(x=>x?.['@type']==='Article' && String(x.image||'').includes('/assets/bao-rescue/symptoms/')),`${slug} has parsable Article image data`);
 }
