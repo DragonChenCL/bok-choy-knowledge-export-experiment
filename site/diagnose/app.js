@@ -7,7 +7,7 @@ document.querySelectorAll('.symptom').forEach(btn=>btn.onclick=()=>{document.que
 document.querySelector('#specialBtn').onclick=()=>{document.querySelectorAll('.symptom').forEach(x=>x.classList.remove('selected'));selected='special';nextBtn.disabled=false;};
 nextBtn.onclick=()=>{if(!selected)return;answers=[];qIndex=0;if(selected==='normal')return renderResult();renderQuestion();};
 // Visitors from the collapse SEO guide can continue without re-selecting the symptom.
-if(new URLSearchParams(location.search).get('entry')==='bao-buns-collapse-after-steaming'){
+if(typeof location!=='undefined' && typeof URLSearchParams!=='undefined' && new URLSearchParams(location.search).get('entry')==='bao-buns-collapse-after-steaming'){
   const collapseOption=document.querySelector('.symptom[data-key="collapse"]');
   if(collapseOption){
     collapseOption.classList.add('selected');
