@@ -6,6 +6,23 @@ function setStep(n){document.querySelectorAll('.step').forEach((el,i)=>el.classL
 document.querySelectorAll('.symptom').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('.symptom').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected');selected=btn.dataset.key;nextBtn.disabled=false;});
 document.querySelector('#specialBtn').onclick=()=>{document.querySelectorAll('.symptom').forEach(x=>x.classList.remove('selected'));selected='special';nextBtn.disabled=false;};
 nextBtn.onclick=()=>{if(!selected)return;answers=[];qIndex=0;if(selected==='normal')return renderResult();renderQuestion();};
+// Visitors from the collapse SEO guide can continue without re-selecting the symptom.
+if(new URLSearchParams(location.search).get('entry')==='bao-buns-collapse-after-steaming'){
+  const collapseOption=document.querySelector('.symptom[data-key="collapse"]');
+  if(collapseOption){
+    collapseOption.classList.add('selected');
+    selected='collapse';
+    nextBtn.disabled=false;
+    nextBtn.textContent='Continue with collapsed buns →';
+    const note=document.createElement('p');
+    note.className='lead';
+    note.textContent='Collapsed or flat is preselected from your guide. Choose a different symptom if needed.';
+    nextBtn.parentNode.insertBefore(note,nextBtn);
+    const clearPrefill=()=>{if(selected!=='collapse'){note.remove();nextBtn.textContent='Next →';}};
+    document.querySelector('#symptomGrid')?.addEventListener('click',clearPrefill);
+    document.querySelector('#specialBtn')?.addEventListener('click',clearPrefill);
+  }
+}
 function renderQuestion(){const flow=flows[selected]||[];if(qIndex>=flow.length)return renderResult();const q=flow[qIndex];setStep(Math.min(3,2+qIndex));let html=`<div class="panel"><div class="eyebrow">Step ${Math.min(3,2+qIndex)} of 4</div><h2>${q.title}</h2><p>${q.sub}</p>`;if(q.proof)html+=`<div class="signal"><b>Use photo + feel together.</b> Ready is roughly 50% puffier, noticeably lighter, with a finger indent that returns slowly. Fast rebound points under-proofed; no recovery points over-proofed.</div>`;if(q.type==='visual'){html+='<div class="visualGrid">'+q.options.map(o=>`<button class="visualChoice" data-value="${o.value}">${photo(o.img,o.label)}<div class="copy"><b>${o.label}</b><span>${o.desc}</span></div></button>`).join('')+'</div>';}else{html+='<div class="answers">'+q.options.map(o=>`<button class="answer" data-value="${o.value}"><b>${o.label}</b><span>${o.desc}</span></button>`).join('')+'</div>';}html+='<div class="actions"><button class="secondary" id="backBtn">Back</button></div></div>';question.innerHTML=html;chooser.style.display='none';result.style.display='none';question.style.display='block';question.querySelectorAll('[data-value]').forEach(btn=>btn.onclick=()=>{const picked={step:q.title,value:btn.dataset.value,label:btn.querySelector('b')?.textContent||btn.textContent};if(selected==='special'&&qIndex===0&&picked.value==='crack'){selected='crack';answers=[picked];qIndex=0;return renderCrackQuestion();}answers.push(picked);qIndex++;renderQuestion();});document.querySelector('#backBtn').onclick=goBack;}
 function renderCrackQuestion(){setStep(2);question.innerHTML=`<div class="panel"><div class="eyebrow">Special case</div><h2>Was a cracking top the style you intended?</h2><p>Some Cantonese char siu bao intentionally crack open, so the style gate comes before diagnosis.</p><div class="visualGrid"><button class="visualChoice" data-v="intentional">${photo('cracked','Cracking-top bao')}<div class="copy"><b>Yes — cracking-top style</b><span>The opening is expected.</span></div></button><button class="visualChoice" data-v="fault">${photo('normal','Smooth bao')}<div class="copy"><b>No — I wanted a smooth bun</b><span>Then this remains a Beta failure path.</span></div></button></div><div class="actions"><button class="secondary" id="backBtn">Back</button></div></div>`;chooser.style.display='none';question.style.display='block';question.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{answers.push({step:'Intended style',value:b.dataset.v,label:b.querySelector('b').textContent});renderResult();});document.querySelector('#backBtn').onclick=()=>reset();}
 function goBack(){if(qIndex===0)return reset();qIndex--;answers.pop();renderQuestion();}

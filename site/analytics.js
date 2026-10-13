@@ -250,6 +250,7 @@
     }
     const next=e.target.closest?.('#nextBtn');
     if(next&&!next.disabled){
+      if(!state.symptom)state.symptom=document.querySelector('.symptom.selected')?.dataset.key||null;
       state.runId=(crypto.randomUUID?.()||`${Date.now()}-${Math.random().toString(16).slice(2)}`);
       state.completed=false;
       state.started=true;

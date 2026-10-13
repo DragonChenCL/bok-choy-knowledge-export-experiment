@@ -34,7 +34,7 @@ must(home.includes('rel="canonical" href="https://bao.serunio.com/"'),'root cano
 must(home.includes('property="og:title"')&&home.includes('property="og:image"'),'root has Open Graph metadata');
 
 const pages=[
-  ['site/bao-buns-collapse-after-steaming/index.html','Why do bao buns collapse, shrink, or deflate after steaming?','bao-buns-collapse-after-steaming',false,true],
+  ['site/bao-buns-collapse-after-steaming/index.html','Why do bao buns collapse after steaming?','bao-buns-collapse-after-steaming',false,true],
   ['site/why-do-steamed-buns-wrinkle/index.html','Steamed buns wrinkled? Check these 3 causes.','why-do-steamed-buns-wrinkle',false,true],
   ['site/why-are-bao-buns-not-fluffy/index.html','Why are my bao buns dense and not fluffy?','why-are-bao-buns-not-fluffy',false,true],
   ['site/bao-buns-gummy-inside/index.html','Why are my bao buns gummy inside?','bao-buns-gummy-inside',true,false],
@@ -97,7 +97,12 @@ for(const p of legacySourcePages){
   must(!html.includes('../diagnose/'),`${p} has no legacy diagnose path`);
 }
 const collapse=read('site/bao-buns-collapse-after-steaming/index.html');
-must(collapse.includes('Bao Buns Collapse After Steaming? Causes & Fixes'),'collapse page keeps query-first CTR title');
+must(collapse.includes('<title>Why Do Bao Buns Collapse After Steaming? | Bao Rescue</title>'),'collapse page keeps the exact-intent title');
+must(collapse.includes('<h1>Why do bao buns collapse after steaming?</h1>'),'collapse page keeps the exact-intent heading');
+must(collapse.includes('id="proof-state-check"')&&collapse.includes('id="collapse-timing-check"'),'collapse page distinguishes proof-state and loss timing');
+must(collapse.includes('Scope:</b> This guide is for freshly made'),'collapse page states limits');
+must(read('site/diagnose/app.js').includes("selected='collapse'"),'collapse SEO entry preselects the symptom');
+must(read('site/analytics.js').includes("if(!state.symptom)state.symptom=document.querySelector('.symptom.selected')"),'SEO prefill retains symptom attribution');
 must(collapse.includes('../bao-buns-spread-sideways/')&&collapse.includes('../bao-buns-wet-after-steaming/')&&collapse.includes('../bao-buns-not-rising/'),'collapse page links to adjacent troubleshooting branches');
 
 const robots=read('site/robots.txt'),sitemap=read('site/sitemap.xml');
