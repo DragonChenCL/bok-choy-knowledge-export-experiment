@@ -86,3 +86,8 @@ body.homeRefresh,body.guideRefresh{background:radial-gradient(circle at 96% 10%,
 .refreshCheckGrid b{display:block;color:#29402f;margin-bottom:7px;font-size:18px}
 .refreshCheckGrid span{font:14px/1.55 Arial,sans-serif;color:#62685d}
 @media(max-width:640px){.refreshCheckGrid{grid-template-columns:1fr}}
+
+/* Photo-style symptom references: individual WebP files, no atlas rendering. */
+.homeRefresh .p-collapsed,.guideRefresh .p-collapsed{background-image:url('./assets/bao-rescue/symptoms/realistic-collapsed.webp');background-size:cover;background-position:center}
+.homeRefresh .p-wrinkled,.guideRefresh .p-wrinkled{background-image:url('./assets/bao-rescue/symptoms/realistic-wrinkled.webp');background-size:cover;background-position:center}
+.homeRefresh .p-wet,.guideRefresh .p-wet{background-image:url('./assets/bao-rescue/symptoms/realistic-wet.webp');background-size:cover;background-position:center}
