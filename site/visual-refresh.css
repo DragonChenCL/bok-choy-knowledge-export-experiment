@@ -74,3 +74,15 @@ body.homeRefresh,body.guideRefresh{background:radial-gradient(circle at 96% 10%,
 @media(max-width:760px){.homeRefresh .topbar{padding:14px;flex-wrap:wrap;justify-content:center}.refreshNav{justify-content:center}.refreshNav a{padding:9px 10px;min-height:37px}.homeRefresh .hero{padding:26px 18px 33px;margin-top:14px;gap:15px}.refreshHeroGrid{min-height:280px}.refreshSteam{display:none}.heroAuxLink{margin-left:3px}.refreshFactors{grid-template-columns:repeat(2,minmax(0,1fr))}.refreshJourney,.refreshGuideGrid{grid-template-columns:1fr}.guideRefresh .hero{padding:16px}.refreshSection{border-radius:20px}}
 @media(max-width:520px){.refreshFactors{grid-template-columns:1fr}.refreshHeroGrid{min-height:240px}.refreshHeroGrid .refreshHeroPhoto{border-width:3px}.homeRefresh .hero h1{font-size:43px}.refreshNav a{font-size:12px}.refreshNav .refreshNavCta{padding:9px 12px}}
 @media(prefers-reduced-motion:reduce){.refreshSteam{animation:none}.homeRefresh :is(.symptom,.visualChoice,.heroCta,.nextBtn),.refreshFactor,.refreshGuideCard,.refreshHeroPhoto,.guideRefresh :is(.topic,.card,.clue,.proofState){transition:none!important}html{scroll-behavior:auto}}
+
+/* Filter and evidence checklist enhancements */
+.hubSearchPanel{background:linear-gradient(120deg,#f7efdd,#fffdf8)}
+.hubSearchLabel{display:block;font:700 13px Arial,sans-serif;color:#33513a;margin:14px 0 8px}
+.hubSearchInput{display:block;width:100%;max-width:650px;padding:16px 18px;border:1px solid #bfccb8;border-radius:14px;background:#fff;color:#263b2b;font:16px Arial,sans-serif;box-shadow:0 7px 18px #5d52380b}
+.hubSearchInput:focus{outline:3px solid #d8e8d0;outline-offset:2px}
+.guideRefresh .topic[hidden],.guideRefresh .topicGroup[hidden]{display:none!important}
+.refreshCheckGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:20px 0}
+.refreshCheckGrid>div{padding:17px;border:1px solid #e6ddcf;border-radius:15px;background:#fffaf1}
+.refreshCheckGrid b{display:block;color:#29402f;margin-bottom:7px;font-size:18px}
+.refreshCheckGrid span{font:14px/1.55 Arial,sans-serif;color:#62685d}
+@media(max-width:640px){.refreshCheckGrid{grid-template-columns:1fr}}
