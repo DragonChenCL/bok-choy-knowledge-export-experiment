@@ -33,14 +33,15 @@
     .premiumSection{margin:34px 0 28px;padding:24px;border:1px solid #d7d0c4;border-radius:18px;background:#fffdf9;box-shadow:0 8px 24px rgba(35,39,32,.04)}
     @media(max-width:740px){.whyBlock,.premiumSection{padding:18px}.whyBlock h2{font-size:26px}}
   </style>
+  <link rel="stylesheet" href="./visual-refresh.css?v=20261014-1">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Bao Rescue","url":"https://bao.serunio.com/","description":"Symptom-first troubleshooting for fresh yeast-leavened steamed buns that narrows look-alike causes and recommends one controlled next-batch test.","applicationCategory":"LifestyleApplication","operatingSystem":"Web","isAccessibleForFree":true,"offers":{"@type":"Offer","name":"Next-Batch Fix","price":"4.99","priceCurrency":"USD","url":"https://bao.serunio.com/#pricing"},"contactPoint":{"@type":"ContactPoint","contactType":"customer support","email":"support@serunio.com"}}</script>
   <!-- product-stage:MVP_FREEZE -->
 </head>
-<body>
+<body class="homeRefresh">
 <div class="wrap">
   <header class="topbar">
     <a class="brand" href="./" aria-label="Bao Rescue home"><span class="brandMark"><img src="./assets/bao-rescue/bao-rescue-icon-64.png" alt="" width="36" height="36" style="display:block;border-radius:10px"></span><span><b>Bao Rescue</b><small>Fix your steamed buns — step by step</small></span></a>
-    <div class="motto">Observe. Narrow. Test.</div>
+    <nav class="refreshNav" aria-label="Main navigation"><a href="./bao-troubleshooting/">Symptoms</a><a href="#diagnose">Diagnose</a><a href="./how-to-make-bao-buns/">Guides</a><a href="#refresh-faq">FAQ</a><a class="refreshNavCta" href="#diagnose">Start diagnosis →</a></nav>
   </header>
 
   <section class="hero">
@@ -48,10 +49,15 @@
       <div class="eyebrow">Visual symptom-guided troubleshooting</div>
       <h1>Your bao failed. Don’t guess what to change.</h1>
       <p>Match what you actually saw and felt. Bao Rescue separates look-alike failures, narrows the likely cause, and gives you <b>one variable to change next batch</b> — instead of a long list of generic possibilities.</p>
-      <a class="heroCta" href="#diagnose">Diagnose my bao — free <span>→</span></a>
+      <a class="heroCta" href="#diagnose">Diagnose my bao — free <span>→</span></a><a class="heroAuxLink" href="./bao-troubleshooting/">Browse symptoms ↗</a>
       <div class="heroMicro">About 2 minutes · No signup · Pick the closest symptom below</div>
     </div>
-    <div class="heroVisual"><div class="photo p-normal" role="img" aria-label="Normal steamed bao reference"></div><div class="heroNote"><b>Normal reference</b><span>Smooth, plump and stable outside; soft, aerated crumb inside.</span></div></div>
+    <div class="heroVisual refreshHeroGrid" aria-label="Steamed bun symptom examples">
+       <figure class="refreshHeroPhoto"><img src="./assets/bao-rescue/symptoms/realistic-collapsed.webp" alt="Example of collapsed steamed buns" width="640" height="480" fetchpriority="high"><em>Collapsed top?</em></figure>
+       <figure class="refreshHeroPhoto"><img src="./assets/bao-rescue/symptoms/realistic-wrinkled.webp" alt="Example of wrinkled steamed bun skin" width="640" height="480"><em>Wrinkled skin?</em></figure>
+       <figure class="refreshHeroPhoto"><img src="./assets/bao-rescue/symptoms/realistic-wet.webp" alt="Example of a steamed bun with wet surface patches" width="640" height="480"><em>Wet patches?</em></figure>
+       <span class="refreshSteam" aria-hidden="true">〰</span>
+     </div>
   </section>
 
   <div class="steps" id="diagnose"><div class="step active" data-step="1"><i>1</i><b>Your bun</b></div><div class="step" data-step="2"><i>2</i><b>Details</b></div><div class="step" data-step="3"><i>3</i><b>More info</b></div><div class="step" data-step="4"><i>4</i><b>Your result</b></div></div>
@@ -66,6 +72,45 @@
     <h2>Don’t change five things at once.</h2>
     <p>Generic advice can give you several plausible reasons. Bao Rescue asks follow-up questions to decide which branch deserves a test first, so you can learn from the next batch instead of restarting from scratch.</p>
     <div class="valuePills"><span>Symptom first</span><span>Separate similar failures</span><span>One controlled variable</span><span>Clear next step</span></div>
+  </section>
+
+
+  <section class="refreshSection" aria-labelledby="refresh-steps-heading">
+    <div class="eyebrow">From confusing symptoms to a useful test</div>
+    <h2 id="refresh-steps-heading" class="refreshHeading">How Bao Rescue works</h2>
+    <p class="refreshLead">Troubleshooting is easier when you compare evidence instead of changing the entire recipe.</p>
+    <ol class="refreshJourney"><li><b>Choose a visible symptom</b><span>Select the closest match, then compare the top, bottom and interior.</span></li><li><b>Answer a few observations</b><span>Tell us what the dough felt like, when the failure happened and how you steamed it.</span></li><li><b>Run one controlled test</b><span>Get a likely branch and a specific variable to test on your next batch.</span></li></ol>
+  </section>
+  <section class="refreshSection" aria-labelledby="refresh-factors-heading">
+    <div class="eyebrow">Learn the why</div>
+    <h2 id="refresh-factors-heading" class="refreshHeading">Five things that can change your bao</h2>
+    <p class="refreshLead">The same visible problem can come from different causes. Use these starting points to decide what to check—not as proof of a diagnosis.</p>
+    <div class="refreshFactors">
+      <article class="refreshFactor"><i aria-hidden="true">◷</i><h3>Proofing</h3><p>Too little fermentation may leave tight crumb; dough that has weakened can spread or deflate.</p><a href="./bao-buns-not-rising/">Check rising clues →</a></article>
+      <article class="refreshFactor"><i aria-hidden="true">♨</i><h3>Steam &amp; heat</h3><p>Look at when the buns changed shape, and whether the steam stayed steady.</p><a href="./how-to-steam-bao-buns/">Steaming guide →</a></article>
+      <article class="refreshFactor"><i aria-hidden="true">◉</i><h3>Condensation</h3><p>Visible lid drips, wet spots or pitted skin can shift attention toward excess water.</p><a href="./bao-buns-wet-after-steaming/">Spot moisture clues →</a></article>
+      <article class="refreshFactor"><i aria-hidden="true">✦</i><h3>Dough structure</h3><p>Flour, hydration and kneading all affect how the bun holds gas and stays tender.</p><a href="./flour-for-bao-buns/">Explore flour choices →</a></article>
+      <article class="refreshFactor"><i aria-hidden="true">↗</i><h3>Filling &amp; sealing</h3><p>Wet filling or loose seams can cause leaks and make the bottom harder to steam evenly.</p><a href="./bao-filling-leaking/">Stop filling leaks →</a></article>
+    </div>
+  </section>
+  <section class="refreshSection" aria-labelledby="refresh-guides-heading">
+    <div class="eyebrow">Practical guides</div>
+    <h2 id="refresh-guides-heading" class="refreshHeading">Learn before your next batch</h2>
+    <p class="refreshLead">Small, useful guides that help you understand a failure before you try another recipe.</p>
+    <div class="refreshGuideGrid">
+      <a class="refreshGuideCard" href="./how-to-make-bao-buns/"><small>START HERE</small><h3>How to make steamed bao</h3><p>Ingredients, dough handling, shaping and the basics of steaming.</p></a>
+      <a class="refreshGuideCard" href="./bao-buns-collapse-after-steaming/"><small>SYMPTOM DEEP DIVE</small><h3>Why buns collapse</h3><p>Compare proofing, condensation and collapse timing before making a change.</p></a>
+      <a class="refreshGuideCard" href="./bao-buns-gummy-inside/"><small>TEXTURE TROUBLESHOOTING</small><h3>Gummy or dense inside?</h3><p>What to inspect in the crumb and which possible causes to separate.</p></a>
+    </div>
+  </section>
+  <section class="refreshSection refreshFAQ" id="refresh-faq" aria-labelledby="refresh-faq-heading">
+    <div class="eyebrow">Common questions</div>
+    <h2 id="refresh-faq-heading" class="refreshHeading">Quick answers for home cooks</h2>
+    <details><summary>Why do steamed buns collapse after cooking?</summary><p>First note whether the buns were fragile or spread before steaming, whether you saw wet patches or lid drips, and whether they shrank during steaming or only after cooling. These clues help separate over-proofing, moisture and handling issues. <a href="./bao-buns-collapse-after-steaming/">Read the collapse guide.</a></p></details>
+    <details><summary>How can I tell if the dough is under-proofed?</summary><p>Check whether shaped buns have expanded at all, whether they still feel unusually tight and whether the crumb is compressed after steaming. Time alone is unreliable because room temperature changes fermentation speed. <a href="./bao-buns-not-rising/">Compare the clues.</a></p></details>
+    <details><summary>Why are my buns sticky or gummy inside?</summary><p>Check the crumb while cooled enough to handle, compare bun size and cooking time, and review hydration and proofing. A gummy center can have several causes, so test just one variable next time. <a href="./bao-buns-gummy-inside/">See the troubleshooting steps.</a></p></details>
+    <details><summary>What if more than one symptom matches?</summary><p>Start the free <a href="#diagnose">guided diagnosis</a>. The follow-up questions are designed to distinguish look-alike failures rather than assign a cause from a photograph alone.</p></details>
+    <p class="refreshNotice">Symptom images are AI-generated visual references, not photographs of actual Bao Rescue test batches. Use your own observations for diagnosis.</p>
   </section>
 
   <div style="margin:0 0 28px;padding:16px 18px;border:1px solid #ddd8cf;border-radius:14px;background:#fffdfa;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap">

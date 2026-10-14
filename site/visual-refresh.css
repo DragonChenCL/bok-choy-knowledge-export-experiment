@@ -1,0 +1,93 @@
+/* Bao Rescue visual refresh — presentation only; diagnostic/payment logic unchanged. */
+:root{--refresh-forest:#213c2b;--refresh-sage:#647b59;--refresh-cream:#fbf5e9;--refresh-gold:#e6a65b;--refresh-edge:#e6dcc9}
+body.homeRefresh,body.guideRefresh{background:radial-gradient(circle at 96% 10%,#f1e4cf 0,transparent 27%),radial-gradient(circle at 4% 32%,#f4ecd7 0,transparent 32%),#fbf6ed;color:#26382a}
+.homeRefresh .wrap,.guideRefresh .wrap{position:relative}
+.homeRefresh .topbar{position:relative;z-index:4;border:1px solid #eae0d0;border-radius:20px;background:rgba(255,253,246,.87);padding:14px 23px;box-shadow:0 12px 35px #65513e0a;backdrop-filter:blur(12px)}
+.homeRefresh .brand b,.guideRefresh .brand{color:#24412c}
+.refreshNav{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font:700 13px/1.2 Arial,sans-serif}
+.refreshNav a{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:11px 13px;color:#36503b;text-decoration:none;border-radius:999px;transition:background .2s,transform .2s}
+.refreshNav a:hover,.refreshNav a:focus-visible{background:#e9ecdf;transform:translateY(-2px)}
+.refreshNav .refreshNavCta{background:#315b3b;color:#fff;padding:11px 19px;box-shadow:0 9px 21px #274b2d26}
+.homeRefresh .hero{margin:22px 0 30px;padding:54px clamp(18px,4.5vw,58px);gap:45px;border:1px solid #efe5d6;border-radius:32px;background:radial-gradient(circle at 85% 7%,#eadac3 0,transparent 45%),linear-gradient(124deg,#fffcf5,#f6ebd8);box-shadow:0 24px 60px #70543d12;overflow:hidden}
+.homeRefresh .hero h1{color:var(--refresh-forest);max-width:670px;font-size:clamp(46px,5.6vw,76px);line-height:1.015}
+.homeRefresh .eyebrow{color:#95623b}
+.homeRefresh .heroCta,.homeRefresh .nextBtn,.homeRefresh .primary{background:linear-gradient(135deg,#467349,#254c30);box-shadow:0 10px 22px #315d3a2d;transition:transform .2s,box-shadow .2s}
+.homeRefresh .heroCta:hover,.homeRefresh .nextBtn:hover:not(:disabled),.homeRefresh .primary:hover{transform:translateY(-3px);box-shadow:0 15px 28px #315d3a38}
+.homeRefresh :is(a,button,summary):focus-visible,.guideRefresh :is(a,button,summary):focus-visible{outline:3px solid #cf8b40;outline-offset:3px}
+.heroAuxLink{display:inline-flex;align-items:center;margin-left:15px;padding:12px;color:#426044;font:700 14px Arial,sans-serif;text-decoration:none}
+.refreshHeroGrid{position:relative;min-height:385px;overflow:visible;background:none;box-shadow:none;border-radius:0}
+.refreshHeroGrid .refreshHeroPhoto{margin:0;position:absolute;width:62%;height:62%;border:6px solid #fff;border-radius:20px;background-size:cover;background-position:center;box-shadow:0 16px 35px #47382b34;transition:transform .35s ease;transform:rotate(var(--tilt,0deg))}
+.refreshHeroGrid .refreshHeroPhoto:hover{transform:translateY(-7px) rotate(0deg)}
+.refreshHeroGrid .refreshHeroPhoto img{width:100%;height:100%;display:block;object-fit:cover;border-radius:14px}
+.refreshHeroGrid .refreshHeroPhoto:nth-child(1){top:0;left:0;--tilt:-5deg}
+.refreshHeroGrid .refreshHeroPhoto:nth-child(2){top:2%;right:0;--tilt:5deg}
+.refreshHeroGrid .refreshHeroPhoto:nth-child(3){left:21%;bottom:0;--tilt:-2deg;z-index:2}
+.refreshHeroPhoto em{position:absolute;bottom:9px;left:9px;background:#fff9eeef;color:#273b29;padding:7px 10px;border-radius:999px;font:700 12px Arial,sans-serif;font-style:normal}
+.refreshSteam{position:absolute;right:5%;bottom:-11%;font-size:115px;line-height:1;color:#e3c59f;opacity:.5;pointer-events:none;animation:steamFloat 7s ease-in-out infinite}
+@keyframes steamFloat{50%{transform:translateY(-12px) rotate(4deg);opacity:.28}}
+.homeRefresh .symptom,.homeRefresh .visualChoice{border-radius:19px;box-shadow:0 7px 18px #4d412e0a;transition:transform .24s,box-shadow .24s,border-color .24s}
+.homeRefresh .symptom:hover,.homeRefresh .visualChoice:hover{transform:translateY(-6px);box-shadow:0 19px 28px #57442f1c}
+.homeRefresh .symptomGrid .photo{aspect-ratio:4/3}
+.homeRefresh .symptom .copy{padding:15px 15px 19px}
+.homeRefresh .layout{align-items:start}
+.homeRefresh .sidecard{background:linear-gradient(145deg,#ecf0e2,#fefbf1);border:1px solid #d9dfcc;box-shadow:0 12px 28px #56683f13}
+.homeRefresh .step.active i{background:#365b3d}
+.refreshSection{margin:30px 0;padding:clamp(20px,3.2vw,36px);border:1px solid var(--refresh-edge);border-radius:27px;background:#fffdf7;box-shadow:0 13px 34px #54422e0b}
+.refreshHeading{margin:4px 0 10px;font-size:clamp(28px,3vw,39px);letter-spacing:-.035em;color:#24402d}
+.refreshLead{font:15px/1.7 Arial,sans-serif;color:#66695f;margin:0 0 22px}
+.refreshSection a{color:#32543a}
+.refreshFactors{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.refreshFactor{padding:19px 16px;min-width:0;border:1px solid #eae2d5;border-radius:17px;background:linear-gradient(150deg,#fffaf1,#f4f1e7);transition:transform .23s,box-shadow .23s}
+.refreshFactor:hover{transform:translateY(-5px);box-shadow:0 12px 23px #5a49331b}
+.refreshFactor i{font-style:normal;display:grid;place-items:center;width:43px;height:43px;margin-bottom:14px;background:#f7e4c7;border-radius:50%;font-size:21px}
+.refreshFactor h3{font-size:19px;margin:0 0 7px}
+.refreshFactor p{font:13px/1.6 Arial,sans-serif;color:#62695e;margin:0 0 10px}
+.refreshFactor a{font:700 12px Arial,sans-serif;text-decoration:none}
+.refreshJourney{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;counter-reset:journey}
+.refreshJourney li{list-style:none;position:relative;padding:19px 20px 19px 73px;border:1px solid #e8dfcf;border-radius:17px;background:#fff8ec;min-height:119px}
+.refreshJourney li::before{counter-increment:journey;content:counter(journey);position:absolute;top:21px;left:18px;display:grid;place-items:center;width:41px;height:41px;color:#fff;background:#bc7a38;border-radius:50%;font:800 18px Arial,sans-serif}
+.refreshJourney b{display:block;font-size:17px;margin-bottom:8px}
+.refreshJourney span{font:13px/1.55 Arial,sans-serif;color:#60645a}
+.refreshGuideGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.refreshGuideCard{display:block;padding:20px;text-decoration:none;border:1px solid #e6dcca;border-radius:17px;background:#fff9ed;transition:transform .2s,box-shadow .2s}
+.refreshGuideCard:hover{transform:translateY(-4px);box-shadow:0 15px 26px #604a291c}
+.refreshGuideCard small{font:800 11px Arial,sans-serif;letter-spacing:.08em;color:#b8793b}
+.refreshGuideCard h3{font-size:21px;color:#263a2a;margin:10px 0}
+.refreshGuideCard p{font:13px/1.6 Arial,sans-serif;color:#65655d;margin:0}
+.refreshFAQ details{padding:16px 19px;border:1px solid #e5dccf;border-radius:13px;background:#fffaf2;margin-top:9px}
+.refreshFAQ summary{cursor:pointer;font:700 15px Arial,sans-serif;color:#263c2d}
+.refreshFAQ details p{color:#5e655b;font:14px/1.65 Arial,sans-serif;margin:13px 0 0}
+.refreshNotice{color:#6d6e65;font:12px/1.6 Arial,sans-serif;margin-top:13px}
+.refreshPicture{display:block;width:100%;height:100%;object-fit:cover}
+.guideRefresh .top{padding:17px 22px;background:#fffdf7;border:1px solid #eae0d0;border-radius:18px;box-shadow:0 11px 35px #65513e0a}
+.guideRefresh .hero{border-radius:26px;padding:24px;background:linear-gradient(120deg,#fffdf7,#f4eadc);border:1px solid #ece1d1;margin:25px 0}
+.guideRefresh .hero h1{color:#24412d}
+.guideRefresh .section,.guideRefresh .quickAnswer{border-radius:20px;box-shadow:0 11px 26px #65513e0b}
+.guideRefresh .card,.guideRefresh .clue,.guideRefresh .proofState{transition:transform .2s,box-shadow .2s;border-radius:15px}
+.guideRefresh :is(.card,.clue,.proofState):hover{transform:translateY(-3px);box-shadow:0 11px 20px #5e4a2c15}
+.guideRefresh .symptom-visual img{border:5px solid #fff;box-shadow:0 14px 25px #47392c29}
+.guideRefresh .cta{background:linear-gradient(135deg,#456d49,#284832)}
+.guideRefresh .topic:hover{box-shadow:0 16px 25px #473b2c21;transform:translateY(-4px)}
+.guideRefresh .topic{transition:transform .2s,box-shadow .2s}
+.guideRefresh .refreshSection{margin:20px 0}
+@media(max-width:1050px){.refreshFactors{grid-template-columns:repeat(3,1fr)}.homeRefresh .refreshNav{gap:0}.homeRefresh .topbar{gap:20px}}
+@media(max-width:760px){.homeRefresh .topbar{padding:14px;flex-wrap:wrap;justify-content:center}.refreshNav{justify-content:center}.refreshNav a{padding:9px 10px;min-height:37px}.homeRefresh .hero{padding:26px 18px 33px;margin-top:14px;gap:15px}.refreshHeroGrid{min-height:280px}.refreshSteam{display:none}.heroAuxLink{margin-left:3px}.refreshFactors{grid-template-columns:repeat(2,minmax(0,1fr))}.refreshJourney,.refreshGuideGrid{grid-template-columns:1fr}.guideRefresh .hero{padding:16px}.refreshSection{border-radius:20px}}
+@media(max-width:520px){.refreshFactors{grid-template-columns:1fr}.refreshHeroGrid{min-height:240px}.refreshHeroGrid .refreshHeroPhoto{border-width:3px}.homeRefresh .hero h1{font-size:43px}.refreshNav a{font-size:12px}.refreshNav .refreshNavCta{padding:9px 12px}}
+@media(prefers-reduced-motion:reduce){.refreshSteam{animation:none}.homeRefresh :is(.symptom,.visualChoice,.heroCta,.nextBtn),.refreshFactor,.refreshGuideCard,.refreshHeroPhoto,.guideRefresh :is(.topic,.card,.clue,.proofState){transition:none!important}html{scroll-behavior:auto}}
+
+/* Filter and evidence checklist enhancements */
+.hubSearchPanel{background:linear-gradient(120deg,#f7efdd,#fffdf8)}
+.hubSearchLabel{display:block;font:700 13px Arial,sans-serif;color:#33513a;margin:14px 0 8px}
+.hubSearchInput{display:block;width:100%;max-width:650px;padding:16px 18px;border:1px solid #bfccb8;border-radius:14px;background:#fff;color:#263b2b;font:16px Arial,sans-serif;box-shadow:0 7px 18px #5d52380b}
+.hubSearchInput:focus{outline:3px solid #d8e8d0;outline-offset:2px}
+.guideRefresh .topic[hidden],.guideRefresh .topicGroup[hidden]{display:none!important}
+.refreshCheckGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:20px 0}
+.refreshCheckGrid>div{padding:17px;border:1px solid #e6ddcf;border-radius:15px;background:#fffaf1}
+.refreshCheckGrid b{display:block;color:#29402f;margin-bottom:7px;font-size:18px}
+.refreshCheckGrid span{font:14px/1.55 Arial,sans-serif;color:#62685d}
+@media(max-width:640px){.refreshCheckGrid{grid-template-columns:1fr}}
+
+/* Photo-style symptom references: individual WebP files, no atlas rendering. */
+.homeRefresh .p-collapsed,.guideRefresh .p-collapsed{background-image:url('./assets/bao-rescue/symptoms/realistic-collapsed.webp');background-size:cover;background-position:center}
+.homeRefresh .p-wrinkled,.guideRefresh .p-wrinkled{background-image:url('./assets/bao-rescue/symptoms/realistic-wrinkled.webp');background-size:cover;background-position:center}
+.homeRefresh .p-wet,.guideRefresh .p-wet{background-image:url('./assets/bao-rescue/symptoms/realistic-wet.webp');background-size:cover;background-position:center}
